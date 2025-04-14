@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 28cb42651f5bd6242a94bc75e16e3882
+timeCreated: 1480851990
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 90709
+  packageName: Triangle Separator
+  packageVersion: 1.0
+  assetPath: Assets/koljo45/Triangle Separator/Test Assets/Scripts/RotateSword.cs
+  uploadId: 185605

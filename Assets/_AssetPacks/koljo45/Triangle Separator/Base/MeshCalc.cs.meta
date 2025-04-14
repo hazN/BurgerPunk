@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: d69609afa2101d1459be03bf3dfdcf56
+timeCreated: 1468319670
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 90709
+  packageName: Triangle Separator
+  packageVersion: 1.0
+  assetPath: Assets/koljo45/Triangle Separator/Base/MeshCalc.cs
+  uploadId: 185605

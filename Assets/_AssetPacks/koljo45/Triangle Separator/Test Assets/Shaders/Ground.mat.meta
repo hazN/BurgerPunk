@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b9b784bde6d95fe47ac258035f427656
+timeCreated: 1472758658
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 90709
+  packageName: Triangle Separator
+  packageVersion: 1.0
+  assetPath: Assets/koljo45/Triangle Separator/Test Assets/Shaders/Ground.mat
+  uploadId: 185605

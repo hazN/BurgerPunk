@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 8ed971beda7adc9439ab9336f0e51383
+timeCreated: 1487949547
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 90709
+  packageName: Triangle Separator
+  packageVersion: 1.0
+  assetPath: Assets/koljo45/Triangle Separator/Test Assets/Scripts/ForceUser.cs
+  uploadId: 185605

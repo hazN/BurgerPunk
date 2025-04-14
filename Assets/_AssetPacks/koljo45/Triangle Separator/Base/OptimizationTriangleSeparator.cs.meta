@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 7ce5befb577e4c54e884d44aed886aba
+timeCreated: 1490706089
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 90709
+  packageName: Triangle Separator
+  packageVersion: 1.0
+  assetPath: Assets/koljo45/Triangle Separator/Base/OptimizationTriangleSeparator.cs
+  uploadId: 185605

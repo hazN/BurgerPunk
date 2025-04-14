@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: ee56ca3bf8371bb48ba92fbd3900faad
+timeCreated: 1490290753
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 90709
+  packageName: Triangle Separator
+  packageVersion: 1.0
+  assetPath: Assets/koljo45/Triangle Separator/Editor/EditorSlicing.cs
+  uploadId: 185605

@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: d74c28d9ba3ac5640b5fdff3d8d7f8e6
+timeCreated: 1497649914
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 90709
+  packageName: Triangle Separator
+  packageVersion: 1.0
+  assetPath: Assets/koljo45/Triangle Separator/Test Assets/Scripts/MouseLook.cs
+  uploadId: 185605
