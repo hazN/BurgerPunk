@@ -13,6 +13,9 @@ public class BuildViewManager : MonoBehaviour
     [SerializeField]
     protected PlaceableObjectList objectList;
 
+    int objectIndex;
+    GameObject previewObject;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -45,7 +48,14 @@ public class BuildViewManager : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask))
             {
                 //Debug.Log("Hit: " + hit.collider.name);
+                previewObject.SetActive(true);
+                previewObject.transform.position = hit.point;
             }
+            else
+            {
+                previewObject.SetActive(false);
+            }
+            
 
             //Debug.Log(ray);
         }
@@ -55,11 +65,18 @@ public class BuildViewManager : MonoBehaviour
     {
         buildCamera.enabled = true;
         mainCamera.enabled = false;
+
+        if (previewObject == null)
+        {
+            previewObject = Instantiate(objectList.placeableObjects[objectIndex].objectPrefab);
+        }
     }
 
     void DeactivateBuildView()
     {
         buildCamera.enabled = false;
         mainCamera.enabled = true;
+
+        Destroy(previewObject);
     }
 }

@@ -5,5 +5,6 @@ public class PlaceableObjectData : ScriptableObject
 {
     public GameObject objectPrefab;
     public int cost = 0;
-
+    public string objectName = "UNNAMED";
+    public string objectDescription = "NO DESCRIPTION";
 }
