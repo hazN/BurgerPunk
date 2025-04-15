@@ -3,8 +3,10 @@ using UnityEngine.AI;
 
 public class CustomerBehaviour : MonoBehaviour
 {
+    public CustomerManager Manager;
+
     #region Animator Parameters
-    public readonly int m_HashMove = Animator.StringToHash("Move");
+    public readonly int m_HashMove = Animator.StringToHash("Moving");
     public readonly int m_HashOrder1 = Animator.StringToHash("Order1");
     #endregion
     
@@ -13,11 +15,12 @@ public class CustomerBehaviour : MonoBehaviour
     {
         get { return _animator; }
     }
+    public float Speed = 1f;
+    public float DistanceMargin = 1.1f;
 
-    public readonly float DistanceMargin = 0.5f;
-
-    public NPCTarget NPCTarget_First;
-    public NPCTarget NPCTarget_Second;
+    public bool IsOrderPlaced = false;
+    public NPCTarget Wait_Target;
+    public Transform POS_Area;
 
     private NavMeshAgent _navMeshAgent;
     public NavMeshAgent NavMeshAgent
@@ -40,10 +43,14 @@ public class CustomerBehaviour : MonoBehaviour
     public readonly CustomerSittingState mCustomerSittigState = new CustomerSittingState();
     public readonly CustomerWaitingState mCustomerWaitingState = new CustomerWaitingState();
 
+    private void Awake()
+    {
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
+    }
+
     void Start()
     {
-        NavMeshAgent = GetComponent<NavMeshAgent>();
-        _navMeshAgent.destination = NPCTarget_First.transform.position;
         TransitionToState(mCustomerMovingState);
     }
 
@@ -53,14 +60,6 @@ public class CustomerBehaviour : MonoBehaviour
         if (NavMeshAgent == null) return;
 
         _currentState.Update(this);
-
-        // Check if agent is at the destination
-
-        // If destination is chair, sit down
-
-        // If destination is cash counter, make an order
-
-        // If destination is pickup line, wait for order
     }
 
     public void TransitionToState(CustomerBaseState state)

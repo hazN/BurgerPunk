@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
-public enum TargetType
+public enum TargetType : int
 {
-    CashRegister,
-    Chair,
-    WaitingQueue
+    Chair           = 0,
+    WaitingQueue    = 1,
 }
 
 public class NPCTarget : MonoBehaviour
 {
     public TargetType TargetType;
+    public bool IsOccupied = false;
 }
