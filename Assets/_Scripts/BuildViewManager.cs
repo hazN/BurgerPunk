@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BuildViewManager : MonoBehaviour
 {
@@ -6,12 +7,17 @@ public class BuildViewManager : MonoBehaviour
     protected Camera buildCamera;
     private Camera mainCamera;
 
+    //[SerializeField]
+    RadialProgress radialProgressBar;
+
     private bool active = false;
     
     LawnGridManager gridManager;
     BuildUI buildUI;
 
-    
+
+    public float holdToPlaceDuration = 0.4f;
+    Vector3 lockedPosition = Vector3.zero;
     GameObject previewObject;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -20,8 +26,10 @@ public class BuildViewManager : MonoBehaviour
         gridManager = FindFirstObjectByType<LawnGridManager>();
         buildUI = FindFirstObjectByType<BuildUI>();
         buildUI.OnPreviewChanged += UpdatePreviewObject;
+        radialProgressBar = buildUI.radialProgressBar;
 
         mainCamera = Camera.main;
+        radialProgressBar.OnRadialProgressComplete += PlaceObject;
     }
 
     // Update is called once per frame
@@ -44,7 +52,7 @@ public class BuildViewManager : MonoBehaviour
         if (active)
         {
             int layerMask = LayerMask.GetMask("LawnGrid");
-            
+
             Ray ray = buildCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask))
             {
@@ -67,10 +75,9 @@ public class BuildViewManager : MonoBehaviour
                 Shader.SetGlobalFloat("_IsValid", 1.0f);
 
 
-                if (Input.GetMouseButtonDown(0))
+                if (!radialProgressBar.IsActive() && Input.GetMouseButtonDown(0))
                 {
-                    placeableComponent.PlaceObject();
-                    previewObject = Instantiate(buildUI.objectList.placeableObjects[buildUI.objectIndex].objectPrefab);
+                    radialProgressBar.StartProgress(holdToPlaceDuration);
 
                 }
             }
@@ -78,8 +85,15 @@ public class BuildViewManager : MonoBehaviour
             {
                 Shader.SetGlobalFloat("_IsValid", 0.0f);
             }
+        }
+        else
+        {
+            radialProgressBar.CancelProgress();
+        }
 
-            
+        if (radialProgressBar.IsActive() && Input.GetMouseButtonUp(0))
+        {
+            radialProgressBar.CancelProgress();
         }
     }
 
@@ -110,5 +124,12 @@ public class BuildViewManager : MonoBehaviour
             Destroy(previewObject);
             previewObject = Instantiate(buildUI.objectList.placeableObjects[buildUI.objectIndex].objectPrefab);
         }
+    }
+
+    void PlaceObject()
+    {
+        PlaceableObject placeableComponent = previewObject.GetComponent<PlaceableObject>();
+        placeableComponent.PlaceObject();
+        previewObject = Instantiate(buildUI.objectList.placeableObjects[buildUI.objectIndex].objectPrefab);
     }
 }

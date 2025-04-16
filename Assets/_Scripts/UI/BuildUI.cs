@@ -19,6 +19,10 @@ public class BuildUI : MonoBehaviour
     [SerializeField]
     public PlaceableObjectList objectList;
 
+
+    [SerializeField]
+    public RadialProgress radialProgressBar;
+
     public int objectIndex;
 
     public event System.Action OnPreviewChanged;

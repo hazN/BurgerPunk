@@ -46,7 +46,7 @@ public class PlaceableObject : MonoBehaviour
         {
             if (hit != GetComponent<Collider>())
             {
-                Debug.Log("Overlaps with: " + hit.name);
+                //Debug.Log("Overlaps with: " + hit.name);
                 return false;
             }
         }
