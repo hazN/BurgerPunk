@@ -9,17 +9,18 @@ public class BuildViewManager : MonoBehaviour
     private bool active = false;
     
     LawnGridManager gridManager;
+    BuildUI buildUI;
 
-    [SerializeField]
-    protected PlaceableObjectList objectList;
-
-    int objectIndex;
+    
     GameObject previewObject;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         gridManager = FindFirstObjectByType<LawnGridManager>();
+        buildUI = FindFirstObjectByType<BuildUI>();
+        buildUI.OnPreviewChanged += UpdatePreviewObject;
+
         mainCamera = Camera.main;
     }
 
@@ -55,9 +56,30 @@ public class BuildViewManager : MonoBehaviour
             {
                 previewObject.SetActive(false);
             }
-            
+
+            PlaceableObject placeableComponent = previewObject.GetComponent<PlaceableObject>();
+            bool placeable = placeableComponent.IsPlaceable();
 
             //Debug.Log(ray);
+
+            if (placeable)
+            {
+                Shader.SetGlobalFloat("_IsValid", 1.0f);
+
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    placeableComponent.PlaceObject();
+                    previewObject = Instantiate(buildUI.objectList.placeableObjects[buildUI.objectIndex].objectPrefab);
+
+                }
+            }
+            else
+            {
+                Shader.SetGlobalFloat("_IsValid", 0.0f);
+            }
+
+            
         }
     }
 
@@ -66,10 +88,7 @@ public class BuildViewManager : MonoBehaviour
         buildCamera.enabled = true;
         mainCamera.enabled = false;
 
-        if (previewObject == null)
-        {
-            previewObject = Instantiate(objectList.placeableObjects[objectIndex].objectPrefab);
-        }
+        UpdatePreviewObject();
     }
 
     void DeactivateBuildView()
@@ -78,5 +97,18 @@ public class BuildViewManager : MonoBehaviour
         mainCamera.enabled = true;
 
         Destroy(previewObject);
+    }
+
+    void UpdatePreviewObject()
+    {
+        if (previewObject == null)
+        {
+            previewObject = Instantiate(buildUI.objectList.placeableObjects[buildUI.objectIndex].objectPrefab);
+        }
+        else
+        {
+            Destroy(previewObject);
+            previewObject = Instantiate(buildUI.objectList.placeableObjects[buildUI.objectIndex].objectPrefab);
+        }
     }
 }
