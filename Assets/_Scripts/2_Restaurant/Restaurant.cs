@@ -10,20 +10,10 @@ public struct OrderItem
     public float Cost;
 }
 
-[System.Serializable]
-public struct RestaurantEquipment
-{
-    public PlaceableObjectData EquipmentData;
-
-    [Tooltip("All the items this equiment can offer")]
-    public List<OrderItem> OrderItemsList;
-    public bool IsEquipped;
-}
-
 public class Restaurant : MonoBehaviour
 {
     public static Restaurant Instance { get; private set; } = null;
-    public List<RestaurantEquipment> EquipmentsList = new List<RestaurantEquipment>();
+    public List<RestaurantEquipmentData> EquipmentsList = new List<RestaurantEquipmentData>();
     public float TotalSale = 0f;
 
     private void Awake()
