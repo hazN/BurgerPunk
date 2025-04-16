@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
-    float health = 100.0f;
+    [SerializeField] private float health = 100.0f;
+    [SerializeField] private float maxHealth = 100.0f;
 
     public event System.Action OnDeath;
 

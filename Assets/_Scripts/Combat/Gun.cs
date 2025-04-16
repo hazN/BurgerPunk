@@ -26,7 +26,7 @@ namespace BurgerPunk.Combat
             RaycastHit hit;
             if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, range))
             {
-                Health targetHealth = hit.transform.GetComponent<Health>();
+                Actor targetHealth = hit.transform.GetComponent<Actor>();
                 if (targetHealth != null)
                 {
                     targetHealth.TakeDamage(damage);
