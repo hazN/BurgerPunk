@@ -1,5 +1,6 @@
 using UnityEngine;
 using BurgerPunk.Inputs;
+using BurgerPunk.Combat;
 
 namespace BurgerPunk.Movement
 {
@@ -7,6 +8,7 @@ namespace BurgerPunk.Movement
     {
         private CharacterController controller;
         [SerializeField] private Camera playerCamera;
+        [SerializeField] private Gun playerGun;
 
         [Header("Movement Settings")]
         [SerializeField] private float speed = 5.0f;
@@ -34,6 +36,7 @@ namespace BurgerPunk.Movement
             HandleMovement();
             HandleLook();
             HandleJump();
+            HandleFire();
         }
 
         private void HandleMovement()
@@ -70,6 +73,21 @@ namespace BurgerPunk.Movement
             if (controller.isGrounded && InputManager.Instance.playerInput.Player.Jump.triggered)
             {
                 verticalVelocity = Mathf.Sqrt(-2f * gravity * jumpHeight);
+            }
+        }
+
+        private void HandleFire()
+        {
+            if (InputManager.Instance.playerInput.Player.Fire.triggered)
+            {
+                if (playerGun != null)
+                {
+                    playerGun.Fire();
+                }
+                else
+                {
+                    Debug.LogError("Gun not assigned");
+                }
             }
         }
     }
