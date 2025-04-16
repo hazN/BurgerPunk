@@ -8,8 +8,8 @@ using UnityEngine;
 
 public enum TargetType : int
 {
-    Chair           = 0,
-    WaitingQueue    = 1,
+    DineIn      = 0,
+    TakeOut     = 1,
 }
 
 public class NPCTarget : MonoBehaviour

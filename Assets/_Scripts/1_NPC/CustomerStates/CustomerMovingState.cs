@@ -33,8 +33,7 @@ public class CustomerMovingState : CustomerBaseState
             customer.Animator.SetBool(customer.m_HashMove, false);
             if (customer.IsOrderPlaced)
             {
-                customer.Manager.SetOccupied(customer);
-                if (customer.Wait_Target.TargetType == TargetType.WaitingQueue)
+                if (customer.Wait_Target.TargetType == TargetType.TakeOut)
                     customer.TransitionToState(customer.mCustomerWaitingState);
                 else 
                     customer.TransitionToState(customer.mCustomerSittigState);

@@ -4,6 +4,7 @@ using UnityEngine.AI;
 public class CustomerBehaviour : MonoBehaviour
 {
     public CustomerManager Manager;
+    public Restaurant Restaurant;
 
     #region Animator Parameters
     public readonly int m_HashMove = Animator.StringToHash("Moving");
@@ -21,6 +22,9 @@ public class CustomerBehaviour : MonoBehaviour
     public bool IsOrderPlaced = false;
     public NPCTarget Wait_Target;
     public Transform POS_Area;
+
+    [HideInInspector]
+    public string OrderStr = string.Empty;
 
     private NavMeshAgent _navMeshAgent;
     public NavMeshAgent NavMeshAgent
