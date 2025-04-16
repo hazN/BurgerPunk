@@ -4,16 +4,25 @@ public class Actor : MonoBehaviour
 {
     float health = 100.0f;
 
+    public event System.Action OnDeath;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void TakeDamage(float damage)
     {
-        
+        health = Mathf.Max(0.0f, health - damage);
+
+        if (health <= 0.0f)
+        {
+            OnDeath.Invoke();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public bool IsAlive()
     {
-        
+        return health > 0.0f;
+    }
+
+    public float GetHealth()
+    {
+        return health;
     }
 }
