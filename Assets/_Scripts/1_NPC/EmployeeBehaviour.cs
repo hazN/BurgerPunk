@@ -9,6 +9,7 @@ public class EmployeeBehaviour : MonoBehaviour
     #region Animator Parameters
     public readonly int m_HashMove = Animator.StringToHash("Moving");
     public readonly int m_HashCooking = Animator.StringToHash("Cooking");
+    public readonly int m_HashStackOrder = Animator.StringToHash("StackOrder");
     #endregion
 
     public Transform POS_Area;
@@ -31,7 +32,8 @@ public class EmployeeBehaviour : MonoBehaviour
         private set => _animator = value;
     }
 
-    private int OrderItemsMade = 0;
+    public int OrderItemsMade = 0;
+    public bool OrderStacked = false;
 
     void Start()
     {
@@ -47,7 +49,13 @@ public class EmployeeBehaviour : MonoBehaviour
         if (HasEmployeeReached() && IsBusy)
         {
             _animator.SetBool(m_HashMove, false);
-            _animator.SetBool(m_HashCooking, true);
+            if(OrderStacked)
+            {
+                _animator.SetTrigger(m_HashStackOrder);
+            }
+            else {
+                _animator.SetBool(m_HashCooking, true);
+            }
         }
     }
 

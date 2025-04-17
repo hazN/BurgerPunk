@@ -73,15 +73,11 @@ public class Restaurant : MonoBehaviour
 
     public void OrderWrapUp(EmployeeBehaviour employee)
     {
-        foreach (var order in PendingOrdersList)
-        {
-            if (order.Employee == employee)
-            {
-                ReadyOrderList.Add(order);
-                AssignTask(employee);
-                return;
-            }
-        }
+        employee.IsBusy = false;
+        employee.OrderStacked = false;
+        employee.OrderItemsMade = 0;
+        ReadyOrderList.Add(employee.PendingOrder);
+        AssignTask(employee);
     }
 
     public void AssignTask(EmployeeBehaviour employee = null)
@@ -111,7 +107,7 @@ public class Restaurant : MonoBehaviour
         employee.NavMeshAgent.destination = employee.PendingOrder.MachinesList[0].position;
         employee.Animator.SetBool(employee.m_HashMove, true);
         PendingOrdersList.RemoveAt(0);
-        Debug.Log(employee.PendingOrder.OrderItemsNames + ", " + employee.PendingOrder.MachinesList.Count);
+        //Debug.Log(employee.PendingOrder.OrderItemsNames + ", " + employee.PendingOrder.MachinesList.Count);
     }
 
     public void GetRandomOrder(CustomerBehaviour customer)
@@ -147,7 +143,7 @@ public class Restaurant : MonoBehaviour
         AssignTask();
 
         customer.OrderStr = orderStr;
-        Debug.Log("[Restaurant] Order Received: " + orderStr);
+        //Debug.Log("[Restaurant] Order Received: " + orderStr);
         customer.Animator.SetTrigger(customer.m_HashOrder1);
     }
 }
