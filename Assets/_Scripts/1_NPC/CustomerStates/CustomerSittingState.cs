@@ -4,7 +4,7 @@ public class CustomerSittingState : CustomerBaseState
 {
     public override void EnterState(CustomerBehaviour customer)
     {
-        // play sitting animation
+        customer.Animator.SetBool(customer.m_HashSit, true);
     }
 
     public override void Update(CustomerBehaviour customer)

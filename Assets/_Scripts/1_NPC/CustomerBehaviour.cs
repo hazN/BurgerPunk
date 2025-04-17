@@ -9,19 +9,17 @@ public class CustomerBehaviour : MonoBehaviour
     #region Animator Parameters
     public readonly int m_HashMove = Animator.StringToHash("Moving");
     public readonly int m_HashOrder1 = Animator.StringToHash("Order1");
+    public readonly int m_HashSit = Animator.StringToHash("Sit");
     #endregion
     
-    private Animator _animator;
-    public Animator Animator
-    {
-        get { return _animator; }
-    }
     public float Speed = 1f;
     public float DistanceMargin = 1.1f;
 
     public bool IsOrderPlaced = false;
+    public bool IsOrderFulfilled = false;
     public NPCTarget Wait_Target;
     public Transform POS_Area;
+    public GameObject Stool;
 
     [HideInInspector]
     public string OrderStr = string.Empty;
@@ -31,6 +29,13 @@ public class CustomerBehaviour : MonoBehaviour
     {
         get => _navMeshAgent;
         set => _navMeshAgent = value;
+    }
+
+    private Animator _animator;
+    public Animator Animator
+    {
+        get { return _animator; }
+        private set => _animator = value;
     }
 
     private CustomerBaseState _currentState;

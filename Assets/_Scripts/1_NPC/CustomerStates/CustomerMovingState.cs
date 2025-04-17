@@ -27,18 +27,23 @@ public class CustomerMovingState : CustomerBaseState
             return;
         }
 
-        if (Vector3.Distance(customer.transform.position, _targetPosition) <= customer.DistanceMargin)
+        if (!customer.NavMeshAgent.pathPending)
         {
-            customer.NavMeshAgent.speed = 0f;
-            customer.Animator.SetBool(customer.m_HashMove, false);
-            if (customer.IsOrderPlaced)
+            if (customer.NavMeshAgent.remainingDistance <= customer.NavMeshAgent.stoppingDistance)
             {
-                if (customer.Wait_Target.TargetType == TargetType.TakeOut)
-                    customer.TransitionToState(customer.mCustomerWaitingState);
-                else 
-                    customer.TransitionToState(customer.mCustomerSittigState);
+                if (!customer.NavMeshAgent.hasPath || customer.NavMeshAgent.velocity.sqrMagnitude == 0f)
+                {
+                    customer.Animator.SetBool(customer.m_HashMove, false);
+                    if (customer.IsOrderPlaced)
+                    {
+                        if (customer.Wait_Target.TargetType == TargetType.TakeOut)
+                            customer.TransitionToState(customer.mCustomerWaitingState);
+                        else
+                            customer.TransitionToState(customer.mCustomerSittigState);
+                    }
+                    else customer.TransitionToState(customer.mCustomerOrderingState);
+                }
             }
-            else customer.TransitionToState(customer.mCustomerOrderingState);
         }
     }
 }

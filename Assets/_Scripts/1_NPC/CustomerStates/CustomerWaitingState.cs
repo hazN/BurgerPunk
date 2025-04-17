@@ -8,8 +8,13 @@ public class CustomerWaitingState : CustomerBaseState
 
     public override void Update(CustomerBehaviour customer)
     {
-        if (customer.IsOrderPlaced) return;
-        if (!customer.Manager.IsSomeonePlacingOrder)
+        if(customer.IsOrderFulfilled)
+        {
+            customer.Restaurant.OrderFulfilled(customer);
+            customer.Restaurant.AssignTask();
+            return;
+        }
+        if (!customer.IsOrderPlaced && !customer.Manager.IsSomeonePlacingOrder)
         {
             customer.TransitionToState(customer.mCustomerMovingState);
         }

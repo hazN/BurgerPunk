@@ -17,7 +17,6 @@ public class CustomerManager : MonoBehaviour
     private int TotalOccupiedPlaces = 0;
     private List <CustomerBehaviour> _customerBehavioursList = new List<CustomerBehaviour>();
     
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
