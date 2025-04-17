@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CustomerMovingState : CustomerBaseState
+public class CustomerMovingState : NPCBaseState
 {
     private Vector3 _targetPosition = Vector3.zero;
-    public override void EnterState(CustomerBehaviour customer)
+    public override void EnterState<T>(T npc)
     {
+        CustomerBehaviour customer = npc as CustomerBehaviour;
         customer.NavMeshAgent.speed = customer.Speed;
         customer.NavMeshAgent.stoppingDistance = customer.DistanceMargin;
         customer.Animator.SetBool(customer.m_HashMove, true);
@@ -17,8 +18,9 @@ public class CustomerMovingState : CustomerBaseState
         customer.NavMeshAgent.destination = _targetPosition;
     }
 
-    public override void Update(CustomerBehaviour customer)
+    public override void Update<T>(T npc)
     {
+        CustomerBehaviour customer = npc as CustomerBehaviour;
         if (!customer.IsOrderPlaced && customer.Manager.IsSomeonePlacingOrder)
         {
             customer.Animator.SetBool(customer.m_HashMove, false);

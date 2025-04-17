@@ -38,8 +38,8 @@ public class CustomerBehaviour : MonoBehaviour
         private set => _animator = value;
     }
 
-    private CustomerBaseState _currentState;
-    public CustomerBaseState CurrentState
+    private NPCBaseState _currentState;
+    public NPCBaseState CurrentState
     {
         get
         {
@@ -71,7 +71,7 @@ public class CustomerBehaviour : MonoBehaviour
         _currentState.Update(this);
     }
 
-    public void TransitionToState(CustomerBaseState state)
+    public void TransitionToState(NPCBaseState state)
     {
         if (_currentState == state) return;
         _currentState = state;

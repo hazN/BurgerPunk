@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         dayStarted = false;
+        // TODO: Remove this from here
         StartDay();
     }
 
@@ -44,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     void StartDay()
     {
-        Debug.Log("Day " + currentDay + " started.");
+        Debug.Log("Day " + currentDay + 1 + " started.");
         dayTimer = 0.0f;
         dayStarted = true;
 

@@ -1,14 +1,16 @@
 using UnityEngine;
 
-public class CustomerWaitingState : CustomerBaseState
+public class CustomerWaitingState : NPCBaseState
 {
-    public override void EnterState(CustomerBehaviour customer)
+    public override void EnterState<T>(T npc)
     {
+        CustomerBehaviour customer = npc as CustomerBehaviour;
     }
 
-    public override void Update(CustomerBehaviour customer)
+    public override void Update<T>(T npc)
     {
-        if(customer.IsOrderFulfilled)
+        CustomerBehaviour customer = npc as CustomerBehaviour;
+        if (customer.IsOrderFulfilled)
         {
             customer.Restaurant.OrderFulfilled(customer);
             customer.Restaurant.AssignTask();
