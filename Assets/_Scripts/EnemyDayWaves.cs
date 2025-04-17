@@ -22,4 +22,5 @@ public class EnemyWave
 public class EnemyDayWaves : ScriptableObject
 {
     public EnemyWave[] waves;
+    int day;
 }

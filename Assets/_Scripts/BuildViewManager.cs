@@ -1,5 +1,5 @@
+using BurgerPunk.Movement;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class BuildViewManager : MonoBehaviour
 {
@@ -20,6 +20,7 @@ public class BuildViewManager : MonoBehaviour
     Vector3 lockedPosition = Vector3.zero;
     GameObject previewObject;
 
+    GameObject player;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,6 +31,8 @@ public class BuildViewManager : MonoBehaviour
 
         mainCamera = Camera.main;
         radialProgressBar.OnRadialProgressComplete += PlaceObject;
+
+        player = GameObject.FindWithTag("Player");
     }
 
     // Update is called once per frame
@@ -53,16 +56,29 @@ public class BuildViewManager : MonoBehaviour
         {
             int layerMask = LayerMask.GetMask("LawnGrid");
 
+            if (previewObject == null) return;
+
             Ray ray = buildCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask))
             {
-                //Debug.Log("Hit: " + hit.collider.name);
                 previewObject.SetActive(true);
-                previewObject.transform.position = hit.point;
+
+                if (radialProgressBar.IsActive())
+                {
+                    previewObject.transform.position = lockedPosition;
+                }
+                else
+                {
+                    previewObject.transform.position = hit.point;
+                }
+                
+                //Debug.Log("Hit: " + hit.collider.name);
+                
             }
             else
             {
                 previewObject.SetActive(false);
+                
             }
 
             PlaceableObject placeableComponent = previewObject.GetComponent<PlaceableObject>();
@@ -75,10 +91,10 @@ public class BuildViewManager : MonoBehaviour
                 Shader.SetGlobalFloat("_IsValid", 1.0f);
 
 
-                if (!radialProgressBar.IsActive() && Input.GetMouseButtonDown(0))
+                if (!radialProgressBar.IsActive() && Input.GetMouseButtonDown(0) && previewObject.activeSelf)
                 {
                     radialProgressBar.StartProgress(holdToPlaceDuration);
-
+                    lockedPosition = previewObject.transform.position;
                 }
             }
             else
@@ -99,18 +115,42 @@ public class BuildViewManager : MonoBehaviour
 
     void ActivateBuildView()
     {
-        buildCamera.enabled = true;
-        mainCamera.enabled = false;
-
         UpdatePreviewObject();
+        buildCamera.enabled = true;
+
+        if (mainCamera)
+        {
+            mainCamera.enabled = false;
+        }
+
+
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        if (player)
+        {
+            player.GetComponent<FirstPersonController>().enabled = false;
+            //player.SetActive(false);
+        }
     }
 
     void DeactivateBuildView()
     {
         buildCamera.enabled = false;
-        mainCamera.enabled = true;
-
         Destroy(previewObject);
+
+        if (mainCamera)
+        {
+            mainCamera.enabled = true;
+        }
+
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = false;
+        if (player)
+        {
+            //player.SetActive(true);
+            player.GetComponent<FirstPersonController>().enabled = true;
+        }
     }
 
     void UpdatePreviewObject()

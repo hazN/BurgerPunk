@@ -29,6 +29,8 @@ public class LawnGridManager : MonoBehaviour
         Gizmos.DrawLine(transform.position + new Vector3(0.0f, 0.1f, 0.0f), transform.position + new Vector3(0.0f, 0.1f, ZLength));
         Gizmos.DrawLine(transform.position + new Vector3(XLength, 0.1f, 0.0f), transform.position + new Vector3(XLength, 0.1f, ZLength));
         Gizmos.DrawLine(transform.position + new Vector3(0.0f, 0.1f, ZLength), transform.position + new Vector3(XLength, 0.1f, ZLength));
+
+        Gizmos.DrawSphere(transform.position, 0.1f);
     }
 
     // Update is called once per frame
@@ -39,7 +41,10 @@ public class LawnGridManager : MonoBehaviour
 
     void OnValidate()
     {
-        lawnPlane.transform.localScale = new Vector3(XLength / 10.0f, 1.0f, ZLength / 10.0f);
-        lawnPlane.transform.position = new Vector3(XLength / 2.0f, 0.0f, ZLength / 2.0f);
+        if (lawnPlane)
+        {
+            lawnPlane.transform.localScale = new Vector3(XLength / 10.0f, 1.0f, ZLength / 10.0f);
+            lawnPlane.transform.position = new Vector3(XLength / 2.0f, 0.0f, ZLength / 2.0f);
+        }
     }
 }
