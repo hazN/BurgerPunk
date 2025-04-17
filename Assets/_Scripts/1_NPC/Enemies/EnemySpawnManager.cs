@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemySpawnManager : MonoBehaviour
 {
     public EnemySpawner[] spawnPoints;
+    public Transform[] attackPoints;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,7 +20,9 @@ public class EnemySpawnManager : MonoBehaviour
     {
         for (int x = 0; x < enemy.numToSpawn; ++x)
         {
-            Instantiate(enemy.enemyPrefab, spawnPoints[Random.Range(0, spawnPoints.Length)].transform);
+            GameObject enemyObject = Instantiate(enemy.enemyPrefab, spawnPoints[Random.Range(0, spawnPoints.Length)].transform);
+            EnemyBehaviour enemyBehaviour = enemyObject.GetComponent<EnemyBehaviour>();
+            enemyBehaviour.AttackPoint = attackPoints[Random.Range(0, attackPoints.Length)];
         }
     }
 

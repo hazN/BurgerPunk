@@ -46,7 +46,7 @@ public class EmployeeBehaviour : MonoBehaviour
     {
         if (NavMeshAgent == null) return;
 
-        if (HasEmployeeReached() && IsBusy)
+        if (Helper.HaveReached(_navMeshAgent) && IsBusy)
         {
             _animator.SetBool(m_HashMove, false);
             if(OrderStacked)
@@ -57,20 +57,5 @@ public class EmployeeBehaviour : MonoBehaviour
                 _animator.SetBool(m_HashCooking, true);
             }
         }
-    }
-
-    private bool HasEmployeeReached()
-    {
-        if (!_navMeshAgent.pathPending)
-        {
-            if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
-            {
-                if (!_navMeshAgent.hasPath || _navMeshAgent.velocity.sqrMagnitude == 0f)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }

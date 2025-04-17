@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class NPCBaseState
 {
@@ -6,11 +7,29 @@ public abstract class NPCBaseState
     /// When npc enters the state
     /// </summary>
     /// <param name="npc"></param>
-    public abstract void EnterState<T>(T customer);
+    public abstract void EnterState<T>(T npc);
 
     /// <summary>
     /// Frame Update
     /// </summary>
     /// <param name="npc"></param>
-    public abstract void Update<T>(T npc);
+    public abstract void Update();
+}
+
+static class Helper
+{
+    public static bool HaveReached(NavMeshAgent navMeshAgent)
+    {
+        if (!navMeshAgent.pathPending)
+        {
+            if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+            {
+                if (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

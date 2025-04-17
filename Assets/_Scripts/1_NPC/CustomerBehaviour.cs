@@ -68,7 +68,7 @@ public class CustomerBehaviour : MonoBehaviour
     {
         if (NavMeshAgent == null) return;
 
-        _currentState.Update(this);
+        _currentState.Update();
     }
 
     public void TransitionToState(NPCBaseState state)
