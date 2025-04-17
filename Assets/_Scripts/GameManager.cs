@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -8,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     protected EnemyDayWaves[] enemyDayWaves;
-    Queue<EnemyWave> waveQueue;
+    Queue<EnemyWave> waveQueue = new Queue<EnemyWave>();
 
     [SerializeField]
     protected float lengthOfDay = 300.0f; // seconds
@@ -17,13 +18,14 @@ public class GameManager : MonoBehaviour
 
     private bool dayStarted = false;
 
+    [SerializeField]
     EnemySpawnManager enemySpawnManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         dayStarted = false;
-        enemySpawnManager = FindFirstObjectByType<EnemySpawnManager>();
+        StartDay();
     }
 
     // Update is called once per frame
@@ -33,7 +35,7 @@ public class GameManager : MonoBehaviour
 
         dayTimer += Time.deltaTime;
 
-        if (dayTimer/lengthOfDay > waveQueue.Peek().spawnTime)
+        if (waveQueue.Any() && dayTimer/lengthOfDay > waveQueue.Peek().spawnTime)
         {
             EnemyWave wave = waveQueue.Dequeue();
             enemySpawnManager.SpawnWave(wave);
