@@ -8,14 +8,38 @@ namespace BurgerPunk.Combat
         [SerializeField] private float range;
         [SerializeField] private float fireRate;
 
-        [SerializeField] private GameObject bulletPrefab;
-        [SerializeField] private Transform firePoint;
         private float nextFireTime;
 
+        [SerializeField] private Transform rightHandIKTarget;
+        [SerializeField] private Transform leftHandIKTarget;
+
+        [SerializeField] private Transform rightHandWeaponPosition;
+        [SerializeField] private Transform leftHandWeaponPosition;
+
+        [SerializeField] private Animator animator;
+        [SerializeField] private ParticleSystem muzzleFlash;
+        [SerializeField] private Transform muzzleFlashTransform;
+        private void Awake()
+        {
+            muzzleFlash.gameObject.transform.position = muzzleFlashTransform.transform.position;
+            muzzleFlash.gameObject.transform.rotation = muzzleFlashTransform.transform.rotation;
+        }
+        private void Update()
+        {
+            rightHandIKTarget.SetPositionAndRotation(rightHandWeaponPosition.position, rightHandWeaponPosition.rotation);
+            leftHandIKTarget.SetPositionAndRotation(leftHandWeaponPosition.position, leftHandWeaponPosition.rotation);
+        }
         public void Fire()
         {
             if (Time.time >= nextFireTime)
             {
+                if (muzzleFlash != null)
+                {
+                    Debug.Log("Muzzle flash played");
+                    muzzleFlash.Stop();
+                    muzzleFlash.Play();
+                }
+                animator.Play("Fire", 0, 0f);
                 nextFireTime = Time.time + 1f / fireRate;
                 Shoot();
             }
@@ -24,21 +48,19 @@ namespace BurgerPunk.Combat
         private void Shoot()
         {
             RaycastHit hit;
-            if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, range))
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range))
             {
-                Actor targetHealth = hit.transform.GetComponent<Actor>();
-                if (targetHealth != null)
+                Actor actor = hit.collider.GetComponent<Actor>();
+                if (actor != null)
                 {
-                    targetHealth.TakeDamage(damage);
+                    actor.TakeDamage(damage);
+                    Debug.Log("Hit " + actor.name + " for " + damage + " damage.");
+                }
+                else
+                {
+                    Debug.Log("Hit " + hit.collider.name);
                 }
             }
-
-            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-            Rigidbody rb = bullet.GetComponent<Rigidbody>();
-            rb.AddForce(firePoint.forward * 20f, ForceMode.Impulse);
-            rb.gameObject.transform.rotation = Quaternion.LookRotation(rb.linearVelocity);
-
-            Destroy(bullet, 0.3f);
         }
     }
 }
