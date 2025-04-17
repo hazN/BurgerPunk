@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!dayStarted) return;
+
         dayTimer += Time.deltaTime;
 
         if (dayTimer/lengthOfDay > waveQueue.Peek().spawnTime)
