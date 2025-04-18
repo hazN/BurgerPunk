@@ -17,6 +17,7 @@ public class SettingsMenu : MonoBehaviour
     void Start()
     {
         audioManager = FindAnyObjectByType<AudioManager>();
+        Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
     }
 
     // Update is called once per frame
@@ -48,6 +49,13 @@ public class SettingsMenu : MonoBehaviour
 
     public void ToggleFullScreen()
     {
-        Screen.fullScreen = !Screen.fullScreen;
+        if (fullscreenToggle.isOn)
+        {
+            Screen.fullScreen = true;
+        }
+        else
+        {
+            Screen.fullScreen = false;
+        }
     }
 }
