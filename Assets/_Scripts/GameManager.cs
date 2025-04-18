@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     protected int currentDay = 0;
-    protected int savings = 0;
+    protected int balance = 0;
 
     public static GameManager Instance;
 
@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     protected float lengthOfDay = 300.0f; // seconds
-    [SerializeField]
     protected float dayTimer = 0.0f;
 
     private bool dayStarted = false;
@@ -42,7 +41,7 @@ public class GameManager : MonoBehaviour
     {
         dayStarted = false;
         // TODO: Remove this from here
-        StartDay();
+        //StartDay();
     }
 
     // Update is called once per frame
@@ -69,5 +68,20 @@ public class GameManager : MonoBehaviour
         {
             waveQueue.Enqueue(wave);
         }
+    }
+
+    public int GetCurrentDay()
+    {
+        return currentDay;
+    }
+
+    public float GetDayProgress()
+    {
+        return dayTimer / lengthOfDay;
+    }
+
+    public int GetBalance()
+    {
+        return balance;
     }
 }

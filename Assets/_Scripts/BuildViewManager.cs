@@ -33,6 +33,8 @@ public class BuildViewManager : MonoBehaviour
         radialProgressBar.OnRadialProgressComplete += PlaceObject;
 
         player = GameObject.FindWithTag("Player");
+
+        DeactivateBuildView();
     }
 
     // Update is called once per frame
@@ -123,6 +125,7 @@ public class BuildViewManager : MonoBehaviour
             mainCamera.enabled = false;
         }
 
+        buildUI.gameObject.SetActive(true);
 
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -143,6 +146,8 @@ public class BuildViewManager : MonoBehaviour
         {
             mainCamera.enabled = true;
         }
+
+        buildUI.gameObject.SetActive(false);
 
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         Cursor.visible = false;
