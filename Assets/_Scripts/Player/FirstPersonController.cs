@@ -118,5 +118,15 @@ namespace BurgerPunk.Movement
         {
             HealthPoints -= hp;
         }
+        public void AddSpeed(float multiplier)
+        {
+            speed *= multiplier;
+            Debug.Log("Speed increased to: " + speed);
+        }
+
+        public void AddHealth(float multiplier)
+        {
+            Debug.Log("Health increased by: " + multiplier);
+        }
     }
 }
