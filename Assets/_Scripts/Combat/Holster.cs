@@ -12,10 +12,13 @@ namespace BurgerPunk.Combat
         [SerializeField] private Gun gun;
         [SerializeField] private string gunName;
         [SerializeField] private int gunID;
+        [SerializeField] public bool unlocked = false;
+        [SerializeField] private int price = 100;
 
         public Gun Gun => gun;
         public string GunName => gunName;
         public int GunID => gunID;
+        public int Price => price;
     }
 
     public class Holster : MonoBehaviour
@@ -88,6 +91,55 @@ namespace BurgerPunk.Combat
             {
                 EquipGun(guns[guns.Count - 1].GunID);
             }
+        }
+        public GunData GetRandomUnlockedGun()
+        {
+            List<GunData> unlockedGuns = guns.FindAll(g => g.unlocked);
+            if (unlockedGuns.Count > 0)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, unlockedGuns.Count);
+                return unlockedGuns[randomIndex];
+            }
+            else
+            {
+                Debug.Log("No unlocked guns available.");
+                return null;
+            }
+        }
+
+        public GunData GetRandomLockedGun()
+        {
+            List<GunData> lockedGuns = guns.FindAll(g => !g.unlocked);
+            if (lockedGuns.Count > 0)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, lockedGuns.Count);
+                return lockedGuns[randomIndex];
+            }
+            else
+            {
+                Debug.Log("No locked guns available.");
+                return null;
+            }
+        }
+
+        public void AddAccuracy(GunData gun, float value)
+        {
+            gun.Gun.AddAccuracy(value);
+        }
+
+        public void AddDamage(GunData gun, float value)
+        {
+            gun.Gun.AddDamage(value);
+        }
+
+        public void AddFireRate(GunData gun, float value)
+        {
+            gun.Gun.AddFireRate(value);
+        }
+
+        public void UnlockGun(GunData gun)
+        {
+            guns.Find(g => g.GunID == gun.GunID).unlocked = true;
         }
     }
 }
