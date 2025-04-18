@@ -37,6 +37,7 @@ namespace BurgerPunk.Movement
             HandleLook();
             HandleJump();
             HandleFire();
+            HandleScroll();
         }
 
         private void HandleMovement()
@@ -80,31 +81,32 @@ namespace BurgerPunk.Movement
         {
             if (InputManager.Instance.playerInput.Player.Fire.triggered || InputManager.Instance.playerInput.Player.Fire.inProgress)
             {
-                if (holster.GetCurrentGun().Gun != null)
+                Gun current = holster.GetCurrentGun().Gun;
+                if (current != null)
                 {
-                    holster.GetCurrentGun().Gun.Fire();
+                    current.Fire();
                 }
                 else
                 {
-                    Debug.LogError("Gun not assigned");
+                    Debug.LogWarning("No gun equipped in holster!");
                 }
             }
         }
 
+
         private void HandleScroll()
         {
-            // Only scroll every 0.1 seconds
-            if (Time.time - timeSinceLastScroll > 0.1f)
-            {
-                float scrollValue = InputManager.Instance.playerInput.Player.Scroll.ReadValue<Vector2>().y;
+            float scrollValue = InputManager.Instance.playerInput.Player.Scroll.ReadValue<Vector2>().y;
 
+            if (scrollValue != 0 && Time.time - timeSinceLastScroll > 0.05f)
+            {
                 if (scrollValue > 0)
                 {
-                    holster.EquipGun(holster.GetCurrentGun().GunID + 1);
+                    holster.NextGun();
                 }
                 else if (scrollValue < 0)
                 {
-                    holster.EquipGun(holster.GetCurrentGun().GunID - 1);
+                    holster.PreviousGun();
                 }
 
                 timeSinceLastScroll = Time.time;

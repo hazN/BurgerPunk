@@ -40,13 +40,54 @@ namespace BurgerPunk.Combat
         {
             currentGun?.Gun.gameObject.SetActive(false);
 
-            guns.Find(g => g.GunID == id).Gun.gameObject.SetActive(true);
+            currentGun = guns.Find(g => g.GunID == id);
+            if (currentGun != null)
+            {
+                currentGun.Gun.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log($"Gun with name {name} not found in holster.");
+            }
         }
         public void EquipGun(string name)
         {
             currentGun?.Gun.gameObject.SetActive(false);
 
-            guns.Find(g => g.GunName == name).Gun.gameObject.SetActive(true);
+            currentGun = guns.Find(g => g.GunName == name);
+            if (currentGun != null)
+            {
+                currentGun.Gun.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.Log($"Gun with name {name} not found in holster.");
+            }
+        }
+        public void NextGun()
+        {
+            int currentIndex = guns.IndexOf(currentGun);
+            if (currentIndex < guns.Count - 1)
+            {
+                EquipGun(guns[currentIndex + 1].GunID);
+            }
+            else
+            {
+                EquipGun(guns[0].GunID);
+            }
+        }
+
+        public void PreviousGun()
+        {
+            int currentIndex = guns.IndexOf(currentGun);
+            if (currentIndex > 0)
+            {
+                EquipGun(guns[currentIndex - 1].GunID);
+            }
+            else
+            {
+                EquipGun(guns[guns.Count - 1].GunID);
+            }
         }
     }
 }
