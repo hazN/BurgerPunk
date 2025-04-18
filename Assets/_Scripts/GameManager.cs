@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     {
         dayStarted = false;
         // TODO: Remove this from here
-        //StartDay();
+        StartDay(); // Testing enemies behaviour
     }
 
     // Update is called once per frame

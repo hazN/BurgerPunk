@@ -9,6 +9,7 @@ namespace BurgerPunk.Movement
         private CharacterController controller;
         [SerializeField] private Camera playerCamera;
         [SerializeField] private Holster holster;
+        public float HealthPoints = 100f;
 
         [Header("Movement Settings")]
         [SerializeField] private float speed = 5.0f;
@@ -111,6 +112,11 @@ namespace BurgerPunk.Movement
 
                 timeSinceLastScroll = Time.time;
             }
+        }
+
+        public void TakeDamage(float hp)
+        {
+            HealthPoints -= hp;
         }
     }
 }

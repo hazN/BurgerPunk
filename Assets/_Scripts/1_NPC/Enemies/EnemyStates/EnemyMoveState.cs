@@ -7,6 +7,7 @@ public class EnemyMoveState : NPCBaseState
     {
         enemy = npc as EnemyBehaviour;
         enemy.Animator.SetBool(enemy.m_HashMove, true);
+        enemy.Animator.SetBool(enemy.m_HashAttack, false);
     }
 
     public override void Update()
