@@ -1,0 +1,37 @@
+
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class MainMenu : MonoBehaviour
+{
+    [SerializeField] SettingsMenu settingsMenu;
+    [SerializeField] GameObject title;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        settingsMenu.gameObject.SetActive(false);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void OpenSettings()
+    {
+        settingsMenu.gameObject.SetActive(true);
+        settingsMenu.OpenSettings();
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene("MainScene");
+    }
+}

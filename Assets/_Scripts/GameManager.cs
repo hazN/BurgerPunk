@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
     protected int currentDay = 0;
     protected int savings = 0;
 
+    public static GameManager Instance;
+
     [SerializeField]
     protected EnemyDayWaves[] enemyDayWaves;
     Queue<EnemyWave> waveQueue;
@@ -20,7 +22,21 @@ public class GameManager : MonoBehaviour
     EnemySpawnManager enemySpawnManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            Setup();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    void Setup()
     {
         dayStarted = false;
         enemySpawnManager = FindFirstObjectByType<EnemySpawnManager>();

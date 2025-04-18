@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
+    AudioManager audioManager;
 
     [SerializeField] Slider masterVolumeSlider;
     [SerializeField] Slider musicVolumeSlider;
@@ -15,7 +16,7 @@ public class SettingsMenu : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        audioManager = FindAnyObjectByType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -26,17 +27,27 @@ public class SettingsMenu : MonoBehaviour
 
     public void UpdateMasterVolume()
     {
-        
+        audioManager.SetMasterVolume(masterVolumeSlider.value);
     }
 
     public void OpenSettings()
     {
-        Time.timeScale = 0.0f;
+        Time.timeScale = 1.0f;
     }
 
     public void GoBack()
     {
         gameObject.SetActive(false);
         Time.timeScale = 1.0f;
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    public void ToggleFullScreen()
+    {
+        Screen.fullScreen = !Screen.fullScreen;
     }
 }
