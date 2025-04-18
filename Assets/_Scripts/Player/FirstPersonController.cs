@@ -8,7 +8,7 @@ namespace BurgerPunk.Movement
     {
         private CharacterController controller;
         [SerializeField] private Camera playerCamera;
-        [SerializeField] private Gun playerGun;
+        [SerializeField] private Holster holster;
 
         [Header("Movement Settings")]
         [SerializeField] private float speed = 5.0f;
@@ -18,7 +18,7 @@ namespace BurgerPunk.Movement
 
         private float verticalVelocity = 0f;
         private float cameraPitch = 0f;
-
+        private float timeSinceLastScroll = 0f;
         private void Start()
         {
             controller = GetComponent<CharacterController>();
@@ -80,14 +80,34 @@ namespace BurgerPunk.Movement
         {
             if (InputManager.Instance.playerInput.Player.Fire.triggered || InputManager.Instance.playerInput.Player.Fire.inProgress)
             {
-                if (playerGun != null)
+                if (holster.GetCurrentGun().Gun != null)
                 {
-                    playerGun.Fire();
+                    holster.GetCurrentGun().Gun.Fire();
                 }
                 else
                 {
                     Debug.LogError("Gun not assigned");
                 }
+            }
+        }
+
+        private void HandleScroll()
+        {
+            // Only scroll every 0.1 seconds
+            if (Time.time - timeSinceLastScroll > 0.1f)
+            {
+                float scrollValue = InputManager.Instance.playerInput.Player.Scroll.ReadValue<Vector2>().y;
+
+                if (scrollValue > 0)
+                {
+                    holster.EquipGun(holster.GetCurrentGun().GunID + 1);
+                }
+                else if (scrollValue < 0)
+                {
+                    holster.EquipGun(holster.GetCurrentGun().GunID - 1);
+                }
+
+                timeSinceLastScroll = Time.time;
             }
         }
     }
