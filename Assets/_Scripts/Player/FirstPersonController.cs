@@ -78,7 +78,7 @@ namespace BurgerPunk.Movement
 
         private void HandleFire()
         {
-            if (InputManager.Instance.playerInput.Player.Fire.triggered)
+            if (InputManager.Instance.playerInput.Player.Fire.triggered || InputManager.Instance.playerInput.Player.Fire.inProgress)
             {
                 if (playerGun != null)
                 {

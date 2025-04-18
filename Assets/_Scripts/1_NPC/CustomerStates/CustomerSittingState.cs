@@ -1,13 +1,15 @@
 using UnityEngine;
 
-public class CustomerSittingState : CustomerBaseState
+public class CustomerSittingState : NPCBaseState
 {
-    public override void EnterState(CustomerBehaviour customer)
+    CustomerBehaviour customer;
+    public override void EnterState<T>(T npc)
     {
+        customer = npc as CustomerBehaviour;
         customer.Animator.SetBool(customer.m_HashSit, true);
     }
 
-    public override void Update(CustomerBehaviour customer)
+    public override void Update()
     {
 
     }

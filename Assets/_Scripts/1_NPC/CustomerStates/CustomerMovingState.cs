@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CustomerMovingState : CustomerBaseState
+public class CustomerMovingState : NPCBaseState
 {
+    CustomerBehaviour customer;
     private Vector3 _targetPosition = Vector3.zero;
-    public override void EnterState(CustomerBehaviour customer)
+    public override void EnterState<T>(T npc)
     {
+        customer = npc as CustomerBehaviour;
         customer.NavMeshAgent.speed = customer.Speed;
         customer.NavMeshAgent.stoppingDistance = customer.DistanceMargin;
         customer.Animator.SetBool(customer.m_HashMove, true);
@@ -17,7 +19,7 @@ public class CustomerMovingState : CustomerBaseState
         customer.NavMeshAgent.destination = _targetPosition;
     }
 
-    public override void Update(CustomerBehaviour customer)
+    public override void Update()
     {
         if (!customer.IsOrderPlaced && customer.Manager.IsSomeonePlacingOrder)
         {
@@ -27,23 +29,17 @@ public class CustomerMovingState : CustomerBaseState
             return;
         }
 
-        if (!customer.NavMeshAgent.pathPending)
+        if(Helper.HaveReached(customer.NavMeshAgent))
         {
-            if (customer.NavMeshAgent.remainingDistance <= customer.NavMeshAgent.stoppingDistance)
+            customer.Animator.SetBool(customer.m_HashMove, false);
+            if (customer.IsOrderPlaced)
             {
-                if (!customer.NavMeshAgent.hasPath || customer.NavMeshAgent.velocity.sqrMagnitude == 0f)
-                {
-                    customer.Animator.SetBool(customer.m_HashMove, false);
-                    if (customer.IsOrderPlaced)
-                    {
-                        if (customer.Wait_Target.TargetType == TargetType.TakeOut)
-                            customer.TransitionToState(customer.mCustomerWaitingState);
-                        else
-                            customer.TransitionToState(customer.mCustomerSittigState);
-                    }
-                    else customer.TransitionToState(customer.mCustomerOrderingState);
-                }
+                if (customer.Wait_Target.TargetType == TargetType.TakeOut)
+                    customer.TransitionToState(customer.mCustomerWaitingState);
+                else
+                    customer.TransitionToState(customer.mCustomerSittigState);
             }
+            else customer.TransitionToState(customer.mCustomerOrderingState);
         }
     }
 }

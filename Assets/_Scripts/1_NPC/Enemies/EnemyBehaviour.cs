@@ -1,28 +1,15 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CustomerBehaviour : MonoBehaviour
+public class EnemyBehaviour : MonoBehaviour
 {
-    public CustomerManager Manager;
     public Restaurant Restaurant;
+    public Transform AttackPoint;
 
     #region Animator Parameters
     public readonly int m_HashMove = Animator.StringToHash("Moving");
-    public readonly int m_HashOrder1 = Animator.StringToHash("Order1");
-    public readonly int m_HashSit = Animator.StringToHash("Sit");
+    public readonly int m_HashAttack = Animator.StringToHash("Attacking");
     #endregion
-    
-    public float Speed = 1f;
-    public float DistanceMargin = 1.1f;
-
-    public bool IsOrderPlaced = false;
-    public bool IsOrderFulfilled = false;
-    public NPCTarget Wait_Target;
-    public Transform POS_Area;
-    public GameObject Stool;
-
-    [HideInInspector]
-    public string OrderStr = string.Empty;
 
     private NavMeshAgent _navMeshAgent;
     public NavMeshAgent NavMeshAgent
@@ -47,34 +34,50 @@ public class CustomerBehaviour : MonoBehaviour
         }
     }
 
-    public readonly CustomerMovingState mCustomerMovingState = new CustomerMovingState();
-    public readonly CustomerOrderingState mCustomerOrderingState = new CustomerOrderingState();
-    public readonly CustomerSittingState mCustomerSittigState = new CustomerSittingState();
-    public readonly CustomerWaitingState mCustomerWaitingState = new CustomerWaitingState();
+    public readonly EnemyMoveState mEnemyMoveState = new EnemyMoveState();
+    public readonly EnemyAttackState mEnemyAttackState = new EnemyAttackState();
 
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+        _navMeshAgent.stoppingDistance = 1.1f;
     }
 
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        TransitionToState(mCustomerMovingState);
+        _navMeshAgent.destination = AttackPoint.position;
+        TransitionToState(mEnemyMoveState);
     }
 
-
+    // Update is called once per frame
     void Update()
     {
         if (NavMeshAgent == null) return;
 
         _currentState.Update();
     }
-
     public void TransitionToState(NPCBaseState state)
     {
         if (_currentState == state) return;
         _currentState = state;
         _currentState.EnterState(this);
+    }
+
+    public bool HasEnemyReached()
+    {
+        if (!_navMeshAgent.pathPending)
+        {
+            if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+            {
+                if (!_navMeshAgent.hasPath || _navMeshAgent.velocity.sqrMagnitude == 0f)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
