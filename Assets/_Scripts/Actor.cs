@@ -6,6 +6,7 @@ public class Actor : MonoBehaviour
     [SerializeField] private float maxHealth = 100.0f;
 
     public event System.Action OnDeath;
+    public event System.Action OnHit;
 
     public void TakeDamage(float damage)
     {
@@ -15,6 +16,7 @@ public class Actor : MonoBehaviour
         {
             OnDeath.Invoke();
         }
+        else OnHit.Invoke();
     }
 
     public bool IsAlive()

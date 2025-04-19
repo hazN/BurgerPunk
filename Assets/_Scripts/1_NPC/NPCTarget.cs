@@ -16,4 +16,11 @@ public class NPCTarget : MonoBehaviour
 {
     public TargetType TargetType;
     public bool IsOccupied = false;
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+
+        Gizmos.DrawWireSphere(transform.position, 0.25f);
+    }
 }

@@ -41,6 +41,7 @@ public struct PendingOrder
 public class Restaurant : MonoBehaviour
 {
     public static Restaurant Instance { get; private set; } = null;
+    public float HealthPoints = 1000f;
     public List<RestuarantEquipmentWrapper> EquipmentsList = new List<RestuarantEquipmentWrapper>();
     public List<PendingOrder> PendingOrdersList = new List<PendingOrder>();
     public List<PendingOrder> ReadyOrderList = new List<PendingOrder>();
@@ -145,6 +146,11 @@ public class Restaurant : MonoBehaviour
         customer.OrderStr = orderStr;
         //Debug.Log("[Restaurant] Order Received: " + orderStr);
         customer.Animator.SetTrigger(customer.m_HashOrder1);
+    }
+
+    public void TakeDamage(float hp)
+    {
+        HealthPoints -= hp;
     }
 }
 

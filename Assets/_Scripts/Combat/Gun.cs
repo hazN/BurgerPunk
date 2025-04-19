@@ -4,9 +4,10 @@ namespace BurgerPunk.Combat
 {
     public class Gun : MonoBehaviour
     {
-        [SerializeField] private int damage;
-        [SerializeField] private float range;
-        [SerializeField] private float fireRate;
+        [SerializeField] private float damage = 5;
+        [SerializeField] private float range = 20;
+        [SerializeField] private float fireRate = 1;
+        [SerializeField] private float accuracy = 1;
 
         private float nextFireTime;
 
@@ -47,8 +48,19 @@ namespace BurgerPunk.Combat
 
         private void Shoot()
         {
+            float inaccuracy = 1f - accuracy;
+            Vector3 direction = Camera.main.transform.forward;
+
+            direction += new Vector3(
+                Random.Range(-inaccuracy, inaccuracy),
+                Random.Range(-inaccuracy, inaccuracy),
+                Random.Range(-inaccuracy, inaccuracy)
+            );
+
+            direction.Normalize();
+
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range))
+            if (Physics.Raycast(Camera.main.transform.position, direction, out hit, range))
             {
                 Actor actor = hit.collider.GetComponent<Actor>();
                 if (actor != null)
@@ -61,6 +73,26 @@ namespace BurgerPunk.Combat
                     Debug.Log("Hit " + hit.collider.name);
                 }
             }
+            else
+            {
+                Debug.Log("Missed.");
+            }
+        }
+
+        public void AddDamage(float multiplier)
+        {
+            damage *= multiplier;
+            Debug.Log("Damage increased to: " + damage);
+        }
+        public void AddFireRate(float multiplier)
+        {
+            fireRate *= multiplier;
+            Debug.Log("Fire rate increased to: " + fireRate);
+        }
+        public void AddAccuracy(float multiplier)
+        {
+            accuracy *= multiplier;
+            Debug.Log("Accuracy increased to: " + accuracy);
         }
     }
 }

@@ -8,7 +8,8 @@ namespace BurgerPunk.Movement
     {
         private CharacterController controller;
         [SerializeField] private Camera playerCamera;
-        [SerializeField] private Gun playerGun;
+        [SerializeField] private Holster holster;
+        public float HealthPoints = 100f;
 
         [Header("Movement Settings")]
         [SerializeField] private float speed = 5.0f;
@@ -18,7 +19,7 @@ namespace BurgerPunk.Movement
 
         private float verticalVelocity = 0f;
         private float cameraPitch = 0f;
-
+        private float timeSinceLastScroll = 0f;
         private void Start()
         {
             controller = GetComponent<CharacterController>();
@@ -37,6 +38,7 @@ namespace BurgerPunk.Movement
             HandleLook();
             HandleJump();
             HandleFire();
+            HandleScroll();
         }
 
         private void HandleMovement()
@@ -80,15 +82,51 @@ namespace BurgerPunk.Movement
         {
             if (InputManager.Instance.playerInput.Player.Fire.triggered || InputManager.Instance.playerInput.Player.Fire.inProgress)
             {
-                if (playerGun != null)
+                Gun current = holster.GetCurrentGun().Gun;
+                if (current != null)
                 {
-                    playerGun.Fire();
+                    current.Fire();
                 }
                 else
                 {
-                    Debug.LogError("Gun not assigned");
+                    Debug.LogWarning("No gun equipped in holster!");
                 }
             }
+        }
+
+
+        private void HandleScroll()
+        {
+            float scrollValue = InputManager.Instance.playerInput.Player.Scroll.ReadValue<Vector2>().y;
+
+            if (scrollValue != 0 && Time.time - timeSinceLastScroll > 0.05f)
+            {
+                if (scrollValue > 0)
+                {
+                    holster.NextGun();
+                }
+                else if (scrollValue < 0)
+                {
+                    holster.PreviousGun();
+                }
+
+                timeSinceLastScroll = Time.time;
+            }
+        }
+
+        public void TakeDamage(float hp)
+        {
+            HealthPoints -= hp;
+        }
+        public void AddSpeed(float multiplier)
+        {
+            speed *= multiplier;
+            Debug.Log("Speed increased to: " + speed);
+        }
+
+        public void AddHealth(float multiplier)
+        {
+            Debug.Log("Health increased by: " + multiplier);
         }
     }
 }
