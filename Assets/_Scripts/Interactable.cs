@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
+    public System.Action OnInteracted;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,5 +14,10 @@ public class Interactable : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void Interact()
+    {
+        OnInteracted.Invoke();
     }
 }

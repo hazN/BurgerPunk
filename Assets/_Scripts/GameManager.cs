@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     EnemySpawnManager enemySpawnManager;
 
+    public System.Action onDayStarted;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Awake()
@@ -60,6 +62,8 @@ public class GameManager : MonoBehaviour
 
     void StartDay()
     {
+        onDayStarted?.Invoke();
+
         Debug.Log("Day " + currentDay + 1 + " started.");
         dayTimer = 0.0f;
         dayStarted = true;
