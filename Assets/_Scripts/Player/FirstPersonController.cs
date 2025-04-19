@@ -20,6 +20,8 @@ namespace BurgerPunk.Movement
         private float verticalVelocity = 0f;
         private float cameraPitch = 0f;
         private float timeSinceLastScroll = 0f;
+
+        public GameObject currentTargeted;
         private void Start()
         {
             controller = GetComponent<CharacterController>();
@@ -39,6 +41,63 @@ namespace BurgerPunk.Movement
             HandleJump();
             HandleFire();
             HandleScroll();
+
+            HandleTargeted();
+        }
+
+        private void HandleTargeted() // what object is currently being looked at
+        {
+            Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0));
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                UpdateTargeted(hit.collider.gameObject);
+            }
+            else
+            {
+                UpdateTargeted(null);
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (currentTargeted && currentTargeted.TryGetComponent<Interactable>(out Interactable interactable))
+                {
+                    interactable.Interact();
+                }
+            }
+        }
+
+        private void UpdateTargeted(GameObject newTarget)
+        {
+            if (currentTargeted == newTarget)
+            {
+                return;
+            }
+
+            if (currentTargeted != null)
+            {
+                if (currentTargeted.TryGetComponent<Interactable>(out Interactable oldInteractable))
+                {
+                    oldInteractable.gameObject.layer = LayerMask.NameToLayer("Default");
+                }
+            }
+
+            currentTargeted = newTarget;
+
+            if (currentTargeted)
+            {
+                Debug.Log("new target" + currentTargeted.name);
+
+                if (currentTargeted.TryGetComponent<Interactable>(out Interactable interactable))
+                {
+                    interactable.gameObject.layer = LayerMask.NameToLayer("InteractableHighlight");
+                }
+            }
+            else
+            {
+                Debug.Log("no target");
+            }
         }
 
         private void HandleMovement()

@@ -50,7 +50,7 @@ public class BuildUI : MonoBehaviour
         }
         UpdatePreviewNameAndDescription();
 
-        OnPreviewChanged?.Invoke();
+        OnPreviewChanged.Invoke();
     }
 
     public void GoRight()
@@ -63,7 +63,7 @@ public class BuildUI : MonoBehaviour
         }
         UpdatePreviewNameAndDescription();
 
-        OnPreviewChanged?.Invoke();
+        OnPreviewChanged.Invoke();
     }
 
     void UpdatePreviewNameAndDescription()

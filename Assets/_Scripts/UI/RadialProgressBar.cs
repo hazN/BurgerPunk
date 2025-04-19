@@ -29,7 +29,7 @@ public class RadialProgress : MonoBehaviour
             if (progressTimer > timerDuration)
             {
                 active = false;
-                OnRadialProgressComplete?.Invoke();
+                OnRadialProgressComplete.Invoke();
                 SetProgress(0.0f);
             }
         }

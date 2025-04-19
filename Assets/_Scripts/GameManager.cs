@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
 
     public System.Action onDayStarted;
 
+    Interactable startDayInteractable;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Awake()
@@ -43,7 +45,13 @@ public class GameManager : MonoBehaviour
     {
         dayStarted = false;
         // TODO: Remove this from here
-        StartDay(); // Testing enemies behaviour
+        //StartDay(); // Testing enemies behaviour
+    }
+
+    public void SetupStartDayInteractable(Interactable interactable)
+    {
+        startDayInteractable = interactable;
+        interactable.OnInteracted += StartDay;
     }
 
     // Update is called once per frame
