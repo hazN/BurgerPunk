@@ -22,6 +22,7 @@ namespace BurgerPunk.Movement
         private float timeSinceLastScroll = 0f;
 
         public GameObject currentTargeted;
+        public bool enableController = true;
         private void Start()
         {
             controller = GetComponent<CharacterController>();
@@ -36,12 +37,21 @@ namespace BurgerPunk.Movement
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.BackQuote))
+            {
+                enableController = !enableController;
+                Cursor.lockState = enableController ? CursorLockMode.Locked : CursorLockMode.None;
+                Cursor.visible = !enableController;
+            }
+            if (!enableController)
+            {
+                return;
+            }
             HandleMovement();
             HandleLook();
             HandleJump();
             HandleFire();
             HandleScroll();
-
             HandleTargeted();
         }
 
@@ -179,13 +189,26 @@ namespace BurgerPunk.Movement
         }
         public void AddSpeed(float multiplier)
         {
-            speed *= multiplier;
+            speed *= (1f + multiplier);
             Debug.Log("Speed increased to: " + speed);
         }
 
         public void AddHealth(float multiplier)
         {
+            HealthPoints *= (1f + multiplier);
             Debug.Log("Health increased by: " + multiplier);
+        }
+        public void EnableController()
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.visible = false;
+            FindFirstObjectByType<FirstPersonController>().enableController = true;
+        }
+        public void DisableController()
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+            UnityEngine.Cursor.visible = true;
+            FindFirstObjectByType<FirstPersonController>().enableController = false;
         }
     }
 }

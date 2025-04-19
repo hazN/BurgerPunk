@@ -1,10 +1,11 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
     public event System.Action OnInteracted;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] private List<GameObject> gameObjects = new List<GameObject>();
     void Start()
     {
         
@@ -19,5 +20,13 @@ public class Interactable : MonoBehaviour
     public void Interact()
     {
         OnInteracted?.Invoke();
+
+        if (gameObjects.Count > 0)
+        {
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObject.SetActive(true);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 using BurgerPunk.Combat;
+using BurgerPunk.Movement;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace BurgerPunk.UI
     {
         public string name;
         public float value;
-        public Gun gun;
+        public int gunID;
         public BuffType buffType;
         public int price;
         public enum BuffType { speed, health, accuracy, damage, firerate}
@@ -26,35 +27,19 @@ namespace BurgerPunk.UI
         [SerializeField] private List<GunData> gunsInShop = new List<GunData>();
         private void Awake()
         {
-            // Destroy all children
-            foreach (Transform child in transform)
-            {
-                Destroy(child.gameObject);
-            }
         }
 
         private void Start()
         {
-            // unlock mouse
-            UnityEngine.Cursor.lockState = CursorLockMode.None;
-            UnityEngine.Cursor.visible = true;
-            for (int i = 0; i < 4; i++)
-            {
-                if (UnityEngine.Random.Range(0, 2) == 0)
-                {
-                    Buff buff = GetRandomBuff();
-                    buffsInShop.Add(buff);
-                    GameObject item = Instantiate(shopItem, transform);
-                    item.GetComponent<ShopItem>().Setup(buff);
-                }
-                else
-                {
-                    GunData gun = FindFirstObjectByType<Holster>().GetRandomLockedGun();
-                    gunsInShop.Add(gun);
-                    GameObject item = Instantiate(shopItem, transform);
-                    item.GetComponent<ShopItem>().Setup(gun);
-                }
+            refreshShop();
+        }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                gameObject.SetActive(false);
+                FindFirstObjectByType<FirstPersonController>().EnableController();
             }
         }
 
@@ -75,16 +60,19 @@ namespace BurgerPunk.UI
                     buff.name = "Health";
                     break;
                 case Buff.BuffType.accuracy:
-                    buff.gun = FindFirstObjectByType<Holster>().GetRandomUnlockedGun().Gun;
-                    buff.name = buff.gun.name + " Accuracy";
+                    var gunData = FindFirstObjectByType<Holster>().GetRandomUnlockedGun();
+                    buff.name = gunData.GunName + " Accuracy";
+                    buff.gunID = gunData.GunID;
                     break;
                 case Buff.BuffType.damage:
-                    buff.gun = FindFirstObjectByType<Holster>().GetRandomUnlockedGun().Gun;
-                    buff.name = buff.gun.name + " Damage";
+                    var gunDataDmg = FindFirstObjectByType<Holster>().GetRandomUnlockedGun();
+                    buff.name = gunDataDmg.GunName + " Damage";
+                    buff.gunID = gunDataDmg.GunID;
                     break;
                 case Buff.BuffType.firerate:
-                    buff.gun = FindFirstObjectByType<Holster>().GetRandomUnlockedGun().Gun;
-                    buff.name = buff.gun.name + " Fire Rate";
+                    var gunDataFireRate = FindFirstObjectByType<Holster>().GetRandomUnlockedGun();
+                    buff.name = gunDataFireRate.GunName + " Fire Rate";
+                    buff.gunID = gunDataFireRate.GunID;
                     break;
             }
 
@@ -92,16 +80,43 @@ namespace BurgerPunk.UI
         }
         private void OnEnable()
         {
-            // unlock mouse
-            UnityEngine.Cursor.lockState = CursorLockMode.None;
-            UnityEngine.Cursor.visible = true;
+            FindFirstObjectByType<FirstPersonController>().DisableController();
         }
 
         private void OnDisable()
         {
-            // lock mouse
-            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            UnityEngine.Cursor.visible = false;
+            FindFirstObjectByType<FirstPersonController>().EnableController();
+        }
+        public void CloseShop()
+        {
+            FindFirstObjectByType<FirstPersonController>().EnableController();
+            gameObject.SetActive(false);
+        }
+        public void refreshShop()
+        {
+            foreach (Transform child in transform)
+            {
+                if (child.gameObject.name != "Exit")
+                    Destroy(child.gameObject);
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                if (UnityEngine.Random.Range(0, 2) == 0)
+                {
+                    Buff buff = GetRandomBuff();
+                    buffsInShop.Add(buff);
+                    GameObject item = Instantiate(shopItem, transform);
+                    item.GetComponent<ShopItem>().Setup(buff);
+                }
+                else
+                {
+                    GunData gun = FindFirstObjectByType<Holster>().GetRandomLockedGun();
+                    gunsInShop.Add(gun);
+                    GameObject item = Instantiate(shopItem, transform);
+                    item.GetComponent<ShopItem>().Setup(gun);
+                }
+
+            }
         }
     }
 }
