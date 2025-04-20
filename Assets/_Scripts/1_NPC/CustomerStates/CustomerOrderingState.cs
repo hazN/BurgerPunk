@@ -6,8 +6,8 @@ public class CustomerOrderingState : NPCBaseState
     public override void EnterState<T>(T npc)
     {
         customer = npc as CustomerBehaviour;
-        customer.Manager.IsSomeonePlacingOrder = true;
-        customer.Restaurant.GetRandomOrder(customer);
+        CustomerManager.Instance.IsSomeonePlacingOrder = true;
+        Restaurant.Instance.GetRandomOrder(customer);
     }
 
     public override void Update()

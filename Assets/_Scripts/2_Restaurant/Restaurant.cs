@@ -15,7 +15,8 @@ public struct OrderItem
 public struct RestuarantEquipmentWrapper
 {
     public RestaurantEquipmentData RestaurantEquipment;
-    public GameObject WorldEntity;
+    public Transform Target;
+    public GameObject Prefab;
 }
 
 public struct PendingOrder
@@ -25,6 +26,7 @@ public struct PendingOrder
     public List<OrderItem> OrderItemsList;
     public float TotalCost;
     public List<Transform> MachinesList;
+    public int TrayId;
 
     public PendingOrder(PendingOrder pendingOrder)
     {
@@ -34,6 +36,7 @@ public struct PendingOrder
         TotalCost = pendingOrder.TotalCost;
         MachinesList = new List<Transform>();
         MachinesList.AddRange(pendingOrder.MachinesList);
+        TrayId = pendingOrder.TrayId;
     }
 }
 
@@ -52,7 +55,8 @@ public class Restaurant : MonoBehaviour
     public List<EmployeeBehaviour> EmployeesList = new List<EmployeeBehaviour>();
     public List<GameObject> EmployeesPrefabsList = new List<GameObject>();
     public Transform EmployeeSpawnTile;
-    public Transform OrderRack;
+    public List<Transform> OrderTraysList;
+    int[] _assignedTray = new int[4] { 0, 0, 0, 0 };
 
     private void Awake()
     {
@@ -77,12 +81,10 @@ public class Restaurant : MonoBehaviour
         {
             GameObject employeeObject = Instantiate(EmployeesPrefabsList[Random.Range(0, EmployeesPrefabsList.Count)], EmployeeSpawnTile);
             EmployeeBehaviour employeeBehaviour = employeeObject.GetComponent<EmployeeBehaviour>();
-            employeeBehaviour.Orders_Rack = OrderRack;
             employeeBehaviour.POS_Area = CustomerManager.Instance.POS_Area;
             EmployeesList.Add(employeeBehaviour);
         }
     }
-
 
     /// <summary>
     /// Order given to Customer
@@ -95,6 +97,8 @@ public class Restaurant : MonoBehaviour
             if (order.Customer == customer)
             {
                 ReadyOrderList.Remove(order);
+                FreeATray(order.TrayId);
+                AssignTask();
                 return;
             }
         }
@@ -110,6 +114,7 @@ public class Restaurant : MonoBehaviour
         employee.OrderStacked = false;
         employee.OrderItemsMade = 0;
         ReadyOrderList.Add(employee.PendingOrder);
+        OccupyATray(employee.PendingOrder.TrayId);
         AssignTask(employee);
     }
 
@@ -119,10 +124,14 @@ public class Restaurant : MonoBehaviour
     /// <param name="employee">Employee who will prepare the order</param>
     public void AssignTask(EmployeeBehaviour employee = null)
     {
-        if (ReadyOrderList.Count == 4)
-            return;
         if (!PendingOrdersList.Any())
             return;
+        int tray = GetFreeTray();
+        if (ReadyOrderList.Count == 4 || tray == 1)
+        {
+            Debug.Log("All trays are occupied");
+            return;
+        }
         if (employee == null)
         {
             foreach (var freeEmployee in EmployeesList)
@@ -142,10 +151,32 @@ public class Restaurant : MonoBehaviour
         }
 
         employee.PendingOrder = new PendingOrder(PendingOrdersList[0]);
+        employee.PendingOrder.TrayId = tray;
+        employee.Orders_Rack = OrderTraysList[tray];
         employee.IsBusy = true;
         employee.NavMeshAgent.destination = employee.PendingOrder.MachinesList[0].position;
         employee.Animator.SetBool(employee.m_HashMove, true);
         PendingOrdersList.RemoveAt(0);
+    }
+
+    private int GetFreeTray()
+    {
+        for(int i = 0; i < _assignedTray.Length; i++)
+        {
+            if (_assignedTray[i] == 0)
+                return i;
+        }
+        return 1;
+    }
+
+    private void FreeATray(int i)
+    {
+        _assignedTray[i] = 0;
+    }
+
+    private void OccupyATray(int i)
+    {
+        _assignedTray[i] = 1;
     }
 
     public void GetRandomOrder(CustomerBehaviour customer)
@@ -155,6 +186,7 @@ public class Restaurant : MonoBehaviour
         int itemOrdered = 0;
         PendingOrder pendingOrder = new PendingOrder();
         pendingOrder.MachinesList = new List<Transform>();
+        pendingOrder.OrderItemsList = new List<OrderItem>();
         pendingOrder.TotalCost = 0f;
         pendingOrder.Customer = null;
         for (int i = 0; i < EquipmentsList.Count; i++)
@@ -165,7 +197,7 @@ public class Restaurant : MonoBehaviour
                 itemOrdered++;
                 OrderItem orderItem = item.RestaurantEquipment.OrderItemsList[Random.Range(0, item.RestaurantEquipment.OrderItemsList.Count)];
                 pendingOrder.OrderItemsList.Add(orderItem);
-                pendingOrder.MachinesList.Add(item.WorldEntity.transform);
+                pendingOrder.MachinesList.Add(item.Target);
                 pendingOrder.TotalCost += orderItem.Cost;
             }
             if (itemOrdered == orderSize)
