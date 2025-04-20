@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    protected int currentDay = 0;
+    public int currentDay = 0;
     protected int balance = 0;
 
     public static GameManager Instance;
 
     [SerializeField]
-    protected EnemyDayWaves[] enemyDayWaves;
+    public EnemyDayWaves[] enemyDayWaves;
     Queue<EnemyWave> waveQueue = new Queue<EnemyWave>();
 
     [SerializeField]
@@ -80,6 +80,8 @@ public class GameManager : MonoBehaviour
         {
             waveQueue.Enqueue(wave);
         }
+
+
     }
 
     public int GetCurrentDay()
