@@ -185,7 +185,7 @@ public class Restaurant : MonoBehaviour
     public void GetRandomOrder(CustomerBehaviour customer)
     {
         string orderStr = string.Empty;
-        int orderSize = 1 /* EquipmentsList.Count <= 1 ? 1 : Random.Range(1, EquipmentsList.Count + 1)*/;
+        int orderSize = EquipmentsList.Count <= 1 ? 1 : Random.Range(1, EquipmentsList.Count + 1);
         int itemOrdered = 0;
         PendingOrder pendingOrder = new PendingOrder();
         pendingOrder.MachinesList = new List<Transform>();
@@ -202,6 +202,7 @@ public class Restaurant : MonoBehaviour
                 pendingOrder.OrderItemsList.Add(orderItem);
                 pendingOrder.MachinesList.Add(item.TargetList[Random.Range(0, item.TargetList.Length)]);
                 pendingOrder.TotalCost += orderItem.Cost;
+                customer.FoodTypesList.Add(orderItem.Type);
             }
             if (itemOrdered == orderSize)
                 break;
@@ -210,8 +211,6 @@ public class Restaurant : MonoBehaviour
         PendingOrdersList.Add(pendingOrder);
 
         AssignTask();
-
-        customer.OrderStr = orderStr;
         customer.Animator.SetTrigger(customer.m_HashOrder1);
     }
 

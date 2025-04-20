@@ -1,6 +1,7 @@
 using UnityEngine;
 using BurgerPunk.Inputs;
 using BurgerPunk.Combat;
+using System.Linq;
 
 namespace BurgerPunk.Movement
 {
@@ -21,6 +22,7 @@ namespace BurgerPunk.Movement
         private float cameraPitch = 0f;
         private float timeSinceLastScroll = 0f;
 
+        public SpeechBubble CustomerOrderBubble;
         public GameObject currentTargeted;
         public bool enableController = true;
         private void Start()
@@ -98,6 +100,20 @@ namespace BurgerPunk.Movement
             if (currentTargeted)
             {
                 //Debug.Log("new target" + currentTargeted.name);
+
+                if (currentTargeted.TryGetComponent<CustomerBehaviour>(out CustomerBehaviour customer))
+                {
+                    if (customer.FoodTypesList.Any())
+                    {
+                        CustomerOrderBubble.gameObject.SetActive(true);
+                        CustomerOrderBubble.transform.position = customer.gameObject.transform.position + Vector3.up * 2f;
+                        CustomerOrderBubble.SetOrder(customer.FoodTypesList);
+                    }
+                }
+                else
+                {
+                    CustomerOrderBubble.gameObject.SetActive(false);
+                }
 
                 if (currentTargeted.TryGetComponent<Interactable>(out Interactable interactable))
                 {

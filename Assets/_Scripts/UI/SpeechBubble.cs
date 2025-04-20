@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,7 @@ public class SpeechBubble : MonoBehaviour
     [SerializeField] Sprite icecreamIcon;
     [SerializeField] TMP_Text text;
     List<Image> items;
+    Sprite[] sprites;
 
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -29,6 +31,7 @@ public class SpeechBubble : MonoBehaviour
         {
             text.enabled = false;
         }
+        sprites = new Sprite[3] { burgerIcon, friesIcon, sodaIcon };
         items = new List<Image>();
         items.Add(item1);
         items.Add(item2);
@@ -48,29 +51,18 @@ public class SpeechBubble : MonoBehaviour
 
     }
 
-    void SetOrder(List<FoodTypes> order)
+    public void SetOrder(List<FoodTypes> order)
     {
         for (int x = 0; x < items.Count; x++) 
         {
-            items[x].enabled = false;
+            items[x].gameObject.SetActive(false);
         }
 
         for (int x = 0; x < order.Count; x++)
         {
-            items[x].enabled = true;
-
-            if (order[x] == FoodTypes.Burger)
-            {
-                items[x].sprite = burgerIcon;
-            }
-            else if (order[x] == FoodTypes.Fries)
-            {
-                items[x].sprite = friesIcon;
-            }
-            else if (order[x] == FoodTypes.Soda)
-            {
-                items[x].sprite = sodaIcon;
-            }
+            int foodIndex = (int) order[x];
+            items[foodIndex].gameObject.SetActive(true);
+            items[foodIndex].sprite = sprites[foodIndex];
         }
     }
 }

@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,7 +21,7 @@ public class CustomerBehaviour : MonoBehaviour
     public GameObject Stool;
 
     [HideInInspector]
-    public string OrderStr = string.Empty;
+    public List<FoodTypes> FoodTypesList = new List<FoodTypes>();
 
     private NavMeshAgent _navMeshAgent;
     public NavMeshAgent NavMeshAgent
