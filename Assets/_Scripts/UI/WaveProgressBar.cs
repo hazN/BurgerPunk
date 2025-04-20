@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements.Experimental;
 
 public class WaveProgressBar : ProgressBar
 {
@@ -25,6 +26,11 @@ public class WaveProgressBar : ProgressBar
         barLength = backgroundImage.rectTransform.rect.width;
         gameManager = FindFirstObjectByType<GameManager>();
         gameManager.onDayStarted += SetNewWaves;
+    }
+
+    private void Update()
+    {
+        
     }
 
     public void SetNewWaves()
