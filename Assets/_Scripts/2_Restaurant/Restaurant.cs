@@ -15,7 +15,7 @@ public struct OrderItem
 public struct RestuarantEquipmentWrapper
 {
     public RestaurantEquipmentData RestaurantEquipment;
-    public Transform Target;
+    public Transform[] TargetList;
     public GameObject Prefab;
 }
 
@@ -197,7 +197,7 @@ public class Restaurant : MonoBehaviour
                 itemOrdered++;
                 OrderItem orderItem = item.RestaurantEquipment.OrderItemsList[Random.Range(0, item.RestaurantEquipment.OrderItemsList.Count)];
                 pendingOrder.OrderItemsList.Add(orderItem);
-                pendingOrder.MachinesList.Add(item.Target);
+                pendingOrder.MachinesList.Add(item.TargetList[Random.Range(0, item.TargetList.Length)]);
                 pendingOrder.TotalCost += orderItem.Cost;
             }
             if (itemOrdered == orderSize)
