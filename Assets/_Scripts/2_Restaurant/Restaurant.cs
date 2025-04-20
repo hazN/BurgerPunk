@@ -63,7 +63,6 @@ public class Restaurant : MonoBehaviour
         if (Instance != null)
             throw new UnityException("There can only be one Restaurant object at a time");
         Instance = this;
-        ReadyOrderList.Capacity = 4;
     }
 
     private void Start()
@@ -98,7 +97,7 @@ public class Restaurant : MonoBehaviour
             {
                 ReadyOrderList.Remove(order);
                 FreeATray(order.TrayId);
-                AssignTask();
+                //AssignTask();
                 return;
             }
         }
@@ -110,11 +109,13 @@ public class Restaurant : MonoBehaviour
     /// <param name="employee">Employee who prepared order</param>
     public void OrderWrapUp(EmployeeBehaviour employee)
     {
+        OccupyATray(employee.PendingOrder.TrayId);
+        employee.NavMeshAgent.enabled = false;
+        employee.Animator.SetBool(employee.m_HashMove, false);
         employee.IsBusy = false;
         employee.OrderStacked = false;
         employee.OrderItemsMade = 0;
         ReadyOrderList.Add(employee.PendingOrder);
-        OccupyATray(employee.PendingOrder.TrayId);
         AssignTask(employee);
     }
 
@@ -127,7 +128,7 @@ public class Restaurant : MonoBehaviour
         if (!PendingOrdersList.Any())
             return;
         int tray = GetFreeTray();
-        if (ReadyOrderList.Count == 4 || tray == 1)
+        if (ReadyOrderList.Count == 4 || tray == -1)
         {
             Debug.Log("All trays are occupied");
             return;
@@ -149,12 +150,13 @@ public class Restaurant : MonoBehaviour
             Debug.Log("All Employees are busy");
             return;
         }
-
         employee.PendingOrder = new PendingOrder(PendingOrdersList[0]);
         employee.PendingOrder.TrayId = tray;
         employee.Orders_Rack = OrderTraysList[tray];
         employee.IsBusy = true;
+        employee.NavMeshAgent.enabled = true;
         employee.NavMeshAgent.destination = employee.PendingOrder.MachinesList[0].position;
+        employee.NavMeshAgent.speed = employee.EmployeeSpeed;
         employee.Animator.SetBool(employee.m_HashMove, true);
         PendingOrdersList.RemoveAt(0);
     }
@@ -166,7 +168,7 @@ public class Restaurant : MonoBehaviour
             if (_assignedTray[i] == 0)
                 return i;
         }
-        return 1;
+        return -1;
     }
 
     private void FreeATray(int i)
@@ -176,13 +178,14 @@ public class Restaurant : MonoBehaviour
 
     private void OccupyATray(int i)
     {
+        Debug.Log("Tray no. " + i + " occupied");
         _assignedTray[i] = 1;
     }
 
     public void GetRandomOrder(CustomerBehaviour customer)
     {
         string orderStr = string.Empty;
-        int orderSize = EquipmentsList.Count <= 1 ? 1 : Random.Range(1, EquipmentsList.Count + 1);
+        int orderSize = 1 /* EquipmentsList.Count <= 1 ? 1 : Random.Range(1, EquipmentsList.Count + 1)*/;
         int itemOrdered = 0;
         PendingOrder pendingOrder = new PendingOrder();
         pendingOrder.MachinesList = new List<Transform>();

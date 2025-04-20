@@ -7,6 +7,8 @@ public class EmployeeAnimState : StateMachineBehaviour
         EmployeeBehaviour employee = animator.gameObject.GetComponent<EmployeeBehaviour>();
         if (employee != null)
         {
+            if (!employee.IsBusy)
+                return;
             employee.Animator.SetBool(employee.m_HashCooking, false);
             if (employee.OrderStacked)
             {

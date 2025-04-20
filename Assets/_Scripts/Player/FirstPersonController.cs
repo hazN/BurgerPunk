@@ -97,7 +97,7 @@ namespace BurgerPunk.Movement
 
             if (currentTargeted)
             {
-                Debug.Log("new target" + currentTargeted.name);
+                //Debug.Log("new target" + currentTargeted.name);
 
                 if (currentTargeted.TryGetComponent<Interactable>(out Interactable interactable))
                 {
@@ -106,7 +106,7 @@ namespace BurgerPunk.Movement
             }
             else
             {
-                Debug.Log("no target");
+                //Debug.Log("no target");
             }
         }
 

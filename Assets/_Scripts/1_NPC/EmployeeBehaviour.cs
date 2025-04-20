@@ -5,6 +5,7 @@ public class EmployeeBehaviour : MonoBehaviour
 {
     public PendingOrder PendingOrder;
     public bool IsBusy = false;
+    public float EmployeeSpeed = 0.5f;
 
     #region Animator Parameters
     public readonly int m_HashMove = Animator.StringToHash("Moving");
@@ -34,13 +35,14 @@ public class EmployeeBehaviour : MonoBehaviour
     void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        _navMeshAgent.stoppingDistance = 1.1f;
+        _navMeshAgent.stoppingDistance = 0.9f;
+        _navMeshAgent.speed = EmployeeSpeed;
         _animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        if (NavMeshAgent == null) return;
+        if (_navMeshAgent == null || !_navMeshAgent.enabled) return;
 
         if (Helper.HaveReached(_navMeshAgent) && IsBusy)
         {
