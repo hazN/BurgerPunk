@@ -20,6 +20,8 @@ public class BuildViewManager : MonoBehaviour
     Vector3 lockedPosition = Vector3.zero;
     GameObject previewObject;
 
+    [SerializeField] Interactable buildViewInteractable;
+
     GameObject player;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,23 +36,27 @@ public class BuildViewManager : MonoBehaviour
 
         player = GameObject.FindWithTag("Player");
 
+        if (buildViewInteractable)
+        {
+            buildViewInteractable.OnInteracted += ActivateBuildView;
+
+
+        }
         DeactivateBuildView();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Escape))
         {
             if (!active)
             {
-                active = true;
                 ActivateBuildView();
             }
             else
             {
                 DeactivateBuildView();
-                active = false;
             }
         }
 
@@ -117,6 +123,7 @@ public class BuildViewManager : MonoBehaviour
 
     void ActivateBuildView()
     {
+        active = true;
         UpdatePreviewObject();
         buildCamera.enabled = true;
 
@@ -139,6 +146,7 @@ public class BuildViewManager : MonoBehaviour
 
     void DeactivateBuildView()
     {
+        active = false;
         buildCamera.enabled = false;
         Destroy(previewObject);
 

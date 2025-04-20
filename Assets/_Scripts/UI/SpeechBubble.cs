@@ -38,6 +38,8 @@ public class SpeechBubble : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Camera.main == null) return;
+
         transform.forward = Camera.main.transform.forward;
     }
 
