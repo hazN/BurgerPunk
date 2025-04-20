@@ -21,7 +21,7 @@ public class CustomerMovingState : NPCBaseState
 
     public override void Update()
     {
-        if (!customer.IsOrderPlaced && customer.Manager.IsSomeonePlacingOrder)
+        if (!customer.IsOrderPlaced && CustomerManager.Instance.IsSomeonePlacingOrder)
         {
             customer.Animator.SetBool(customer.m_HashMove, false);
             customer.TransitionToState(customer.mCustomerWaitingState);

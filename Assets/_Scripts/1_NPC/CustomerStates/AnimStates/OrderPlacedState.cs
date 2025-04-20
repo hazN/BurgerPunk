@@ -8,7 +8,7 @@ public class OrderPlacedState : StateMachineBehaviour
         if(customer != null )
         {
             customer.IsOrderPlaced = true;
-            customer.Manager.IsSomeonePlacingOrder = false;
+            CustomerManager.Instance.IsSomeonePlacingOrder = false;
             customer.TransitionToState(customer.mCustomerMovingState);
         }
     }

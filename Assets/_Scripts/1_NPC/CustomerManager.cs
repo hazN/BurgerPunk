@@ -8,7 +8,6 @@ public class CustomerManager : MonoBehaviour
     public static CustomerManager Instance { get; private set; } = null;
     public List<GameObject> CustomersList = new List<GameObject>();
     public List<NPCTarget> TargetList = new List<NPCTarget>();
-    public Restaurant mRestaurant;
     //public List<Order> OrdersList = new List<Order>();
     public Transform SpwanPoint;
     public Transform POS_Area;
@@ -42,8 +41,6 @@ public class CustomerManager : MonoBehaviour
     {
         GameObject customer = Instantiate(CustomersList[Random.Range(0, CustomersList.Count)], SpwanPoint);
         CustomerBehaviour customerBehaviour = customer.GetComponent<CustomerBehaviour>();
-        customerBehaviour.Manager = this;
-        customerBehaviour.Restaurant = mRestaurant;
         customerBehaviour.POS_Area = POS_Area;
         customerBehaviour.Speed = Random.Range(0.2f, 1f);
         customerBehaviour.Wait_Target = TargetList[TotalOccupiedPlaces++];

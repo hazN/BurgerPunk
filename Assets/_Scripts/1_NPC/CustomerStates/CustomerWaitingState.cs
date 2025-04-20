@@ -12,11 +12,11 @@ public class CustomerWaitingState : NPCBaseState
     {
         if (customer.IsOrderFulfilled)
         {
-            customer.Restaurant.OrderFulfilled(customer);
-            customer.Restaurant.AssignTask();
+            Restaurant.Instance.OrderFulfilled(customer);
+            Restaurant.Instance.AssignTask();
             return;
         }
-        if (!customer.IsOrderPlaced && !customer.Manager.IsSomeonePlacingOrder)
+        if (!customer.IsOrderPlaced && !CustomerManager.Instance.IsSomeonePlacingOrder)
         {
             customer.TransitionToState(customer.mCustomerMovingState);
         }
