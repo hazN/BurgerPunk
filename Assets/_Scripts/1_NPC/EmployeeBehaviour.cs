@@ -14,10 +14,6 @@ public class EmployeeBehaviour : MonoBehaviour
 
     public Transform POS_Area;
     public Transform Orders_Rack;
-
-    public CustomerManager CustomerManager;
-    public Restaurant Restaurant;
-
     private NavMeshAgent _navMeshAgent;
     public NavMeshAgent NavMeshAgent
     {

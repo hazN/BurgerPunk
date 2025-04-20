@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CustomerManager : MonoBehaviour
 {
+    public static CustomerManager Instance { get; private set; } = null;
     public List<GameObject> CustomersList = new List<GameObject>();
     public List<NPCTarget> TargetList = new List<NPCTarget>();
     public Restaurant mRestaurant;
@@ -16,7 +17,14 @@ public class CustomerManager : MonoBehaviour
     [SerializeField]
     private int TotalOccupiedPlaces = 0;
     private List <CustomerBehaviour> _customerBehavioursList = new List<CustomerBehaviour>();
-    
+
+    private void Awake()
+    {
+        if (Instance != null)
+            throw new UnityException("There can only be one Customer Manager at a time");
+        Instance = this;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

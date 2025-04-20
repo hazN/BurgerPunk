@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public struct OrderItem
 {
+    public FoodTypes Type;
     public string Name;
     public float Cost;
 }
@@ -17,12 +18,11 @@ public struct RestuarantEquipmentWrapper
     public GameObject WorldEntity;
 }
 
-
 public struct PendingOrder
 {
     public CustomerBehaviour Customer;
     public EmployeeBehaviour Employee;
-    public string OrderItemsNames;
+    public List<OrderItem> OrderItemsList;
     public float TotalCost;
     public List<Transform> MachinesList;
 
@@ -30,36 +30,64 @@ public struct PendingOrder
     {
         Customer = pendingOrder.Customer;
         Employee = pendingOrder.Employee;
-        OrderItemsNames = pendingOrder.OrderItemsNames;
+        OrderItemsList = pendingOrder.OrderItemsList;
         TotalCost = pendingOrder.TotalCost;
         MachinesList = new List<Transform>();
         MachinesList.AddRange(pendingOrder.MachinesList);
     }
 }
 
-
 public class Restaurant : MonoBehaviour
 {
     public static Restaurant Instance { get; private set; } = null;
     public float HealthPoints = 1000f;
+
+    [Header("Orders")]
     public List<RestuarantEquipmentWrapper> EquipmentsList = new List<RestuarantEquipmentWrapper>();
     public List<PendingOrder> PendingOrdersList = new List<PendingOrder>();
     public List<PendingOrder> ReadyOrderList = new List<PendingOrder>();
-    public List<EmployeeBehaviour> EmployeesList = new List<EmployeeBehaviour>();
     public float TotalSale = 0f;
+
+    [Header("Employees")]
+    public List<EmployeeBehaviour> EmployeesList = new List<EmployeeBehaviour>();
+    public List<GameObject> EmployeesPrefabsList = new List<GameObject>();
+    public Transform EmployeeSpawnTile;
+    public Transform OrderRack;
 
     private void Awake()
     {
         if (Instance != null)
             throw new UnityException("There can only be one Restaurant object at a time");
         Instance = this;
+        ReadyOrderList.Capacity = 4;
     }
 
-    public void SpawnEmployees()
+    private void Start()
     {
-
+        SpawnEmployees();
     }
 
+    /// <summary>
+    /// Spawn given "count" number of employees
+    /// </summary>
+    /// <param name="count">No. of employees to be spawned</param>
+    public void SpawnEmployees(int count = 1)
+    {
+        for(int i = 0; i < count; i++)
+        {
+            GameObject employeeObject = Instantiate(EmployeesPrefabsList[Random.Range(0, EmployeesPrefabsList.Count)], EmployeeSpawnTile);
+            EmployeeBehaviour employeeBehaviour = employeeObject.GetComponent<EmployeeBehaviour>();
+            employeeBehaviour.Orders_Rack = OrderRack;
+            employeeBehaviour.POS_Area = CustomerManager.Instance.POS_Area;
+            EmployeesList.Add(employeeBehaviour);
+        }
+    }
+
+
+    /// <summary>
+    /// Order given to Customer
+    /// </summary>
+    /// <param name="customer">Customer who ordered</param>
     public void OrderFulfilled(CustomerBehaviour customer)
     {
         foreach (var order in ReadyOrderList)
@@ -72,6 +100,10 @@ public class Restaurant : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Order is ready to be delivered
+    /// </summary>
+    /// <param name="employee">Employee who prepared order</param>
     public void OrderWrapUp(EmployeeBehaviour employee)
     {
         employee.IsBusy = false;
@@ -81,8 +113,14 @@ public class Restaurant : MonoBehaviour
         AssignTask(employee);
     }
 
+    /// <summary>
+    /// Tell Employee to do stuff
+    /// </summary>
+    /// <param name="employee">Employee who will prepare the order</param>
     public void AssignTask(EmployeeBehaviour employee = null)
     {
+        if (ReadyOrderList.Count == 4)
+            return;
         if (!PendingOrdersList.Any())
             return;
         if (employee == null)
@@ -108,7 +146,6 @@ public class Restaurant : MonoBehaviour
         employee.NavMeshAgent.destination = employee.PendingOrder.MachinesList[0].position;
         employee.Animator.SetBool(employee.m_HashMove, true);
         PendingOrdersList.RemoveAt(0);
-        //Debug.Log(employee.PendingOrder.OrderItemsNames + ", " + employee.PendingOrder.MachinesList.Count);
     }
 
     public void GetRandomOrder(CustomerBehaviour customer)
@@ -127,24 +164,19 @@ public class Restaurant : MonoBehaviour
             {
                 itemOrdered++;
                 OrderItem orderItem = item.RestaurantEquipment.OrderItemsList[Random.Range(0, item.RestaurantEquipment.OrderItemsList.Count)];
-                if (string.IsNullOrEmpty(orderStr))
-                    orderStr = orderItem.Name;
-                else orderStr += ", " + orderItem.Name;
-
+                pendingOrder.OrderItemsList.Add(orderItem);
                 pendingOrder.MachinesList.Add(item.WorldEntity.transform);
                 pendingOrder.TotalCost += orderItem.Cost;
             }
             if (itemOrdered == orderSize)
                 break;
         }
-        pendingOrder.OrderItemsNames = orderStr;
         pendingOrder.Customer = customer;
         PendingOrdersList.Add(pendingOrder);
 
         AssignTask();
 
         customer.OrderStr = orderStr;
-        //Debug.Log("[Restaurant] Order Received: " + orderStr);
         customer.Animator.SetTrigger(customer.m_HashOrder1);
     }
 

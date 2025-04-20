@@ -10,7 +10,7 @@ public class EmployeeAnimState : StateMachineBehaviour
             employee.Animator.SetBool(employee.m_HashCooking, false);
             if (employee.OrderStacked)
             {
-                employee.Restaurant.OrderWrapUp(employee);
+                Restaurant.Instance.OrderWrapUp(employee);
                 return;
             }
             employee.Animator.SetBool(employee.m_HashMove, true);
