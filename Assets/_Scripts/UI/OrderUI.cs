@@ -56,7 +56,7 @@ namespace BurgerPunk.UI
                     }
 
                     GameObject orderButton = Instantiate(orderUIButton, transform);
-                    orderButton.GetComponent<OrderUIButton>().SetOrderText(orderText);
+                    orderButton.GetComponent<OrderUIButton>().SetOrder(orderText, order);
                    
                 }
             }

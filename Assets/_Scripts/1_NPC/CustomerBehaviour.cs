@@ -1,3 +1,4 @@
+using BurgerPunk.Player;
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,14 +52,31 @@ public class CustomerBehaviour : Interactable
     public readonly CustomerOrderingState mCustomerOrderingState = new CustomerOrderingState();
     public readonly CustomerSittingState mCustomerSittigState = new CustomerSittingState();
     public readonly CustomerWaitingState mCustomerWaitingState = new CustomerWaitingState();
-
+    private PlayerRestaurant playerRestaurant;
     private void Awake()
     {
+        playerRestaurant = FindFirstObjectByType<PlayerRestaurant>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         OnInteracted += () =>
         {
-            _animator.SetTrigger(m_HashEat);
+            if (playerRestaurant.IsOrderComplete())
+            {
+                PendingOrder order = playerRestaurant.GetCurrentOrder();
+                if (order.Customer == this)
+                {
+                    playerRestaurant.ClaimOrder(order);
+                    IsOrderFulfilled = true;
+                    // add anything needed?
+                    _animator.SetTrigger(m_HashEat);
+
+                    playerRestaurant.ClearOrder();
+                }
+                else
+                {
+                    Debug.Log("This is not your order!");
+                }
+            }
         };
     }
 
