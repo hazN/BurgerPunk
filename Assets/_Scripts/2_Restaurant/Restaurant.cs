@@ -85,7 +85,7 @@ public class Restaurant : MonoBehaviour
         {
             GameObject employeeObject = Instantiate(EmployeesPrefabsList[Random.Range(0, EmployeesPrefabsList.Count)], EmployeeSpawnTile);
             EmployeeBehaviour employeeBehaviour = employeeObject.GetComponent<EmployeeBehaviour>();
-            employeeBehaviour.POS_Area = CustomerManager.Instance.OrderTile;
+            employeeBehaviour.POS_Area = CustomerManager.Instance.POS_Area;
             EmployeesList.Add(employeeBehaviour);
         }
     }
