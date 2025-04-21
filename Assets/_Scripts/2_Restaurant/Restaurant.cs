@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
 public struct OrderItem
@@ -47,16 +48,20 @@ public class Restaurant : MonoBehaviour
 
     [Header("Orders")]
     public List<RestuarantEquipmentWrapper> EquipmentsList = new List<RestuarantEquipmentWrapper>();
+
     public List<PendingOrder> PendingOrdersList = new List<PendingOrder>();
     public List<PendingOrder> ReadyOrderList = new List<PendingOrder>();
     public float TotalSale = 0f;
 
     [Header("Employees")]
     public List<EmployeeBehaviour> EmployeesList = new List<EmployeeBehaviour>();
+
     public List<GameObject> EmployeesPrefabsList = new List<GameObject>();
     public Transform EmployeeSpawnTile;
     public List<Transform> OrderTraysList;
-    int[] _assignedTray = new int[4] { 0, 0, 0, 0 };
+    private int[] _assignedTray = new int[4] { 0, 0, 0, 0 };
+
+    public UnityEvent OnRefreshUI;
 
     private void Awake()
     {
@@ -76,11 +81,11 @@ public class Restaurant : MonoBehaviour
     /// <param name="count">No. of employees to be spawned</param>
     public void SpawnEmployees(int count = 1)
     {
-        for(int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
             GameObject employeeObject = Instantiate(EmployeesPrefabsList[Random.Range(0, EmployeesPrefabsList.Count)], EmployeeSpawnTile);
             EmployeeBehaviour employeeBehaviour = employeeObject.GetComponent<EmployeeBehaviour>();
-            employeeBehaviour.POS_Area = CustomerManager.Instance.OrderTile;
+            employeeBehaviour.POS_Area = CustomerManager.Instance.POS_Area;
             EmployeesList.Add(employeeBehaviour);
         }
     }
@@ -159,11 +164,13 @@ public class Restaurant : MonoBehaviour
         employee.NavMeshAgent.speed = employee.EmployeeSpeed;
         employee.Animator.SetBool(employee.m_HashMove, true);
         PendingOrdersList.RemoveAt(0);
+        
+        OnRefreshUI?.Invoke();
     }
 
     private int GetFreeTray()
     {
-        for(int i = 0; i < _assignedTray.Length; i++)
+        for (int i = 0; i < _assignedTray.Length; i++)
         {
             if (_assignedTray[i] == 0)
                 return i;
@@ -209,6 +216,7 @@ public class Restaurant : MonoBehaviour
         }
         pendingOrder.Customer = customer;
         PendingOrdersList.Add(pendingOrder);
+        OnRefreshUI?.Invoke();
 
         AssignTask();
         customer.Animator.SetTrigger(customer.m_HashOrder1);
@@ -219,5 +227,3 @@ public class Restaurant : MonoBehaviour
         HealthPoints -= hp;
     }
 }
-
-
