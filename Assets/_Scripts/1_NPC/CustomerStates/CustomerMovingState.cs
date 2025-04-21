@@ -11,10 +11,14 @@ public class CustomerMovingState : NPCBaseState
         customer.NavMeshAgent.speed = customer.Speed;
         customer.NavMeshAgent.stoppingDistance = customer.DistanceMargin;
         customer.Animator.SetBool(customer.m_HashMove, true);
-        if(customer.IsOrderPlaced)
+        if (customer.IsOrderFulfilled)
+        {
+            _targetPosition = CustomerManager.Instance.SpawnPoint.position;
+        }
+        else if (customer.IsOrderPlaced)
             _targetPosition = customer.Wait_Target.transform.position;
         else 
-            _targetPosition = customer.POS_Area.position;
+            _targetPosition = customer.OrderTile.position;
 
         customer.NavMeshAgent.destination = _targetPosition;
     }
@@ -32,6 +36,11 @@ public class CustomerMovingState : NPCBaseState
         if(Helper.HaveReached(customer.NavMeshAgent))
         {
             customer.Animator.SetBool(customer.m_HashMove, false);
+            if(customer.IsOrderFulfilled)
+            {
+                CustomerManager.Instance.DespawnCustomer(customer);
+                return;
+            }
             if (customer.IsOrderPlaced)
             {
                 if (customer.Wait_Target.TargetType == TargetType.TakeOut)
@@ -39,7 +48,11 @@ public class CustomerMovingState : NPCBaseState
                 else
                     customer.TransitionToState(customer.mCustomerSittigState);
             }
-            else customer.TransitionToState(customer.mCustomerOrderingState);
+            else
+            {
+                //customer.transform.forward = CustomerManager.Instance.OrderTile.transform.forward;
+                customer.TransitionToState(customer.mCustomerOrderingState); 
+            }
         }
     }
 }

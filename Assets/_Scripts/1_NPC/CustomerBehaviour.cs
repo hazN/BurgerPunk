@@ -1,3 +1,4 @@
+using BurgerPunk.Player;
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class CustomerBehaviour : Interactable
     public readonly int m_HashMove = Animator.StringToHash("Moving");
     public readonly int m_HashOrder1 = Animator.StringToHash("Order1");
     public readonly int m_HashSit = Animator.StringToHash("Sit");
+    public readonly int m_HashEat = Animator.StringToHash("Eat");
     #endregion
     
     public float Speed = 1f;
@@ -17,7 +19,7 @@ public class CustomerBehaviour : Interactable
     public bool IsOrderPlaced = false;
     public bool IsOrderFulfilled = false;
     public NPCTarget Wait_Target;
-    public Transform POS_Area;
+    public Transform OrderTile;
     public GameObject Stool;
 
     [HideInInspector]
@@ -50,14 +52,31 @@ public class CustomerBehaviour : Interactable
     public readonly CustomerOrderingState mCustomerOrderingState = new CustomerOrderingState();
     public readonly CustomerSittingState mCustomerSittigState = new CustomerSittingState();
     public readonly CustomerWaitingState mCustomerWaitingState = new CustomerWaitingState();
-
+    private PlayerRestaurant playerRestaurant;
     private void Awake()
     {
+        playerRestaurant = FindFirstObjectByType<PlayerRestaurant>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         OnInteracted += () =>
         {
-            IsOrderFulfilled = true;
+            if (playerRestaurant.IsOrderComplete())
+            {
+                PendingOrder order = playerRestaurant.GetCurrentOrder();
+                if (order.Customer == this)
+                {
+                    playerRestaurant.ClaimOrder(order);
+                    IsOrderFulfilled = true;
+                    // add anything needed?
+                    _animator.SetTrigger(m_HashEat);
+
+                    playerRestaurant.ClearOrder();
+                }
+                else
+                {
+                    Debug.Log("This is not your order!");
+                }
+            }
         };
     }
 
