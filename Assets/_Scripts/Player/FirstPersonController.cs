@@ -99,8 +99,6 @@ namespace BurgerPunk.Movement
 
             if (currentTargeted)
             {
-                //Debug.Log("new target" + currentTargeted.name);
-
                 if (currentTargeted.TryGetComponent<CustomerBehaviour>(out CustomerBehaviour customer))
                 {
                     if (customer.FoodTypesList.Any())
@@ -119,10 +117,6 @@ namespace BurgerPunk.Movement
                 {
                     interactable.gameObject.layer = LayerMask.NameToLayer("InteractableHighlight");
                 }
-            }
-            else
-            {
-                //Debug.Log("no target");
             }
         }
 

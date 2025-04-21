@@ -12,7 +12,7 @@ public class CustomerBehaviour : MonoBehaviour
     #endregion
     
     public float Speed = 1f;
-    public float DistanceMargin = 1.1f;
+    public float DistanceMargin = 0.8f;
 
     public bool IsOrderPlaced = false;
     public bool IsOrderFulfilled = false;

@@ -35,7 +35,7 @@ public class EmployeeBehaviour : MonoBehaviour
     void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        _navMeshAgent.stoppingDistance = 0.9f;
+        _navMeshAgent.stoppingDistance = 0.8f;
         _navMeshAgent.speed = EmployeeSpeed;
         _animator = GetComponent<Animator>();
     }

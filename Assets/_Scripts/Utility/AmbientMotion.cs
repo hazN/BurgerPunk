@@ -20,7 +20,7 @@ public class AmbientMotion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //gameObject.transform.localPosition = cachedLocation + Vector3.up * Mathf.Sin(Time.time * frequency) * amplitude;
+        gameObject.transform.localPosition = cachedLocation + Vector3.up * Mathf.Sin(Time.time * frequency) * amplitude;
         //Debug.Log(Time.deltaTime);
         //Debug.Log(cachedLocation + Vector3.up * Mathf.Sin(Time.deltaTime * frequency) * amplitude);
     }

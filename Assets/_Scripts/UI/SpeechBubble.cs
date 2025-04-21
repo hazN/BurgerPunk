@@ -29,7 +29,7 @@ public class SpeechBubble : MonoBehaviour
     {
         if (speechType == SpeechType.Image)
         {
-            text.enabled = false;
+            text.gameObject.SetActive(false);
         }
         sprites = new Sprite[3] { burgerIcon, friesIcon, sodaIcon };
         items = new List<Image>();
@@ -53,7 +53,7 @@ public class SpeechBubble : MonoBehaviour
 
     public void SetOrder(List<FoodTypes> order)
     {
-        for (int x = 0; x < items.Count; x++) 
+        for (int x = 0; x < items.Count; x++)
         {
             items[x].gameObject.SetActive(false);
         }
