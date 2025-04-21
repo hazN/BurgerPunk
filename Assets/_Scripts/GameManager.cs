@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
 
     void StartDay()
     {
+        if (dayStarted) return;
         onDayStarted?.Invoke();
 
         Debug.Log("Day " + currentDay + 1 + " started.");
@@ -80,8 +81,6 @@ public class GameManager : MonoBehaviour
         {
             waveQueue.Enqueue(wave);
         }
-
-
     }
 
     public int GetCurrentDay()
