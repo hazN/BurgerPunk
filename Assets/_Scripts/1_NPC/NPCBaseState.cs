@@ -24,10 +24,10 @@ static class Helper
         {
             if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
             {
-                if (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f)
+                return true;
+                /*if (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f)
                 {
-                    return true;
-                }
+                }*/
             }
         }
         return false;

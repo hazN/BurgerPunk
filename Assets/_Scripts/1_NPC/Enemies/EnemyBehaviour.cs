@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBehaviour :  Actor
+public class EnemyBehaviour : Actor
 {
     public float AttackPoints = 5f;
     public Transform TargetPoint;
@@ -42,16 +42,19 @@ public class EnemyBehaviour :  Actor
     public readonly EnemyMoveState mEnemyMoveState = new EnemyMoveState();
     public readonly EnemyAttackState mEnemyAttackState = new EnemyAttackState();
 
-    private GameObject m_PlayerObject;
-    private bool m_IsTargetPlayer = false;
+    public FirstPersonController mPlayerObject;
+    public FighterEmployeeBehaviour mFighterEmployeeObject;
+    public bool mIsTargetPlayer = false;
+    public bool mIsTargetEmployee = false;
     private bool m_IsDead = false;
 
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-        _navMeshAgent.stoppingDistance = 0.8f;
-        OnDeath += () => {
+        _navMeshAgent.stoppingDistance = 1.1f;
+        OnDeath += () =>
+        {
             m_IsDead = true;
             _navMeshAgent.speed = 0f;
             _animator.SetBool(m_HashDead, true);
@@ -77,8 +80,19 @@ public class EnemyBehaviour :  Actor
         if (m_IsDead) return;
         if (NavMeshAgent == null) return;
 
-        if(m_IsTargetPlayer)
-            _navMeshAgent.destination = m_PlayerObject.transform.position;
+        if (mIsTargetPlayer)
+            _navMeshAgent.destination = mPlayerObject.transform.position;
+        else if (mIsTargetEmployee)
+        {
+            if (mFighterEmployeeObject != null)
+            {
+                _navMeshAgent.destination = mFighterEmployeeObject.transform.position;
+            }
+            else
+            {
+                mIsTargetEmployee = false;
+            }
+        }
         _currentState.Update();
     }
 
@@ -91,11 +105,21 @@ public class EnemyBehaviour :  Actor
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            m_IsTargetPlayer = true;
-            m_PlayerObject = other.gameObject;
-            _navMeshAgent.destination = m_PlayerObject.transform.position;
+            mIsTargetPlayer = true;
+            mIsTargetEmployee = false;
+            if (mPlayerObject == null)
+                mPlayerObject = other.GetComponent<FirstPersonController>();
+            TransitionToState(mEnemyMoveState);
+        }
+        else if (other.CompareTag("Employee"))
+        {
+            mIsTargetPlayer = false;
+            mIsTargetEmployee = true;
+            if (mFighterEmployeeObject == null)
+                mFighterEmployeeObject = other.GetComponent<FighterEmployeeBehaviour>();
+            _navMeshAgent.destination = mFighterEmployeeObject.transform.position;
             TransitionToState(mEnemyMoveState);
         }
     }
@@ -104,7 +128,13 @@ public class EnemyBehaviour :  Actor
     {
         if (other.CompareTag("Player"))
         {
-            m_IsTargetPlayer = false;
+            mIsTargetPlayer = false;
+            _navMeshAgent.destination = SpawnerManger.targetPoint[Random.Range(0, SpawnerManger.targetPoint.Length)].position;
+            TransitionToState(mEnemyMoveState);
+        }
+        else if (other.CompareTag("Employee"))
+        {
+            mFighterEmployeeObject = null;
             _navMeshAgent.destination = SpawnerManger.targetPoint[Random.Range(0, SpawnerManger.targetPoint.Length)].position;
             TransitionToState(mEnemyMoveState);
         }
@@ -112,12 +142,28 @@ public class EnemyBehaviour :  Actor
 
     public void SendDamage()
     {
-        if (m_IsTargetPlayer)
-        { 
-            if (m_PlayerObject != null)
+        if (mIsTargetPlayer)
+        {
+            if (mPlayerObject != null)
             {
                 Debug.Log("Attacking Player: -" + AttackPoints);
-                m_PlayerObject.GetComponent<FirstPersonController>().TakeDamage(AttackPoints);
+                mPlayerObject.TakeDamage(AttackPoints);
+                return;
+            }
+        }
+        else if (mIsTargetEmployee)
+        {
+            if(mFighterEmployeeObject != null)
+            {
+                Debug.Log("Attacking Employee: -" + AttackPoints);
+                mFighterEmployeeObject.TakeDamage(AttackPoints);
+                if(!mFighterEmployeeObject.IsAlive())
+                {
+                    mIsTargetEmployee = false;
+                    mFighterEmployeeObject = null;
+                    _navMeshAgent.destination = SpawnerManger.targetPoint[Random.Range(0, SpawnerManger.targetPoint.Length)].position;
+                    TransitionToState(mEnemyMoveState);
+                }
                 return;
             }
         }

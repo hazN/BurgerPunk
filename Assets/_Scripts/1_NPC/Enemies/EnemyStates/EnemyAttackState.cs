@@ -11,6 +11,5 @@ public class EnemyAttackState : NPCBaseState
 
     public override void Update()
     {
-
     }
 }
