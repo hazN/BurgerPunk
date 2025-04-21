@@ -13,6 +13,7 @@ public class EatAndLeave : StateMachineBehaviour
             }
             else
             {
+                customer.FoodTypesList.Clear();
                 customer.IsOrderFulfilled = true;
                 customer.Animator.SetBool(customer.m_HashSit, false);
                 customer.Stool.gameObject.SetActive(false);

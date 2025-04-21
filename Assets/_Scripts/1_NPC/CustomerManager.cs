@@ -14,8 +14,6 @@ public class CustomerManager : MonoBehaviour
     public Transform OrderTile;
     public bool IsSomeonePlacingOrder = false;
 
-    [SerializeField]
-    private int TotalOccupiedPlaces = 0;
     private List <CustomerBehaviour> _customerBehavioursList = new List<CustomerBehaviour>();
 
     private void Awake()
@@ -48,6 +46,17 @@ public class CustomerManager : MonoBehaviour
         }
     }
 
+    public void DespawnCustomer(CustomerBehaviour customer)
+    {
+        if (customer != null)
+        {
+            customer.Wait_Target.IsOccupied = false;
+            _customerBehavioursList.Remove(customer);
+            Destroy(customer.gameObject);
+            SpawnCustomers(1, 5f);
+        }
+    }
+
     private IEnumerator SpawnCustomersDelayed(int count,float time)
     {
         for (int i = 0; i < count; i++)
@@ -57,13 +66,30 @@ public class CustomerManager : MonoBehaviour
         }
     }
 
+    private int GetFreeSpot()
+    {
+        int freeSpot = -1;
+
+        for(int i = 0; i < TargetList.Count; i++)
+        {
+            if (!TargetList[i].IsOccupied)
+                return i;
+        }
+
+        return freeSpot;
+    }
+
     private void CreateCustomer()
     {
+        int freeSpot = GetFreeSpot();
+        if (freeSpot == -1)
+            return;
         GameObject customer = Instantiate(CustomersList[Random.Range(0, CustomersList.Count)], SpawnPoint);
         CustomerBehaviour customerBehaviour = customer.GetComponent<CustomerBehaviour>();
         customerBehaviour.OrderTile = OrderTile;
         customerBehaviour.Speed = Random.Range(0.2f, 1f);
-        customerBehaviour.Wait_Target = TargetList[TotalOccupiedPlaces++];
+        customerBehaviour.Wait_Target = TargetList[freeSpot];
+        customerBehaviour.Wait_Target.IsOccupied = true;
         _customerBehavioursList.Add(customerBehaviour);
     }
 }

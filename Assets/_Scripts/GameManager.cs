@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Day " + currentDay + 1 + " started.");
         dayTimer = 0.0f;
         dayStarted = true;
-        CustomerManager.Instance.SpawnCustomers(3, 10.0f);
+        CustomerManager.Instance.SpawnCustomers(3, 5.0f);
         foreach (EnemyWave wave in enemyDayWaves[currentDay].waves)
         {
             waveQueue.Enqueue(wave);
