@@ -1,3 +1,5 @@
+using BurgerPunk;
+using BurgerPunk.Player;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,6 +76,8 @@ public class Restaurant : MonoBehaviour
 
     public UnityEvent OnRefreshUI;
 
+    [SerializeField] public List<Tray> trays = new List<Tray>();
+
     private void Awake()
     {
         if (Instance != null)
@@ -126,6 +130,8 @@ public class Restaurant : MonoBehaviour
     public void OrderWrapUp(EmployeeBehaviour employee)
     {
         OccupyATray(employee.PendingOrder.TrayId);
+        trays[employee.PendingOrder.TrayId].AssignOrder(employee.PendingOrder);
+        trays[employee.PendingOrder.TrayId].GetComponent<InteractableTray>().enabled = true;
         employee.NavMeshAgent.enabled = false;
         employee.Animator.SetBool(employee.m_HashMove, false);
         employee.IsBusy = false;

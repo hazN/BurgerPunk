@@ -43,6 +43,7 @@ namespace BurgerPunk.Player
 
         private void UpdateOrderStatus()
         {
+            orderStatus.text = "";
             if (itemsToComplete.Count == 0)
             {
                 orderStatus.text = "Order Complete, hand to Customer!";
@@ -80,7 +81,6 @@ namespace BurgerPunk.Player
                 {
                     tray.EnableItem(true, foodType);
                     itemsToComplete.Remove(item);
-                    orderStatus.text = "";
                     UpdateOrderStatus();
                     break;
                 }
@@ -112,5 +112,28 @@ namespace BurgerPunk.Player
                 Debug.Log("No order to clear");
             }
         }
+        public void EquipCompletedOrder(InteractableTray trayObj, Tray completedTray)
+        {
+            if (currentOrder != null)
+            {
+                Debug.Log("Already have an order, complete it first.");
+                return;
+            }
+
+            ClaimOrder(completedTray.GetCurrentOrder());
+
+            // Complete all items on the tray
+            for (int i = itemsToComplete.Count - 1; i >= 0; i--)
+            {
+                var item = itemsToComplete[i];
+                tray.EnableItem(true, item.Type);
+                itemsToComplete.RemoveAt(i);
+                UpdateOrderStatus();
+            }
+
+            trayObj.enabled = false;
+            completedTray.ClearAll();
+            completedTray.ClearOrder();
+        }    
     }
 }
