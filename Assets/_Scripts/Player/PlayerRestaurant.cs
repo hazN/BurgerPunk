@@ -1,0 +1,116 @@
+﻿using BurgerPunk.Movement;
+using NUnit.Framework;
+using RPGCharacterAnims.Lookups;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+namespace BurgerPunk.Player
+{
+    public class PlayerRestaurant : MonoBehaviour
+    {
+        private PendingOrder currentOrder;
+        private List<OrderItem> itemsToComplete = new List<OrderItem>();
+        private bool isOrderComplete = false;
+        [SerializeField] private TextMeshProUGUI orderStatus;
+        [SerializeField] private FirstPersonController firstPersonController;
+        [SerializeField] private Tray tray;
+        private void Awake()
+        {
+            firstPersonController = gameObject.GetComponent<FirstPersonController>();
+        }
+        public void ClaimOrder(PendingOrder order)
+        {
+            if (currentOrder != null)
+            {
+                Debug.Log("Already have an order");
+                return;
+            }
+
+            isOrderComplete = false;
+
+            currentOrder = order;
+
+            itemsToComplete.Clear();
+            foreach (var item in order.OrderItemsList)
+            {
+                itemsToComplete.Add(item);
+                orderStatus.text += item.Name + "\n";
+            }
+        }
+
+        private void UpdateOrderStatus()
+        {
+            if (itemsToComplete.Count == 0)
+            {
+                orderStatus.text = "Order Complete, hand to Customer!";
+                isOrderComplete = true;
+                return;
+            }
+            foreach (var item in itemsToComplete)
+            {
+                orderStatus.text += item.Name + "\n";
+            }
+        }
+
+        public void Cook(FoodTypes foodType)
+        {
+            StartCoroutine(CookCoroutine(foodType));
+        }
+
+        private IEnumerator CookCoroutine(FoodTypes foodType)
+        {
+            if (currentOrder == null)
+            {
+                Debug.Log("No order to cook for");
+                yield break;
+            }
+
+            Debug.Log("Starting to cook...");
+            firstPersonController.DisableController();
+            yield return new WaitForSeconds(3f);
+            firstPersonController.EnableController();
+            Debug.Log("Done cooking!");
+
+            foreach (var item in itemsToComplete)
+            {
+                if (item.Type == foodType)
+                {
+                    tray.EnableItem(true, foodType);
+                    itemsToComplete.Remove(item);
+                    orderStatus.text = "";
+                    UpdateOrderStatus();
+                    break;
+                }
+            }
+        }
+
+        public bool IsOrderComplete()
+        {
+            return isOrderComplete;
+        }
+
+        public PendingOrder GetCurrentOrder()
+        {
+            return currentOrder;
+        }
+
+        public void ClearOrder()
+        {
+            if (currentOrder != null)
+            {
+                currentOrder = null;
+                orderStatus.text = "";
+                isOrderComplete = false;
+                itemsToComplete.Clear();
+                tray.ClearAll();
+            }
+            else
+            {
+                Debug.Log("No order to clear");
+            }
+        }
+    }
+}

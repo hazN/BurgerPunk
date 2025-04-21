@@ -20,7 +20,7 @@ public struct RestuarantEquipmentWrapper
     public GameObject Prefab;
 }
 
-public struct PendingOrder
+public class PendingOrder
 {
     private static int _orderIdCounter = 0;
     public int OrderId;
@@ -40,6 +40,13 @@ public struct PendingOrder
         MachinesList = new List<Transform>();
         MachinesList.AddRange(pendingOrder.MachinesList);
         TrayId = pendingOrder.TrayId;
+        if (OrderId == 0)
+            OrderId = _orderIdCounter++;
+        else
+            OrderId = pendingOrder.OrderId;
+    }
+    public PendingOrder()
+    {
         OrderId = _orderIdCounter++;
     }
 }
@@ -54,6 +61,7 @@ public class Restaurant : MonoBehaviour
 
     public List<PendingOrder> PendingOrdersList = new List<PendingOrder>();
     public List<PendingOrder> ReadyOrderList = new List<PendingOrder>();
+    public PendingOrder PlayerOrder;
     public float TotalSale = 0f;
 
     [Header("Employees")]
