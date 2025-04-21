@@ -1,4 +1,5 @@
 using BurgerPunk.Movement;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -54,6 +55,7 @@ public class EnemyBehaviour :  Actor
             m_IsDead = true;
             _navMeshAgent.speed = 0f;
             _animator.SetBool(m_HashDead, true);
+            StartCoroutine();
         };
         OnHit += () =>
         {
@@ -125,4 +127,9 @@ public class EnemyBehaviour :  Actor
         }
     }
 
+    private IEnumerator Despawn()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
+    }
 }
