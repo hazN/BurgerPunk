@@ -22,6 +22,8 @@ public struct RestuarantEquipmentWrapper
 
 public struct PendingOrder
 {
+    private static int _orderIdCounter = 0;
+    public int OrderId;
     public CustomerBehaviour Customer;
     public EmployeeBehaviour Employee;
     public List<OrderItem> OrderItemsList;
@@ -38,6 +40,7 @@ public struct PendingOrder
         MachinesList = new List<Transform>();
         MachinesList.AddRange(pendingOrder.MachinesList);
         TrayId = pendingOrder.TrayId;
+        OrderId = _orderIdCounter++;
     }
 }
 
@@ -85,7 +88,7 @@ public class Restaurant : MonoBehaviour
         {
             GameObject employeeObject = Instantiate(EmployeesPrefabsList[Random.Range(0, EmployeesPrefabsList.Count)], EmployeeSpawnTile);
             EmployeeBehaviour employeeBehaviour = employeeObject.GetComponent<EmployeeBehaviour>();
-            employeeBehaviour.POS_Area = CustomerManager.Instance.POS_Area;
+            employeeBehaviour.POS_Area = CustomerManager.Instance.OrderTile;
             EmployeesList.Add(employeeBehaviour);
         }
     }
@@ -164,7 +167,7 @@ public class Restaurant : MonoBehaviour
         employee.NavMeshAgent.speed = employee.EmployeeSpeed;
         employee.Animator.SetBool(employee.m_HashMove, true);
         PendingOrdersList.RemoveAt(0);
-        
+
         OnRefreshUI?.Invoke();
     }
 
