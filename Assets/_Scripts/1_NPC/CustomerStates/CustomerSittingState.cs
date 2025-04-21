@@ -11,6 +11,12 @@ public class CustomerSittingState : NPCBaseState
 
     public override void Update()
     {
-
+        if (customer != null)
+        {
+            if (customer.IsOrderFulfilled)
+            {
+                // customer eats and leave
+            }
+        }
     }
 }

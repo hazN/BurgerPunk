@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CustomerBehaviour : MonoBehaviour
+public class CustomerBehaviour : Interactable
 {
     #region Animator Parameters
     public readonly int m_HashMove = Animator.StringToHash("Moving");
@@ -12,7 +12,7 @@ public class CustomerBehaviour : MonoBehaviour
     #endregion
     
     public float Speed = 1f;
-    public float DistanceMargin = 1.1f;
+    public float DistanceMargin = 0.8f;
 
     public bool IsOrderPlaced = false;
     public bool IsOrderFulfilled = false;
@@ -55,6 +55,10 @@ public class CustomerBehaviour : MonoBehaviour
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+        OnInteracted += () =>
+        {
+            IsOrderFulfilled = true;
+        };
     }
 
     void Start()

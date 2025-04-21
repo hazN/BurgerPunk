@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -27,14 +28,33 @@ public class CustomerManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        for (int i = 0; i < TargetList.Count / 2; i++)
-            CreateCustomer();
+
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void SpawnCustomers(int count = 1, float timeInSeconds = 0f)
+    {
+        if(timeInSeconds == 0f)
+            for (int i = 0; i < count; i++)
+                CreateCustomer();
+        else
+        {
+            StartCoroutine(SpawnCustomersDelayed(count, timeInSeconds));
+        }
+    }
+
+    private IEnumerator SpawnCustomersDelayed(int count,float time)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            yield return new WaitForSeconds(time);
+            CreateCustomer();
+        }
     }
 
     private void CreateCustomer()
