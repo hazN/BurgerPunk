@@ -66,8 +66,7 @@ public class CustomerBehaviour : Interactable
                 if (order.Customer == this)
                 {
                     playerRestaurant.ClaimOrder(order);
-                    IsOrderFulfilled = true;
-                    // add anything needed?
+
                     _animator.SetTrigger(m_HashEat);
 
                     playerRestaurant.ClearOrder();
