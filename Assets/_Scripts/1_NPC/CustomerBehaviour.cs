@@ -9,6 +9,7 @@ public class CustomerBehaviour : Interactable
     public readonly int m_HashMove = Animator.StringToHash("Moving");
     public readonly int m_HashOrder1 = Animator.StringToHash("Order1");
     public readonly int m_HashSit = Animator.StringToHash("Sit");
+    public readonly int m_HashEat = Animator.StringToHash("Eat");
     #endregion
     
     public float Speed = 1f;
@@ -17,7 +18,7 @@ public class CustomerBehaviour : Interactable
     public bool IsOrderPlaced = false;
     public bool IsOrderFulfilled = false;
     public NPCTarget Wait_Target;
-    public Transform POS_Area;
+    public Transform OrderTile;
     public GameObject Stool;
 
     [HideInInspector]
@@ -57,7 +58,7 @@ public class CustomerBehaviour : Interactable
         _animator = GetComponent<Animator>();
         OnInteracted += () =>
         {
-            IsOrderFulfilled = true;
+            _animator.SetTrigger(m_HashEat);
         };
     }
 

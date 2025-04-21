@@ -10,8 +10,8 @@ public class CustomerManager : MonoBehaviour
     public List<GameObject> CustomersList = new List<GameObject>();
     public List<NPCTarget> TargetList = new List<NPCTarget>();
     //public List<Order> OrdersList = new List<Order>();
-    public Transform SpwanPoint;
-    public Transform POS_Area;
+    public Transform SpawnPoint;
+    public Transform OrderTile;
     public bool IsSomeonePlacingOrder = false;
 
     [SerializeField]
@@ -59,9 +59,9 @@ public class CustomerManager : MonoBehaviour
 
     private void CreateCustomer()
     {
-        GameObject customer = Instantiate(CustomersList[Random.Range(0, CustomersList.Count)], SpwanPoint);
+        GameObject customer = Instantiate(CustomersList[Random.Range(0, CustomersList.Count)], SpawnPoint);
         CustomerBehaviour customerBehaviour = customer.GetComponent<CustomerBehaviour>();
-        customerBehaviour.POS_Area = POS_Area;
+        customerBehaviour.OrderTile = OrderTile;
         customerBehaviour.Speed = Random.Range(0.2f, 1f);
         customerBehaviour.Wait_Target = TargetList[TotalOccupiedPlaces++];
         _customerBehavioursList.Add(customerBehaviour);
