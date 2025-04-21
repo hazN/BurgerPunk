@@ -12,5 +12,6 @@ public class FighterEmployeeIdleState : NPCBaseState
 
     public override void Update()
     {
+        
     }
 }

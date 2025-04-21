@@ -7,6 +7,7 @@ public class FighterEmployeeMoveState : NPCBaseState
     {
         employee = npc as FighterEmployeeBehaviour;
         employee.Animator.SetBool(employee.m_HashAttacking, false);
+        employee.Animator.SetBool(employee.m_HashMoving, true);
     }
 
     public override void Update()
