@@ -38,7 +38,8 @@ public class CustomerMovingState : NPCBaseState
             customer.Animator.SetBool(customer.m_HashMove, false);
             if(customer.IsOrderFulfilled)
             {
-                GameObject.Destroy(customer.gameObject);
+                CustomerManager.Instance.DespawnCustomer(customer);
+                return;
             }
             if (customer.IsOrderPlaced)
             {
@@ -47,7 +48,11 @@ public class CustomerMovingState : NPCBaseState
                 else
                     customer.TransitionToState(customer.mCustomerSittigState);
             }
-            else customer.TransitionToState(customer.mCustomerOrderingState);
+            else
+            {
+                //customer.transform.forward = CustomerManager.Instance.OrderTile.transform.forward;
+                customer.TransitionToState(customer.mCustomerOrderingState); 
+            }
         }
     }
 }
