@@ -28,4 +28,9 @@ public class Actor : MonoBehaviour
     {
         return health;
     }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
 }

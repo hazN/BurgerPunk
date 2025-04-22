@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -10,7 +12,14 @@ public class AudioManager : MonoBehaviour
     public AudioMixerGroup sfxGroup;
     public AudioMixerGroup musicGroup;
 
-    
+    [SerializeField] AudioSource musicSource;
+    [SerializeField] AudioSource sfxSource;
+
+
+    [SerializeField] AudioClip buttonClick;
+    [SerializeField] AudioClip menuSong;
+
+
 
     void Awake()
     {
@@ -18,6 +27,13 @@ public class AudioManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SetButtonSounds();
+            SceneManager.sceneLoaded += OnSceneLoaded;
+
+            if (SceneManager.GetActiveScene().name == "TitleScreen")
+            {
+                PlayMusic(menuSong);
+            }
             //LoadVolumes();
         }
         else
@@ -32,6 +48,37 @@ public class AudioManager : MonoBehaviour
         
     }
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SetButtonSounds();
+    }
+
+    void SetButtonSounds()
+    {
+        Button[] buttons = FindObjectsByType<Button>(FindObjectsSortMode.None);
+        foreach (Button btn in buttons)
+        {
+            btn.onClick.RemoveListener(() => PlayButtonSFX());
+            btn.onClick.AddListener(() => PlayButtonSFX());
+        }
+    }
+
+    void PlayButtonSFX()
+    {
+        PlaySFX(buttonClick);
+    }
+
+    public void PlayMusic(AudioClip audioClip)
+    {
+        musicSource.clip = audioClip;
+        musicSource.loop = true;
+        musicSource.Play();
+    }
+    public void PlaySFX(AudioClip audioClip)
+    {
+        sfxSource.PlayOneShot(audioClip);
+    }
+
     private void SetVolume(string param, float value)
     {
         float db = Mathf.Log10(Mathf.Clamp(value, 0.001f, 1.5f)) * 20f;
@@ -40,17 +87,20 @@ public class AudioManager : MonoBehaviour
     }
     public void SetMasterVolume(float volume)
     {
-        SetVolume(masterGroup.name, volume);
+        Debug.Log("setting master volume " + volume);
+        SetVolume("masterVolume", volume);
     }
 
     public void SetSfxVolume(float volume)
     {
-        SetVolume(sfxGroup.name, volume);
+        Debug.Log("setting sfx volume " + volume);
+        SetVolume("sfxVolume", volume);
     }
 
     public void SetMusicVolume(float volume)
     {
-        SetVolume(musicGroup.name, volume);
+        Debug.Log("setting music volume " + volume);
+        SetVolume("musicVolume", volume);
     }
 
     

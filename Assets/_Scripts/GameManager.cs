@@ -107,4 +107,9 @@ public class GameManager : MonoBehaviour
     {
         balance -= amount;
     }
+
+    public void AddMoney(int amount)
+    {
+        balance += amount;
+    }
 }
