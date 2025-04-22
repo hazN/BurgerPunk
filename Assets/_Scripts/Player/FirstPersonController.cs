@@ -217,13 +217,13 @@ namespace BurgerPunk.Movement
         {
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
-            FindFirstObjectByType<FirstPersonController>().enableController = true;
+            enableController = true;
         }
         public void DisableController()
         {
             UnityEngine.Cursor.lockState = CursorLockMode.None;
             UnityEngine.Cursor.visible = true;
-            FindFirstObjectByType<FirstPersonController>().enableController = false;
+            enableController = false;
         }
     }
 }
