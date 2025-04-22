@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
     public AudioMixerGroup sfxGroup;
     public AudioMixerGroup musicGroup;
 
+    
+
     void Awake()
     {
         if (Instance == null)
