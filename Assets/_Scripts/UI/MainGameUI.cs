@@ -35,7 +35,7 @@ public class MainGameUI : MonoBehaviour
         dayText.text = "DAY: " + day.ToString();
     }
 
-    public void SetMoney(int money)
+    public void SetMoney(float money)
     {
         moneyText.text = "CASH: $" + money.ToString();
     }

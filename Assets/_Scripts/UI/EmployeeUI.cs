@@ -1,3 +1,4 @@
+using BurgerPunk.Movement;
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,29 +10,40 @@ public class EmployeeUI : MonoBehaviour
     [SerializeField] RectTransform employeePanel3;
     [SerializeField] RectTransform employeePanel4;
 
-    [SerializeField] int[] employeeCosts;
+    [SerializeField] float[] employeeCosts;
     List<RectTransform> employeePanels;
 
     GameManager gameManager;
     void Start()
     {
         gameManager = FindFirstObjectByType<GameManager>();
-
+        employeePanels = new List<RectTransform>();
+        FirstPersonController.Instance.DisableController();
         employeePanels.Add(employeePanel1);
         employeePanels.Add(employeePanel2);
         employeePanels.Add(employeePanel3);
         employeePanels.Add(employeePanel4);
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameObject.SetActive(false);
+            FirstPersonController.Instance.EnableController();
+        }    
+    }
+
 
     public void HireEmployee(int index)
     {
-        int cost = employeeCosts[index];
-        int balance = gameManager.GetBalance();
+        float cost = employeeCosts[index];
+        float balance = gameManager.GetBalance();
 
         if (cost <= balance)
         {
             gameManager.SpendMoney(cost);
+            Restaurant.Instance.SpawnEmployees(index);
             employeePanels[index].gameObject.SetActive(false);
         }
     }

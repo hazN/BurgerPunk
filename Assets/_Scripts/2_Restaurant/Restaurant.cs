@@ -70,7 +70,7 @@ public class Restaurant : MonoBehaviour
     public List<EmployeeBehaviour> EmployeesList = new List<EmployeeBehaviour>();
 
     public List<GameObject> EmployeesPrefabsList = new List<GameObject>();
-    public Transform EmployeeSpawnTile;
+    public Transform[] EmployeeSpawnTile;
     public List<Transform> OrderTraysList;
     private int[] _assignedTray = new int[4] { 0, 0, 0, 0 };
 
@@ -87,22 +87,26 @@ public class Restaurant : MonoBehaviour
 
     private void Start()
     {
-        SpawnEmployees();
+        //SpawnEmployees();
     }
 
     /// <summary>
     /// Spawn given "count" number of employees
     /// </summary>
     /// <param name="count">No. of employees to be spawned</param>
-    public void SpawnEmployees(int count = 1)
+    public void SpawnEmployees(int index  = -1)
     {
-        for (int i = 0; i < count; i++)
+        if (index == -1)
+            index = Random.Range(0, EmployeesPrefabsList.Count);
+        if(index > EmployeesPrefabsList.Count)
         {
-            GameObject employeeObject = Instantiate(EmployeesPrefabsList[Random.Range(0, EmployeesPrefabsList.Count)], EmployeeSpawnTile);
-            EmployeeBehaviour employeeBehaviour = employeeObject.GetComponent<EmployeeBehaviour>();
-            employeeBehaviour.POS_Area = CustomerManager.Instance.OrderTile;
-            EmployeesList.Add(employeeBehaviour);
+            throw new UnityException("Employee Prefab is not present");
         }
+
+        GameObject employeeObject = Instantiate(EmployeesPrefabsList[index], EmployeeSpawnTile[index]);
+        EmployeeBehaviour employeeBehaviour = employeeObject.GetComponent<EmployeeBehaviour>();
+        employeeBehaviour.POS_Area = CustomerManager.Instance.OrderTile;
+        EmployeesList.Add(employeeBehaviour);
     }
 
     /// <summary>
@@ -115,6 +119,7 @@ public class Restaurant : MonoBehaviour
         {
             if (order.Customer == customer)
             {
+                GameManager.Instance.AddToBalance(order.TotalCost);
                 ReadyOrderList.Remove(order);
                 FreeATray(order.TrayId);
                 AssignTask();

@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public int currentDay = 0;
-    protected int balance = 0;
+    protected float balance = 0;
 
     public static GameManager Instance;
 
@@ -44,8 +44,8 @@ public class GameManager : MonoBehaviour
     void Setup()
     {
         dayStarted = false;
-        // TODO: Remove this from here
-        //StartDay(); // Testing enemies behaviour
+        // TODO: Remove this
+        balance = 10000f;
     }
 
     public void SetupStartDayInteractable(Interactable interactable)
@@ -93,12 +93,17 @@ public class GameManager : MonoBehaviour
         return dayTimer / lengthOfDay;
     }
 
-    public int GetBalance()
+    public void AddToBalance(float amount)
+    {
+        balance += amount;
+    }
+
+    public float GetBalance()
     {
         return balance;
     }
 
-    public void SpendMoney(int amount)
+    public void SpendMoney(float amount)
     {
         balance -= amount;
     }
