@@ -48,15 +48,15 @@ public class BuildViewManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Escape))
+        //if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Escape))
         {
             if (!active)
             {
-                ActivateBuildView();
+                //ActivateBuildView();
             }
             else
             {
-                DeactivateBuildView();
+                //DeactivateBuildView();
             }
         }
 
@@ -144,7 +144,7 @@ public class BuildViewManager : MonoBehaviour
         }
     }
 
-    void DeactivateBuildView()
+    public void DeactivateBuildView()
     {
         active = false;
         buildCamera.enabled = false;

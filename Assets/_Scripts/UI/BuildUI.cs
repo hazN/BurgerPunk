@@ -15,6 +15,7 @@ public class BuildUI : MonoBehaviour
 
     [SerializeField]
     TMP_Text objectDescription;
+    [SerializeField] TMP_Text objectPrice;
 
     [SerializeField]
     public PlaceableObjectList objectList;
@@ -26,18 +27,26 @@ public class BuildUI : MonoBehaviour
     public int objectIndex;
 
     public event System.Action OnPreviewChanged;
+    
+    BuildViewManager buildViewManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         objectIndex = 0;
         UpdatePreviewNameAndDescription();
+        buildViewManager = FindAnyObjectByType<BuildViewManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void CloseBuildUI()
+    {
+        buildViewManager.DeactivateBuildView();
     }
 
     public void GoLeft()
@@ -70,5 +79,6 @@ public class BuildUI : MonoBehaviour
     {
         objectName.text = objectList.placeableObjects[objectIndex].objectName;
         objectDescription.text = objectList.placeableObjects[objectIndex].objectDescription;
+        objectPrice.text = "$" + objectList.placeableObjects[objectIndex].cost;
     }
 }
