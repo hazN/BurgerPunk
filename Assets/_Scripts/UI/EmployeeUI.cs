@@ -47,4 +47,9 @@ public class EmployeeUI : MonoBehaviour
             employeePanels[index].gameObject.SetActive(false);
         }
     }
+
+    public void ExitUI()
+    {
+        gameObject.SetActive(false);
+    }
 }
