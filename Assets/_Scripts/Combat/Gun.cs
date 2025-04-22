@@ -31,7 +31,7 @@ namespace BurgerPunk.Combat
         {
             if (rightHandIKTarget == null || leftHandIKTarget == null)
             {
-                Debug.LogError("IK targets not set");
+                Debug.Log("IK targets not set");
                 return;
             }
             rightHandIKTarget.SetPositionAndRotation(rightHandWeaponPosition.position, rightHandWeaponPosition.rotation);
