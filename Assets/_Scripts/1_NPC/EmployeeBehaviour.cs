@@ -51,7 +51,7 @@ public class EmployeeBehaviour : MonoBehaviour
             {
                 _animator.SetTrigger(m_HashStackOrder);
             }
-            else {
+            else { 
                 _animator.SetBool(m_HashCooking, true);
             }
         }
