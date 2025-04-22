@@ -10,7 +10,7 @@ public class FighterEmployeeBehaviour : Actor
     public readonly int m_HashDead = Animator.StringToHash("Dead");
     public readonly int m_HashHurt = Animator.StringToHash("Hurt");
     #endregion
-
+    public float Damage = 20f;
     private bool m_IsDead = false;
     private Actor _enemy;
 
@@ -81,7 +81,7 @@ public class FighterEmployeeBehaviour : Actor
     {
         if (_enemy)
         {
-            _enemy.TakeDamage(15f);
+            _enemy.TakeDamage(Damage);
             if(!_enemy.IsAlive())
             {
                 _enemy = null;
@@ -101,6 +101,19 @@ public class FighterEmployeeBehaviour : Actor
             _enemy = other.GetComponent<EnemyBehaviour>();
             _navMeshAgent.destination = _enemy.transform.position;
             TransitionToState(mEmployeeMoveState);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(_enemy == null)
+        {
+            if (other.CompareTag("Enemy"))
+            {
+                _enemy = other.GetComponent<EnemyBehaviour>();
+                _navMeshAgent.destination = _enemy.transform.position;
+                TransitionToState(mEmployeeMoveState);
+            }
         }
     }
 
