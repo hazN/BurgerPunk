@@ -108,6 +108,16 @@ public class GameManager : MonoBehaviour
         balance -= amount;
     }
 
+    public bool TrySpendMoney(float amount)
+    {
+        if (balance >= amount)
+        {
+            balance -= amount;
+            return true;
+        }
+        return false;
+    }
+
     public void AddMoney(int amount)
     {
         balance += amount;

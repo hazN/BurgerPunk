@@ -68,6 +68,8 @@ public class CustomerBehaviour : Interactable
                     _animator.SetTrigger(m_HashEat);
 
                     playerRestaurant.ClearOrder();
+
+                    GameManager.Instance.AddMoney((int)order.TotalCost);
                 }
                 else
                 {

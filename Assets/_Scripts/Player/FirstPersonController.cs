@@ -50,12 +50,6 @@ namespace BurgerPunk.Movement
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.BackQuote))
-            {
-                enableController = !enableController;
-                Cursor.lockState = enableController ? CursorLockMode.Locked : CursorLockMode.None;
-                Cursor.visible = !enableController;
-            }
             if (!enableController)
             {
                 return;

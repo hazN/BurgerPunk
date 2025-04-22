@@ -25,18 +25,20 @@ namespace BurgerPunk.UI
         [SerializeField] private GameObject shopItem;
         [SerializeField] private List<Buff> buffsInShop = new List<Buff>();
         [SerializeField] private List<GunData> gunsInShop = new List<GunData>();
-        private void Awake()
-        {
-        }
-
+        private Holster holster;
         private void Start()
         {
+            holster = FindFirstObjectByType<Holster>();
+            if (holster == null)
+            {
+                Debug.LogError("Holster not found");
+            }
             refreshShop();
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Tab))
             {
                 gameObject.SetActive(false);
                 FindFirstObjectByType<FirstPersonController>().EnableController();
@@ -46,10 +48,23 @@ namespace BurgerPunk.UI
         private Buff GetRandomBuff()
         {
             Buff buff = new Buff();
-            buff.buffType = (Buff.BuffType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Buff.BuffType)).Length);
-
+            // If we have no unlocked guns, we can't give a buff to a gun so only pick between speed , health
+            if (holster.GetRandomUnlockedGun() == null)
+            {
+                buff.buffType = (Buff.BuffType)UnityEngine.Random.Range(0, 2);
+            }
+            else
+            {
+                buff.buffType = (Buff.BuffType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Buff.BuffType)).Length - 1);
+            }
+            buff.name = "";
             buff.value = 0.01f;
-            buff.price = UnityEngine.Random.Range(50, 500);
+
+            int currentDay = GameManager.Instance.GetCurrentDay();
+            int basePrice = Mathf.RoundToInt(50 + currentDay * 10f);
+            float randomFactor = UnityEngine.Random.Range(0.85f, 1.15f);
+            buff.price = Mathf.RoundToInt(basePrice * randomFactor);
+
 
             switch (buff.buffType)
             {
@@ -60,17 +75,17 @@ namespace BurgerPunk.UI
                     buff.name = "Health";
                     break;
                 case Buff.BuffType.accuracy:
-                    var gunData = FindFirstObjectByType<Holster>().GetRandomUnlockedGun();
+                    var gunData = holster.GetRandomUnlockedGun();
                     buff.name = gunData.GunName + " Accuracy";
                     buff.gunID = gunData.GunID;
                     break;
                 case Buff.BuffType.damage:
-                    var gunDataDmg = FindFirstObjectByType<Holster>().GetRandomUnlockedGun();
+                    var gunDataDmg = holster.GetRandomUnlockedGun();
                     buff.name = gunDataDmg.GunName + " Damage";
                     buff.gunID = gunDataDmg.GunID;
                     break;
                 case Buff.BuffType.firerate:
-                    var gunDataFireRate = FindFirstObjectByType<Holster>().GetRandomUnlockedGun();
+                    var gunDataFireRate = holster.GetRandomUnlockedGun();
                     buff.name = gunDataFireRate.GunName + " Fire Rate";
                     buff.gunID = gunDataFireRate.GunID;
                     break;
@@ -96,26 +111,35 @@ namespace BurgerPunk.UI
         {
             foreach (Transform child in transform)
             {
-                if (child.gameObject.name != "Exit")
+                if (child.gameObject.name != "DoNotDelete")
                     Destroy(child.gameObject);
             }
+
+            List<GunData> availableGuns = holster.GetLockedGuns();
+
             for (int i = 0; i < 4; i++)
             {
-                if (UnityEngine.Random.Range(0, 2) == 0)
+                if (UnityEngine.Random.Range(0, 2) == 0 && availableGuns.Count > 0)
+                {
+                    // Check for duplicates
+                    GunData gun = holster.GetRandomLockedGun();
+                    while (gunsInShop.Contains(gun))
+                    {
+                        gun = holster.GetRandomLockedGun();
+                    }
+
+                    availableGuns.Remove(gun);
+                    gunsInShop.Add(gun);
+                    GameObject item = Instantiate(shopItem, transform);
+                    item.GetComponent<ShopItem>().Setup(gun);
+                }
+                else
                 {
                     Buff buff = GetRandomBuff();
                     buffsInShop.Add(buff);
                     GameObject item = Instantiate(shopItem, transform);
                     item.GetComponent<ShopItem>().Setup(buff);
                 }
-                else
-                {
-                    GunData gun = FindFirstObjectByType<Holster>().GetRandomLockedGun();
-                    gunsInShop.Add(gun);
-                    GameObject item = Instantiate(shopItem, transform);
-                    item.GetComponent<ShopItem>().Setup(gun);
-                }
-
             }
         }
     }
