@@ -7,6 +7,7 @@ namespace BurgerPunk.Movement
 {
     public class FirstPersonController : MonoBehaviour
     {
+        public static FirstPersonController Instance = null;
         private CharacterController controller;
         [SerializeField] private Camera playerCamera;
         [SerializeField] private Holster holster;
@@ -25,6 +26,16 @@ namespace BurgerPunk.Movement
         public SpeechBubble CustomerOrderBubble;
         public GameObject currentTargeted;
         public bool enableController = true;
+
+        private void Awake()
+        {
+            if(Instance != null)
+            {
+                throw new UnityException("There can only be one Player at a time");
+            }
+            Instance = this;
+        }
+
         private void Start()
         {
             controller = GetComponent<CharacterController>();
