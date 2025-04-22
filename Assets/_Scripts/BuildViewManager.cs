@@ -184,5 +184,6 @@ public class BuildViewManager : MonoBehaviour
         PlaceableObject placeableComponent = previewObject.GetComponent<PlaceableObject>();
         placeableComponent.PlaceObject();
         previewObject = Instantiate(buildUI.objectList.placeableObjects[buildUI.objectIndex].objectPrefab);
+        ParticleManager.Instance.CreateParticleEffect(ParticleManager.Particle.Pop, placeableComponent.transform.position, 10f);
     }
 }
