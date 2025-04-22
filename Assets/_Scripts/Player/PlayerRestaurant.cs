@@ -1,7 +1,4 @@
 ﻿using BurgerPunk.Movement;
-using NUnit.Framework;
-using RPGCharacterAnims.Lookups;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
