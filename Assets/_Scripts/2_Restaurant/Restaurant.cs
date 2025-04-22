@@ -117,7 +117,7 @@ public class Restaurant : MonoBehaviour
             {
                 ReadyOrderList.Remove(order);
                 FreeATray(order.TrayId);
-                //AssignTask();
+                AssignTask();
                 return;
             }
         }

@@ -9,10 +9,12 @@ namespace BurgerPunk.UI
     {
         [SerializeField] private TextMeshProUGUI orderText;
         [SerializeField] private PendingOrder order;
+        private PlayerRestaurant playerRestaurant;
 
         private void Start()
         {
             GetComponent<UnityEngine.UI.Button>().onClick.AddListener(OnButtonPress);
+            playerRestaurant = FindFirstObjectByType<PlayerRestaurant>();
         }
         public void SetOrder(string text, PendingOrder order)
         {
@@ -22,9 +24,12 @@ namespace BurgerPunk.UI
 
         public void OnButtonPress()
         {
+            // make sure we dont have any orders
+            if (playerRestaurant.GetCurrentOrder() != null)
+                return;
             Restaurant.Instance.PlayerOrder = order;
             Restaurant.Instance.PendingOrdersList.Remove(order);
-            FindFirstObjectByType<PlayerRestaurant>().ClaimOrder(order);
+            playerRestaurant.ClaimOrder(order);
             Destroy(gameObject);
         }
     }

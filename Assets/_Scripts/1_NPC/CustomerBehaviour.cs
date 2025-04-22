@@ -65,8 +65,6 @@ public class CustomerBehaviour : Interactable
                 PendingOrder order = playerRestaurant.GetCurrentOrder();
                 if (order.Customer == this)
                 {
-                    playerRestaurant.ClaimOrder(order);
-
                     _animator.SetTrigger(m_HashEat);
 
                     playerRestaurant.ClearOrder();

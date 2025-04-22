@@ -9,6 +9,7 @@ public class EatAndLeave : StateMachineBehaviour
         {
             if(customer.IsOrderFulfilled)
             {
+                Restaurant.Instance.OrderFulfilled(customer);
                 customer.TransitionToState(customer.mCustomerMovingState);
             }
             else
