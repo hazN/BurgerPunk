@@ -9,8 +9,7 @@ AudioMixerGroupController:
   m_Name: SFX
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 28471689c6f73d543b8a17192af40aa3
-  m_Children:
-  - {fileID: 8021565117740174131}
+  m_Children: []
   m_Volume: 8b2c84a0c8bab014ca765f2983e05083
   m_Pitch: 82ce5cd145a1fc149bcc83115f10a01b
   m_Send: 00000000000000000000000000000000
@@ -49,7 +48,13 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 9e2dace061d19a84395c9d2ecf6b5908
+    name: masterVolume
+  - guid: d8ff73871f2e8cd42a2eace533f44b5d
+    name: musicVolume
+  - guid: 8b2c84a0c8bab014ca765f2983e05083
+    name: sfxVolume
   m_AudioMixerGroupViews:
   - guids:
     - 1e3191c6a91a3924e90bb2bf88b423ae
@@ -68,6 +73,7 @@ AudioMixerGroupController:
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 1e3191c6a91a3924e90bb2bf88b423ae
   m_Children:
+  - {fileID: 8021565117740174131}
   - {fileID: -3417706196518573162}
   m_Volume: 9e2dace061d19a84395c9d2ecf6b5908
   m_Pitch: 190bb5a80a88ac04883684151f2c77bb
@@ -101,7 +107,8 @@ AudioMixerSnapshotController:
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: dac851456beab984594c736ebe2bd8d9
-  m_FloatValues: {}
+  m_FloatValues:
+    d8ff73871f2e8cd42a2eace533f44b5d: -1
   m_TransitionOverrides: {}
 --- !u!244 &5199486524348413006
 AudioMixerEffectController:

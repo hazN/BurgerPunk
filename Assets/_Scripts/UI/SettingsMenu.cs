@@ -31,6 +31,18 @@ public class SettingsMenu : MonoBehaviour
         audioManager.SetMasterVolume(masterVolumeSlider.value);
     }
 
+    public void UpdateSfxVolume()
+    {
+        audioManager.SetSfxVolume(sfxVolumeSlider.value);
+    }
+
+
+    public void UpdateMusicVolume()
+    {
+        audioManager.SetMusicVolume(musicVolumeSlider.value);
+    }
+
+
     public void OpenSettings()
     {
         Time.timeScale = 1.0f;
