@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,6 +38,10 @@ public class GameManager : MonoBehaviour
     public int numMoneyEarnedThisDay = 0;
     public int numStructuresThisDay = 0;
     public int customersServedThisDay = 0;
+
+    [Header("Scenes")]
+    [SerializeField] SceneAsset mainMenuScene;
+    [SerializeField] SceneAsset mainGameScene;
 
     private void Awake()
     {
@@ -93,6 +100,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void StartGame()
+    {
+        SceneManager.LoadScene(mainGameScene.name);
+        StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.menuTheme, 3.0f));
+        StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.pregameSong, 3.0f));
+    }
     public void MoveToNextDay()
     {
         currentDay++;

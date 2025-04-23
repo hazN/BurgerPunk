@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -19,9 +21,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource buttonClick;
 
     [Header("Music")]
-    [SerializeField] AudioSource menuTheme;
-    [SerializeField] AudioSource pregameSong;
-    [SerializeField] AudioSource daySong1;
+    [SerializeField] public AudioSource menuTheme;
+    [SerializeField] public AudioSource pregameSong;
+    [SerializeField] public AudioSource daySong1;
 
     [Header("Player")]
     [SerializeField] AudioSource gunfire;
@@ -73,6 +75,8 @@ public class AudioManager : MonoBehaviour
             btn.onClick.AddListener(() => PlayButtonSFX());
         }
     }
+
+    
 
     void PlayButtonSFX()
     {
