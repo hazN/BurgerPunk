@@ -102,6 +102,8 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        enemySpawnManager = FindAnyObjectByType<EnemySpawnManager>();
+        settingsMenu = FindAnyObjectByType<SettingsMenu>();
         SceneManager.LoadScene(mainGameScene.name);
         StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.menuTheme, 3.0f));
         StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.pregameSong, 3.0f));
