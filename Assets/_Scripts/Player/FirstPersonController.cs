@@ -97,6 +97,7 @@ namespace BurgerPunk.Movement
                 if (currentTargeted.TryGetComponent<Interactable>(out Interactable oldInteractable))
                 {
                     oldInteractable.gameObject.layer = LayerMask.NameToLayer("Default");
+                    oldInteractable.DisableText();
                 }
             }
 
@@ -121,6 +122,7 @@ namespace BurgerPunk.Movement
                 if (currentTargeted.TryGetComponent<Interactable>(out Interactable interactable))
                 {
                     interactable.gameObject.layer = LayerMask.NameToLayer("InteractableHighlight");
+                    interactable.EnableText();
                 }
             }
         }
