@@ -50,12 +50,6 @@ namespace BurgerPunk.Movement
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.BackQuote))
-            {
-                enableController = !enableController;
-                Cursor.lockState = enableController ? CursorLockMode.Locked : CursorLockMode.None;
-                Cursor.visible = !enableController;
-            }
             if (!enableController)
             {
                 return;
@@ -223,13 +217,13 @@ namespace BurgerPunk.Movement
         {
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
-            FindFirstObjectByType<FirstPersonController>().enableController = true;
+            enableController = true;
         }
         public void DisableController()
         {
             UnityEngine.Cursor.lockState = CursorLockMode.None;
             UnityEngine.Cursor.visible = true;
-            FindFirstObjectByType<FirstPersonController>().enableController = false;
+            enableController = false;
         }
     }
 }

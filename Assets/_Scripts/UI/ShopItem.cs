@@ -44,6 +44,8 @@ namespace BurgerPunk.UI
         // on button press
         public void OnButtonPress()
         {
+            if (!GameManager.Instance.TrySpendMoney(isBuff ? buff.price : gunData.Price))
+                return;
             if (isBuff)
             {
                 switch (buff.buffType)

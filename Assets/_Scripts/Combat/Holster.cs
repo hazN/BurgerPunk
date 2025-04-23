@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -104,7 +105,7 @@ namespace BurgerPunk.Combat
 
         public GunData GetRandomUnlockedGun()
         {
-            List<GunData> unlockedGuns = guns.FindAll(g => g.unlocked);
+            List<GunData> unlockedGuns = guns.FindAll(g => g.unlocked && g.Gun.IsFireable());
             if (unlockedGuns.Count > 0)
             {
                 int randomIndex = UnityEngine.Random.Range(0, unlockedGuns.Count);
@@ -119,18 +120,40 @@ namespace BurgerPunk.Combat
 
         public GunData GetRandomLockedGun()
         {
-            List<GunData> lockedGuns = guns.FindAll(g => !g.unlocked);
-            if (lockedGuns.Count > 0)
-            {
-                int randomIndex = UnityEngine.Random.Range(0, lockedGuns.Count);
-                return lockedGuns[randomIndex];
-            }
-            else
+            int level = GameManager.Instance.GetCurrentDay();
+
+            List<GunData> lockedGuns = guns.FindAll(g => !g.unlocked && g.Gun.IsFireable());
+            if (lockedGuns.Count == 0)
             {
                 Debug.Log("No locked guns available.");
                 return null;
             }
+
+            List<float> weights = new List<float>();
+            float totalWeight = 0f;
+
+            foreach (var gun in lockedGuns)
+            {
+                float price = gun.Price;
+                float weight = 1f / Mathf.Pow(price, 1f - Mathf.Clamp01(level * 0.05f));
+
+                weights.Add(weight);
+                totalWeight += weight;
+            }
+
+            float rand = UnityEngine.Random.Range(0f, totalWeight);
+            float cumulative = 0f;
+
+            for (int i = 0; i < lockedGuns.Count; i++)
+            {
+                cumulative += weights[i];
+                if (rand <= cumulative)
+                    return lockedGuns[i];
+            }
+
+            return lockedGuns[lockedGuns.Count - 1];
         }
+
 
         public void AddAccuracy(int gunId, float value)
         {
@@ -182,6 +205,31 @@ namespace BurgerPunk.Combat
                     unlockedGuns.Add(g);
                 }
             }
+        }
+        public int AmountOfLockedGuns()
+        {
+            int count = 0;
+            foreach (var gun in guns)
+            {
+                if (!gun.unlocked)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        public List<GunData> GetLockedGuns()
+        {
+            List<GunData> lockedGuns = new List<GunData>();
+            foreach (var gun in guns)
+            {
+                if (!gun.unlocked)
+                {
+                    lockedGuns.Add(gun);
+                }
+            }
+            return lockedGuns;
         }
     }
 }
