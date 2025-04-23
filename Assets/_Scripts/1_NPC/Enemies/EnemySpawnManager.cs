@@ -39,6 +39,8 @@ public class EnemySpawnManager : MonoBehaviour
             GameObject enemyObject = Instantiate(enemy.enemyPrefab, spawnPoints[Random.Range(0, spawnPoints.Length)].transform);
             EnemyBehaviour enemyBehaviour = enemyObject.GetComponent<EnemyBehaviour>();
             Actor actor = enemyObject.GetComponent<Actor>();
+
+            actor.OnDeath -= OnEnemyDeath;
             actor.OnDeath += OnEnemyDeath;
             enemyBehaviour.TargetPoint = targetPoint[Random.Range(0, targetPoint.Length)];
             enemyBehaviour.SpawnerManger = this;
