@@ -48,7 +48,7 @@ public class SpeechBubble : MonoBehaviour
 
     void SetText(string text)
     {
-
+        this.text.text = text;
     }
 
     public void SetOrder(List<FoodTypes> order)

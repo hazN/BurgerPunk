@@ -8,6 +8,9 @@ public class Interactable : MonoBehaviour
     public event System.Action OnInteracted;
     [SerializeField] private List<GameObject> gameObjects = new List<GameObject>();
     [SerializeField] private GameObject speechBubble;
+
+    [SerializeField] private AudioSource interactSfx;
+
     void Start()
     {
         
@@ -22,6 +25,7 @@ public class Interactable : MonoBehaviour
     public virtual void Interact()
     {
         OnInteracted?.Invoke();
+        interactSfx?.Play();
 
         if (gameObjects.Count > 0)
         {
