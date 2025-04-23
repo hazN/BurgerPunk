@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour
     void EndDay() // show end screen
     {
         dayTimer = 0.0f;
-        (FindFirstObjectByType(typeof(EndDayScreen)) as EndDayScreen).gameObject.SetActive(true);
+        endDayScreen.gameObject.SetActive(true);
         onDayEnded?.Invoke();
     }
 
