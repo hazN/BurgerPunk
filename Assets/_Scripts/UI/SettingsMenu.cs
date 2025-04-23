@@ -63,6 +63,7 @@ public class SettingsMenu : MonoBehaviour
     public void OpenTutorial()
     {
         GoBack();
+        FindFirstObjectByType<Tutorial>(FindObjectsInactive.Include)?.gameObject.SetActive(true);
     }
 
     public void GoBack()

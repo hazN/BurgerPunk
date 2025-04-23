@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     public System.Action onDayStarted;
     public System.Action onDayEnded;
 
+    [SerializeField] FadeUI fadeUI;
+
     Interactable bellInteractable;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -53,6 +55,8 @@ public class GameManager : MonoBehaviour
         settingsMenu = FindAnyObjectByType<SettingsMenu>(FindObjectsInactive.Include);
         // TODO: Remove this
         balance = 10000f;
+        fadeUI.gameObject.SetActive(true);
+        fadeUI.FadeFromBlackManually();
     }
 
     public void SetupBellInteractable(Interactable interactable)
