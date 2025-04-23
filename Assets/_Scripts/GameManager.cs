@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     Queue<EnemyWave> waveQueue = new Queue<EnemyWave>();
 
     [SerializeField] SettingsMenu settingsMenu;
+    [SerializeField] EndDayScreen endDayScreen;
+
     [SerializeField] protected float lengthOfDay = 300.0f; // seconds
     protected float dayTimer = 0.0f;
 
@@ -181,6 +183,7 @@ public class GameManager : MonoBehaviour
         {
             settingsMenu = FindAnyObjectByType<SettingsMenu>(FindObjectsInactive.Include);
             enemySpawnManager = FindAnyObjectByType<EnemySpawnManager>(FindObjectsInactive.Include);
+            endDayScreen = FindAnyObjectByType<EndDayScreen>(FindObjectsInactive.Include);
         }
     }
     public int GetCurrentDay()
