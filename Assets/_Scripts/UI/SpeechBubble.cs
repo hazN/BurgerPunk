@@ -29,7 +29,6 @@ public class SpeechBubble : MonoBehaviour
     {
         Setup();
     }
-
     public void Setup()
     {
         if (speechType == SpeechType.Image)

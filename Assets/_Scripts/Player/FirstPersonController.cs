@@ -67,7 +67,7 @@ namespace BurgerPunk.Movement
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0));
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 10.0f))
+            if (Physics.Raycast(ray, out hit, 4.0f))
             {
                 UpdateTargeted(hit.collider.gameObject);
             }
