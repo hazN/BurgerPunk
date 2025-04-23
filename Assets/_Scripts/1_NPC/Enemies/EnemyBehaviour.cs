@@ -59,6 +59,7 @@ public class EnemyBehaviour : Actor
             _navMeshAgent.speed = 0f;
             _animator.SetBool(m_HashDead, true);
             StartCoroutine(Despawn());
+            GameManager.Instance.EnemyDied();
         };
         OnHit += () =>
         {
