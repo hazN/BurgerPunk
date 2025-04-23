@@ -134,7 +134,6 @@ public class Restaurant : MonoBehaviour
     /// <param name="employee">Employee who prepared order</param>
     public void OrderWrapUp(EmployeeBehaviour employee)
     {
-        OccupyATray(employee.PendingOrder.TrayId);
         trays[employee.PendingOrder.TrayId].AssignOrder(employee.PendingOrder);
         trays[employee.PendingOrder.TrayId].GetComponent<InteractableTray>().enabled = true;
         employee.NavMeshAgent.enabled = false;
@@ -180,6 +179,7 @@ public class Restaurant : MonoBehaviour
         employee.PendingOrder = new PendingOrder(PendingOrdersList[0]);
         employee.PendingOrder.TrayId = tray;
         employee.Orders_Rack = OrderTraysList[tray];
+        OccupyATray(employee.PendingOrder.TrayId);
         employee.IsBusy = true;
         employee.NavMeshAgent.enabled = true;
         employee.NavMeshAgent.destination = employee.PendingOrder.MachinesList[0].position;
