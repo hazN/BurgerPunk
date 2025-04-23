@@ -116,7 +116,6 @@ namespace BurgerPunk.UI
             }
 
             List<GunData> availableGuns = holster.GetLockedGuns();
-
             for (int i = 0; i < 4; i++)
             {
                 if (UnityEngine.Random.Range(0, 2) == 0 && availableGuns.Count > 0)
