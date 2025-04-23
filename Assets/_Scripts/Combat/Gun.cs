@@ -146,17 +146,17 @@ namespace BurgerPunk.Combat
 
         public void AddDamage(float multiplier)
         {
-            damage *= multiplier;
+            damage *= (1 + multiplier);
             Debug.Log("Damage increased to: " + damage);
         }
         public void AddFireRate(float multiplier)
         {
-            fireRate *= multiplier;
+            fireRate *= (1 + multiplier);
             Debug.Log("Fire rate increased to: " + fireRate);
         }
         public void AddAccuracy(float multiplier)
         {
-            accuracy *= multiplier;
+            accuracy *= (1 + multiplier);
             Debug.Log("Accuracy increased to: " + accuracy);
         }
         public bool IsFireable()
