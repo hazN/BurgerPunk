@@ -1,3 +1,4 @@
+using BurgerPunk.Movement;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -26,6 +27,7 @@ public class SettingsMenu : MonoBehaviour
         
     }
 
+    
     public void UpdateMasterVolume()
     {
         audioManager.SetMasterVolume(masterVolumeSlider.value);
@@ -46,6 +48,21 @@ public class SettingsMenu : MonoBehaviour
     public void OpenSettings()
     {
         Time.timeScale = 1.0f;
+    }
+
+    private void OnEnable()
+    {
+        FindFirstObjectByType<FirstPersonController>()?.DisableController();
+    }
+
+    private void OnDisable()
+    {
+        FindFirstObjectByType<FirstPersonController>()?.EnableController();
+    }
+
+    public void OpenTutorial()
+    {
+        GoBack();
     }
 
     public void GoBack()

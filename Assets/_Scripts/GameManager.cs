@@ -14,14 +14,13 @@ public class GameManager : MonoBehaviour
     public EnemyDayWaves[] enemyDayWaves;
     Queue<EnemyWave> waveQueue = new Queue<EnemyWave>();
 
-    [SerializeField]
-    protected float lengthOfDay = 300.0f; // seconds
+    [SerializeField] SettingsMenu settingsMenu;
+    [SerializeField] protected float lengthOfDay = 300.0f; // seconds
     protected float dayTimer = 0.0f;
 
     private bool dayStarted = false;
 
-    [SerializeField]
-    EnemySpawnManager enemySpawnManager;
+    [SerializeField] EnemySpawnManager enemySpawnManager;
 
     public System.Action onDayStarted;
     public System.Action onDayEnded;
@@ -51,6 +50,7 @@ public class GameManager : MonoBehaviour
     void Setup()
     {
         dayStarted = false;
+        settingsMenu = FindAnyObjectByType<SettingsMenu>(FindObjectsInactive.Include);
         // TODO: Remove this
         balance = 10000f;
     }
@@ -64,6 +64,19 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (settingsMenu.gameObject.activeSelf)
+            {
+                settingsMenu.gameObject.SetActive(true);
+                settingsMenu.OpenSettings();
+            }
+            else
+            {
+                settingsMenu.gameObject.SetActive(false);
+            }
+        }
+
         if (!dayStarted) return;
 
         dayTimer += Time.deltaTime;
