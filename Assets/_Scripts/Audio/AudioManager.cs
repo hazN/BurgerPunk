@@ -23,7 +23,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource pregameSong;
     [SerializeField] AudioSource daySong1;
 
-
+    [Header("Player")]
+    [SerializeField] AudioSource gunfire;
 
     void Awake()
     {
@@ -56,6 +57,11 @@ public class AudioManager : MonoBehaviour
     {
         Debug.Log("Setting button sfx");
         SetButtonSounds();
+    }
+
+    public void Gunfire(AudioClip clip)
+    {
+        gunfire.PlayOneShot(clip);
     }
 
     void SetButtonSounds()
