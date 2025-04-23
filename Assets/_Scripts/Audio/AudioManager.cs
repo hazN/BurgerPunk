@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] AudioSource buttonClick;
+    [SerializeField] AudioSource placeableDropped;
 
     [Header("Music")]
     [SerializeField] public AudioSource menuTheme;

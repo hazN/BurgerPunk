@@ -170,6 +170,7 @@ public class GameManager : MonoBehaviour
         if (scene.name == mainGameScene.name)
         {
             settingsMenu = FindAnyObjectByType<SettingsMenu>(FindObjectsInactive.Include);
+            enemySpawnManager = FindAnyObjectByType<EnemySpawnManager>(FindObjectsInactive.Include);
         }
     }
     public int GetCurrentDay()

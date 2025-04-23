@@ -28,7 +28,7 @@ public class EnemySpawnManager : MonoBehaviour
             enemyBehaviour.TargetPoint = targetPoint[Random.Range(0, targetPoint.Length)];
             enemyBehaviour.SpawnerManger = this;
 
-            OnEnemySpawned.Invoke();
+            OnEnemySpawned?.Invoke();
         }
     }
 
