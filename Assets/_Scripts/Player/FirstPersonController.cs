@@ -2,6 +2,7 @@ using UnityEngine;
 using BurgerPunk.Inputs;
 using BurgerPunk.Combat;
 using System.Linq;
+using BurgerPunk.UI;
 
 namespace BurgerPunk.Movement
 {
@@ -204,6 +205,12 @@ namespace BurgerPunk.Movement
         public void TakeDamage(float hp)
         {
             HealthPoints -= hp;
+
+            if (HealthPoints <= 0)
+            {
+                FindFirstObjectByType<GameOverUI>().GameOver();
+                DisableController();
+            }
         }
         public void AddSpeed(float multiplier)
         {

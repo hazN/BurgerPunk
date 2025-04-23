@@ -8,13 +8,16 @@ namespace BurgerPunk.UI
 {
     public class GameOverUI : MonoBehaviour
     {
+        [SerializeField] private GameObject gameOverPanel;
         [SerializeField] private TextMeshProUGUI killCount;
         [SerializeField] private TextMeshProUGUI dayCount;
         [SerializeField] private TextMeshProUGUI moneyMade;
         [SerializeField] private TextMeshProUGUI structuresBuilt;
         [SerializeField] Button backToMainMenu;
-        private void OnEnable()
+        public void GameOver()
         {
+            gameOverPanel.SetActive(true);
+
             backToMainMenu.onClick.AddListener(BackToMainMenu);
 
             killCount. text = GameManager.Instance.totalEnemiesDefeated.ToString();
