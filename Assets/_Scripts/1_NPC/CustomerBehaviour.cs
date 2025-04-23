@@ -70,6 +70,9 @@ public class CustomerBehaviour : Interactable
                     playerRestaurant.ClearOrder();
 
                     GameManager.Instance.AddMoney((int)order.TotalCost);
+
+                    GameManager.Instance.customersServedThisDay++;
+                    GameManager.Instance.totalCustomersServed++;
                 }
                 else
                 {

@@ -39,6 +39,11 @@ public class GameManager : MonoBehaviour
     public int numStructuresThisDay = 0;
     public int customersServedThisDay = 0;
 
+    public int totalEnemiesDefeated = 0;
+    public int totalMoneyEarned = 0;
+    public int totalStructuresBuilt = 0;
+    public int totalCustomersServed = 0;
+
     [Header("Scenes")]
     [SerializeField] SceneAsset mainMenuScene;
     [SerializeField] SceneAsset mainGameScene;
@@ -222,10 +227,12 @@ public class GameManager : MonoBehaviour
     {
         balance += amount;
         numMoneyEarnedThisDay += amount;
+        totalMoneyEarned += amount;
     }
 
     public void EnemyDied()
     {
         numEnemiesDefeatedThisDay++;
+        totalEnemiesDefeated++;
     }
 }
