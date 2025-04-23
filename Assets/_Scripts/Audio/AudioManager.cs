@@ -15,9 +15,13 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource sfxSource;
 
+    [Header("UI")]
+    [SerializeField] AudioSource buttonClick;
 
-    [SerializeField] AudioClip buttonClick;
-    [SerializeField] AudioClip menuSong;
+    [Header("Music")]
+    [SerializeField] AudioSource menuTheme;
+    [SerializeField] AudioSource pregameSong;
+    [SerializeField] AudioSource daySong1;
 
 
 
@@ -32,7 +36,7 @@ public class AudioManager : MonoBehaviour
 
             if (SceneManager.GetActiveScene().name == "TitleScreen")
             {
-                PlayMusic(menuSong);
+                menuTheme.Play();
             }
             //LoadVolumes();
         }
@@ -50,6 +54,7 @@ public class AudioManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("Setting button sfx");
         SetButtonSounds();
     }
 
@@ -65,7 +70,7 @@ public class AudioManager : MonoBehaviour
 
     void PlayButtonSFX()
     {
-        PlaySFX(buttonClick);
+        buttonClick.PlayOneShot(buttonClick.clip);
     }
 
     public void PlayMusic(AudioClip audioClip)
