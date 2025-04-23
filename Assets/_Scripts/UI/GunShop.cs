@@ -100,7 +100,9 @@ namespace BurgerPunk.UI
 
         private void OnDisable()
         {
-            FindFirstObjectByType<FirstPersonController>().EnableController();
+            FirstPersonController controller = FindFirstObjectByType<FirstPersonController>();
+            controller.enabled = true;
+            controller.EnableController();
         }
         public void CloseShop()
         {
