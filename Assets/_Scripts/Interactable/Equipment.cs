@@ -22,14 +22,7 @@ namespace BurgerPunk
             // Check if the player is holding the tray
             if (holster.GetCurrentGun().GunName == "Tray")
             {
-                if(Vector3.Distance(FirstPersonController.Instance.gameObject.transform.position, transform.position) < 2f)
-                {
-                    playerRestaurant.Cook(equipmentType);
-                }
-                else
-                {
-                    Debug.Log("Player is too far");
-                }
+                playerRestaurant.Cook(equipmentType);
             }
             else
             {

@@ -8,7 +8,7 @@ namespace BurgerPunk.UI
     {
         [SerializeField] private GameObject orderUIButton;
         private Restaurant restaurant;
-        void Start()
+        private void OnEnable()
         {
             restaurant = Restaurant.Instance;
             if (restaurant == null)
@@ -17,16 +17,15 @@ namespace BurgerPunk.UI
                 return;
             }
             restaurant.OnRefreshUI.AddListener(RefreshUI);
-        }
-        private void OnEnable()
-        {
             FindFirstObjectByType<FirstPersonController>().DisableController();
             RefreshUI();
         }
 
         private void OnDisable()
         {
+            FindFirstObjectByType<FirstPersonController>().enabled = true;
             FindFirstObjectByType<FirstPersonController>().EnableController();
+            restaurant.OnRefreshUI.RemoveListener(RefreshUI);
         }
 
         public void RefreshUI()
