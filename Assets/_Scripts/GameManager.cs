@@ -22,13 +22,13 @@ public class GameManager : MonoBehaviour
     protected float dayTimer = 0.0f;
 
     private bool dayStarted = false;
+    private bool dayActivitiesComplete = false;
 
     [SerializeField] EnemySpawnManager enemySpawnManager;
 
     public System.Action onDayStarted;
     public System.Action onDayEnded;
 
-    [SerializeField] FadeUI fadeUI;
 
     Interactable bellInteractable;
 
@@ -62,8 +62,10 @@ public class GameManager : MonoBehaviour
         settingsMenu = FindAnyObjectByType<SettingsMenu>(FindObjectsInactive.Include);
         // TODO: Remove this
         balance = 10000f;
-        fadeUI.gameObject.SetActive(true);
-        fadeUI.FadeFromBlack();
+        //fadeUI.gameObject.SetActive(true);
+        //fadeUI.FadeFromBlack();
+        //FadeUI.Instance.gameObject.SetActive(true);
+        //FadeUI.Instance.FadeFromBlack();
     }
 
     public void SetupBellInteractable(Interactable interactable)
@@ -101,6 +103,13 @@ public class GameManager : MonoBehaviour
             EnemyWave wave = waveQueue.Dequeue();
             enemySpawnManager.SpawnWave(wave);
         }
+
+        if (IsDayActivitiesComplete())
+        {
+            dayStarted = false;
+            dayActivitiesComplete = true;
+            StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.daySong1, 1.0f));
+        }
     }
 
     public void StartGame()
@@ -124,16 +133,16 @@ public class GameManager : MonoBehaviour
         customersServedThisDay = 0;
     }
 
-    public bool IsDayOver()
+
+    public bool IsDayActivitiesComplete()
     {
-        if (dayTimer >= lengthOfDay) return true;
+        if (dayTimer >= lengthOfDay && enemySpawnManager.NumEnemiesAlive() == 0) return true;
 
         return false;
     }
 
-    void EndDay()
+    void EndDay() // show end screen
     {
-        dayStarted = false;
         dayTimer = 0.0f;
         (FindFirstObjectByType(typeof(EndDayScreen)) as EndDayScreen).gameObject.SetActive(true);
         onDayEnded?.Invoke();
@@ -141,28 +150,29 @@ public class GameManager : MonoBehaviour
 
     void RingBell()
     {
-        if (dayStarted)
+        if (dayActivitiesComplete)
         {
-            if (IsDayOver())
+            EndDay();
+        }
+
+        if (!dayStarted)
+        {
+            onDayStarted?.Invoke();
+
+            dayActivitiesComplete = false;
+            Debug.Log("Day " + currentDay + 1 + " started.");
+            dayTimer = 0.0f;
+            dayStarted = true;
+            CustomerManager.Instance.SpawnCustomers(3, 5.0f);
+            StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.daySong1, 3.0f));
+            StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.pregameSong, 1.5f));
+
+            foreach (EnemyWave wave in enemyDayWaves[currentDay].waves)
             {
-                EndDay();
+                waveQueue.Enqueue(wave);
             }
-
-            return;
         }
-        onDayStarted?.Invoke();
-
-        Debug.Log("Day " + currentDay + 1 + " started.");
-        dayTimer = 0.0f;
-        dayStarted = true;
-        CustomerManager.Instance.SpawnCustomers(3, 5.0f);
-        StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.daySong1, 3.0f));
-        StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.pregameSong, 1.5f));
-
-        foreach (EnemyWave wave in enemyDayWaves[currentDay].waves)
-        {
-            waveQueue.Enqueue(wave);
-        }
+        
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -212,5 +222,10 @@ public class GameManager : MonoBehaviour
     {
         balance += amount;
         numMoneyEarnedThisDay += amount;
+    }
+
+    public void EnemyDied()
+    {
+        numEnemiesDefeatedThisDay++;
     }
 }
