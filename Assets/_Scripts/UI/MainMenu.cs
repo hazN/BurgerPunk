@@ -32,6 +32,6 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        GameManager.Instance.StartGame();
+        FadeUI.Instance.FadeToBlack(GameManager.Instance.StartGame);
     }
 }

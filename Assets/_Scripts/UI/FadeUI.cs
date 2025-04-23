@@ -1,32 +1,63 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FadeUI : MonoBehaviour
 {
+    public static FadeUI Instance;
     [SerializeField] public Image fadeImage;
     public float fadeDuration = 1f;
+
+    Coroutine fadeRoutine = null;
+
+    Queue<IEnumerator> fadeQueue = new Queue<IEnumerator>();
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
         if (fadeImage != null)
         {
             fadeImage.color = new Color(0f, 0f, 0f, 1f);
-            StartCoroutine(FadeOut());
+            StartCoroutine(FadeFromBlackCoroutine());
         }
     }
 
-    public void FadeToBlack()
+    private void Update()
     {
-        StartCoroutine(FadeIn());
+        if (fadeQueue.Count > 0)
+        {
+            if (fadeRoutine == null)
+            {
+                fadeRoutine = StartCoroutine(fadeQueue.Dequeue());
+            }
+        }
     }
 
-    public void FadeFromBlackManually()
+    public void FadeToBlack(System.Action onComplete = null)
     {
-        StartCoroutine(FadeOut());
+        fadeQueue.Enqueue(FadeToBlackCoroutine(onComplete));
     }
 
-    private IEnumerator FadeOut() // Fade from black to transparent
+    public void FadeFromBlack(System.Action onComplete = null)
+    {
+        fadeQueue.Enqueue(FadeFromBlackCoroutine(onComplete));
+    }
+
+    public IEnumerator FadeFromBlackCoroutine(System.Action onComplete = null) // Fade from black to transparent
     {
         float time = 0f;
         Color color = fadeImage.color;
@@ -41,9 +72,13 @@ public class FadeUI : MonoBehaviour
 
         fadeImage.color = new Color(color.r, color.g, color.b, 0f);
         fadeImage.gameObject.SetActive(false); // Optional
+
+        fadeRoutine = null;
+
+        onComplete?.Invoke();
     }
 
-    private IEnumerator FadeIn() // Fade to black
+    public IEnumerator FadeToBlackCoroutine(System.Action onComplete = null) // Fade to black
     {
         fadeImage.gameObject.SetActive(true); // In case it was turned off
         float time = 0f;
@@ -58,5 +93,9 @@ public class FadeUI : MonoBehaviour
         }
 
         fadeImage.color = new Color(color.r, color.g, color.b, 1f);
+
+        fadeRoutine = null;
+
+        onComplete.Invoke();
     }
 }

@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         // TODO: Remove this
         balance = 10000f;
         fadeUI.gameObject.SetActive(true);
-        fadeUI.FadeFromBlackManually();
+        fadeUI.FadeFromBlack();
     }
 
     public void SetupBellInteractable(Interactable interactable)
@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(mainGameScene.name);
         StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.menuTheme, 3.0f));
         StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.pregameSong, 3.0f));
+        FadeUI.Instance.FadeFromBlack();
     }
     public void MoveToNextDay()
     {
