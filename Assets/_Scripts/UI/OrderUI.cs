@@ -23,6 +23,7 @@ namespace BurgerPunk.UI
 
         private void OnDisable()
         {
+            FindFirstObjectByType<FirstPersonController>().enabled = true;
             FindFirstObjectByType<FirstPersonController>().EnableController();
             restaurant.OnRefreshUI.RemoveListener(RefreshUI);
         }
