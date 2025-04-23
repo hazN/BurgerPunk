@@ -110,6 +110,7 @@ namespace BurgerPunk.Movement
                     if (customer.FoodTypesList.Any())
                     {
                         CustomerOrderBubble.gameObject.SetActive(true);
+                        CustomerOrderBubble.Setup();
                         CustomerOrderBubble.transform.position = customer.gameObject.transform.position + Vector3.up * 2f;
                         CustomerOrderBubble.SetOrder(customer.FoodTypesList);
                     }

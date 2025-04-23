@@ -25,7 +25,10 @@ public class Interactable : MonoBehaviour
     public virtual void Interact()
     {
         OnInteracted?.Invoke();
-        interactSfx?.Play();
+        if (interactSfx != null)
+        {
+            interactSfx.Play();
+        }
 
         if (gameObjects.Count > 0)
         {

@@ -20,19 +20,24 @@ public class SpeechBubble : MonoBehaviour
     [SerializeField] Sprite sodaIcon;
     [SerializeField] Sprite icecreamIcon;
     [SerializeField] TMP_Text text;
-    List<Image> items;
+    List<Image> items = new List<Image>();
     Sprite[] sprites;
 
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Setup();
+    }
+
+    public void Setup()
+    {
         if (speechType == SpeechType.Image)
         {
             text.gameObject.SetActive(false);
         }
         sprites = new Sprite[3] { burgerIcon, friesIcon, sodaIcon };
-        items = new List<Image>();
+        items.Clear();
         items.Add(item1);
         items.Add(item2);
         items.Add(item3);
