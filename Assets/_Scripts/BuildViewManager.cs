@@ -21,6 +21,7 @@ public class BuildViewManager : MonoBehaviour
     GameObject previewObject;
 
     [SerializeField] Interactable buildViewInteractable;
+    PlaceableObject placeableComponent;
 
     GameObject player;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -89,7 +90,6 @@ public class BuildViewManager : MonoBehaviour
                 
             }
 
-            PlaceableObject placeableComponent = previewObject.GetComponent<PlaceableObject>();
             bool placeable = placeableComponent.IsPlaceable();
 
             //Debug.Log(ray);
@@ -177,11 +177,12 @@ public class BuildViewManager : MonoBehaviour
             Destroy(previewObject);
             previewObject = Instantiate(buildUI.objectList.placeableObjects[buildUI.objectIndex].objectPrefab);
         }
+
+        placeableComponent = previewObject.GetComponentInChildren<PlaceableObject>();
     }
 
     void PlaceObject()
     {
-        PlaceableObject placeableComponent = previewObject.GetComponent<PlaceableObject>();
         placeableComponent.PlaceObject();
         previewObject = Instantiate(buildUI.objectList.placeableObjects[buildUI.objectIndex].objectPrefab);
         ParticleManager.Instance.CreateParticleEffect(ParticleManager.Particle.Pop, placeableComponent.transform.position, 10f);
