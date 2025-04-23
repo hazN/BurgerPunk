@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -77,14 +77,17 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (settingsMenu.gameObject.activeSelf)
+            if (settingsMenu != null)
             {
-                settingsMenu.gameObject.SetActive(true);
-                settingsMenu.OpenSettings();
-            }
-            else
-            {
-                settingsMenu.gameObject.SetActive(false);
+                if (!settingsMenu.gameObject.activeSelf)
+                {
+                    settingsMenu.gameObject.SetActive(true);
+                    settingsMenu.OpenSettings();
+                }
+                else
+                {
+                    settingsMenu.gameObject.SetActive(false);
+                }
             }
         }
 
@@ -103,8 +106,11 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         enemySpawnManager = FindAnyObjectByType<EnemySpawnManager>();
-        settingsMenu = FindAnyObjectByType<SettingsMenu>();
+        settingsMenu = null;
         SceneManager.LoadScene(mainGameScene.name);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        
+
         StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.menuTheme, 3.0f));
         StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.pregameSong, 3.0f));
         FadeUI.Instance.FadeFromBlack();
@@ -150,12 +156,22 @@ public class GameManager : MonoBehaviour
         dayTimer = 0.0f;
         dayStarted = true;
         CustomerManager.Instance.SpawnCustomers(3, 5.0f);
+        StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.daySong1, 3.0f));
+        StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.pregameSong, 1.5f));
+
         foreach (EnemyWave wave in enemyDayWaves[currentDay].waves)
         {
             waveQueue.Enqueue(wave);
         }
     }
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        if (scene.name == mainGameScene.name)
+        {
+            settingsMenu = FindAnyObjectByType<SettingsMenu>(FindObjectsInactive.Include);
+        }
+    }
     public int GetCurrentDay()
     {
         return currentDay;
