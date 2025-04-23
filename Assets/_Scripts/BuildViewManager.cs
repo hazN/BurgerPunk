@@ -28,7 +28,7 @@ public class BuildViewManager : MonoBehaviour
     void Start()
     {
         gridManager = FindFirstObjectByType<LawnGridManager>();
-        buildUI = FindFirstObjectByType<BuildUI>();
+        buildUI = FindAnyObjectByType<BuildUI>(FindObjectsInactive.Include);
         buildUI.OnPreviewChanged += UpdatePreviewObject;
         radialProgressBar = buildUI.radialProgressBar;
 
@@ -110,12 +110,8 @@ public class BuildViewManager : MonoBehaviour
                 Shader.SetGlobalFloat("_IsValid", 0.0f);
             }
         }
-        else
-        {
-            radialProgressBar.CancelProgress();
-        }
 
-        if (radialProgressBar.IsActive() && Input.GetMouseButtonUp(0))
+        if (radialProgressBar && radialProgressBar.IsActive() && Input.GetMouseButtonUp(0))
         {
             radialProgressBar.CancelProgress();
         }
@@ -149,6 +145,7 @@ public class BuildViewManager : MonoBehaviour
         active = false;
         buildCamera.enabled = false;
         Destroy(previewObject);
+        radialProgressBar.CancelProgress();
 
         if (mainCamera)
         {

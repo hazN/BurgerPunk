@@ -4,6 +4,9 @@ public class EnemySpawnManager : MonoBehaviour
 {
     public EnemySpawner[] spawnPoints;
     public Transform[] targetPoint;
+
+    public event System.Action OnEnemySpawned;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,6 +27,8 @@ public class EnemySpawnManager : MonoBehaviour
             EnemyBehaviour enemyBehaviour = enemyObject.GetComponent<EnemyBehaviour>();
             enemyBehaviour.TargetPoint = targetPoint[Random.Range(0, targetPoint.Length)];
             enemyBehaviour.SpawnerManger = this;
+
+            OnEnemySpawned.Invoke();
         }
     }
 

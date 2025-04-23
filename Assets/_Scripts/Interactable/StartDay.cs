@@ -6,6 +6,6 @@ public class StartDayInteractable : MonoBehaviour
     void Start()
     {
         GameManager gameManager = FindFirstObjectByType<GameManager>();
-        gameManager.SetupStartDayInteractable(gameObject.GetComponent<Interactable>());
+        gameManager.SetupBellInteractable(gameObject.GetComponent<Interactable>());
     }
 }

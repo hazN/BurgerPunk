@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -23,8 +24,9 @@ public class GameManager : MonoBehaviour
     EnemySpawnManager enemySpawnManager;
 
     public System.Action onDayStarted;
+    public System.Action onDayEnded;
 
-    Interactable startDayInteractable;
+    Interactable bellInteractable;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -48,10 +50,10 @@ public class GameManager : MonoBehaviour
         balance = 10000f;
     }
 
-    public void SetupStartDayInteractable(Interactable interactable)
+    public void SetupBellInteractable(Interactable interactable)
     {
-        startDayInteractable = interactable;
-        interactable.OnInteracted += StartDay;
+        bellInteractable = interactable;
+        interactable.OnInteracted += RingBell;
     }
 
     // Update is called once per frame
@@ -60,6 +62,7 @@ public class GameManager : MonoBehaviour
         if (!dayStarted) return;
 
         dayTimer += Time.deltaTime;
+        dayTimer = Math.Min(dayTimer, lengthOfDay);
 
         if (waveQueue.Any() && dayTimer/lengthOfDay > waveQueue.Peek().spawnTime)
         {
@@ -68,9 +71,37 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void StartDay()
+    public void MoveToNextDay()
     {
-        if (dayStarted) return;
+        currentDay++;
+    }
+
+    public bool IsDayOver()
+    {
+        if (dayTimer >= lengthOfDay) return true;
+
+        return false;
+    }
+
+    void EndDay()
+    {
+        dayStarted = false;
+        dayTimer = 0.0f;
+        (FindFirstObjectByType(typeof(EndDayScreen)) as EndDayScreen).gameObject.SetActive(true);
+        onDayEnded?.Invoke();
+    }
+
+    void RingBell()
+    {
+        if (dayStarted)
+        {
+            if (IsDayOver())
+            {
+                EndDay();
+            }
+
+            return;
+        }
         onDayStarted?.Invoke();
 
         Debug.Log("Day " + currentDay + 1 + " started.");

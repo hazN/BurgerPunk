@@ -14,6 +14,17 @@ public class EmployeeUI : MonoBehaviour
     List<RectTransform> employeePanels;
 
     GameManager gameManager;
+
+    private void OnEnable()
+    {
+        FindFirstObjectByType<FirstPersonController>().DisableController();
+    }
+
+    private void OnDisable()
+    {
+        FindFirstObjectByType<FirstPersonController>().EnableController();
+    }
+
     void Start()
     {
         gameManager = FindFirstObjectByType<GameManager>();
