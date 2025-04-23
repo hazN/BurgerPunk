@@ -45,6 +45,11 @@ namespace BurgerPunk.Player
             {
                 orderStatus.text = "Order Complete, hand to Customer!";
                 isOrderComplete = true;
+
+                // HIGHLIGHT CUSTOMER
+                // TODO: Implement highlighting logic
+                // currentOrder.Customer.getcomponent highlighter??
+
                 return;
             }
             foreach (var item in itemsToComplete)

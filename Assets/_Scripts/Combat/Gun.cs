@@ -25,6 +25,7 @@ namespace BurgerPunk.Combat
         [SerializeField] private Transform muzzleFlashTransform;
 
         [SerializeField] private GameObject trailPrefab;
+        [SerializeField] private AudioClip gunfireSound;
 
         [SerializeField] private bool isFireable = true;
         private void Update()
@@ -49,6 +50,10 @@ namespace BurgerPunk.Combat
                     Debug.Log("Muzzle flash played");
                     muzzleFlash.Stop();
                     muzzleFlash.Play();
+                }
+                if (gunfireSound != null)
+                {
+                    AudioManager.Instance.Gunfire(gunfireSound);
                 }
                 animator.Play("Fire", 0, 0f);
                 nextFireTime = Time.time + 1f / fireRate;
