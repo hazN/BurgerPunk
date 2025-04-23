@@ -17,15 +17,13 @@ public class WaveProgressBar : ProgressBar
     [SerializeField] Image backgroundImage;
     [SerializeField] Image pizzaIcon;
     float barLength;
-    GameManager gameManager;
 
     List<Image> pizzaIcons;
 
     private void Start()
     {
         barLength = backgroundImage.rectTransform.rect.width;
-        gameManager = FindFirstObjectByType<GameManager>();
-        gameManager.onDayStarted += SetNewWaves;
+        GameManager.Instance.onDayStarted += SetNewWaves;
     }
 
     private void Update()
@@ -48,7 +46,7 @@ public class WaveProgressBar : ProgressBar
         }
         pizzaIcons.Clear();
 
-        EnemyWave[] waves = gameManager.enemyDayWaves[gameManager.currentDay].waves;
+        EnemyWave[] waves = GameManager.Instance.enemyDayWaves[GameManager.Instance.currentDay].waves;
         for (int x = 0; x < waves.Length; x++)
         {
             Image icon = Instantiate(pizzaIcon);

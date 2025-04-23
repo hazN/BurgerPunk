@@ -21,6 +21,7 @@ public class PlaceableObject : MonoBehaviour
     {
         inPlacementMode = false;
         gameObject.layer = LayerMask.NameToLayer("PlaceableObjects");
+        FindAnyObjectByType<GameManager>().numStructuresThisDay++;
     }
 
     // Update is called once per frame

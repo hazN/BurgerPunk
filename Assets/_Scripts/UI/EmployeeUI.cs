@@ -13,7 +13,6 @@ public class EmployeeUI : MonoBehaviour
     [SerializeField] float[] employeeCosts;
     List<RectTransform> employeePanels;
 
-    GameManager gameManager;
 
     private void OnEnable()
     {
@@ -27,7 +26,6 @@ public class EmployeeUI : MonoBehaviour
 
     void Start()
     {
-        gameManager = FindFirstObjectByType<GameManager>();
         employeePanels = new List<RectTransform>();
         FirstPersonController.Instance.DisableController();
         employeePanels.Add(employeePanel1);
@@ -49,11 +47,11 @@ public class EmployeeUI : MonoBehaviour
     public void HireEmployee(int index)
     {
         float cost = employeeCosts[index];
-        float balance = gameManager.GetBalance();
+        float balance = GameManager.Instance.GetBalance();
 
         if (cost <= balance)
         {
-            gameManager.SpendMoney(cost);
+            GameManager.Instance.TrySpendMoney(cost);
             Restaurant.Instance.SpawnEmployees(index);
             employeePanels[index].gameObject.SetActive(false);
         }

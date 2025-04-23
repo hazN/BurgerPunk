@@ -30,6 +30,11 @@ public class GameManager : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
+    public int numEnemiesDefeatedThisDay = 0;
+    public int numMoneyEarnedThisDay = 0;
+    public int numStructuresThisDay = 0;
+    public int customersServedThisDay = 0;
+
     private void Awake()
     {
         if (Instance == null)
@@ -74,6 +79,10 @@ public class GameManager : MonoBehaviour
     public void MoveToNextDay()
     {
         currentDay++;
+        numEnemiesDefeatedThisDay = 0;
+        numMoneyEarnedThisDay = 0;
+        numStructuresThisDay = 0;
+        customersServedThisDay = 0;
     }
 
     public bool IsDayOver()
@@ -134,7 +143,7 @@ public class GameManager : MonoBehaviour
         return balance;
     }
 
-    public void SpendMoney(float amount)
+    void SpendMoney(float amount)
     {
         balance -= amount;
     }
@@ -152,5 +161,6 @@ public class GameManager : MonoBehaviour
     public void AddMoney(int amount)
     {
         balance += amount;
+        numMoneyEarnedThisDay += amount;
     }
 }

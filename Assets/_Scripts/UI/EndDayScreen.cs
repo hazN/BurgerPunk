@@ -1,20 +1,24 @@
 using BurgerPunk.Movement;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class EndDayScreen : MonoBehaviour
 {
 
+    [SerializeField] TMP_Text titleText;
+    [SerializeField] TMP_Text descriptionText;
 
-    GameManager gameManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        gameManager = FindFirstObjectByType<GameManager>();
+
     }
     private void OnEnable()
     {
         FindFirstObjectByType<FirstPersonController>().DisableController();
+        titleText.text = "DAY" + GameManager.Instance.currentDay.ToString() + " COMPLETE";
+
     }
 
     private void OnDisable()
@@ -30,7 +34,7 @@ public class EndDayScreen : MonoBehaviour
 
     public void GoNextDay()
     {
-        gameManager.MoveToNextDay();
+        GameManager.Instance.MoveToNextDay();
         this.gameObject.SetActive(false);
     }
 }
