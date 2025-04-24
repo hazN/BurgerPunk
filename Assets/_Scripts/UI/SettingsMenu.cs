@@ -11,7 +11,7 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] Slider musicVolumeSlider;
     [SerializeField] Slider sfxVolumeSlider;
 
-    [SerializeField] Slider sensitivitySlider;
+    [SerializeField] public Slider sensitivitySlider;
     [SerializeField] Toggle fullscreenToggle;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
