@@ -12,7 +12,8 @@ public class ParticleManager : MonoBehaviour
     public enum Particle
     {
         Pop,
-        Ding
+        Ding,
+        Grill
     }
 
     private void Start()
