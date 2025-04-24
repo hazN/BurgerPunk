@@ -17,6 +17,8 @@ public class CustomerManager : MonoBehaviour
     [SerializeField]
     private int TotalOccupiedPlaces = 0;
     private List <CustomerBehaviour> _customerBehavioursList = new List<CustomerBehaviour>();
+    public bool DayStarted = false;
+    public bool DayFinished = false;
 
     private void Awake()
     {
@@ -28,7 +30,6 @@ public class CustomerManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -55,7 +56,8 @@ public class CustomerManager : MonoBehaviour
             customer.Wait_Target.IsOccupied = false;
             _customerBehavioursList.Remove(customer);
             Destroy(customer.gameObject);
-            SpawnCustomers(1, 5f);
+            if(!DayFinished)
+                SpawnCustomers(1, 5f);
         }
     }
 

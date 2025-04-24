@@ -25,11 +25,13 @@ namespace BurgerPunk.Movement
         private float verticalVelocity = 0f;
         private float cameraPitch = 0f;
         private float timeSinceLastScroll = 0f;
+        private float timeSinceTakenDamage = 0f;
 
         public SpeechBubble CustomerOrderBubble;
         public GameObject currentTargeted;
         public bool enableController = true;
         public UnityEvent OnPlayerDamage;
+
         private void Awake()
         {
             if(Instance != null)
@@ -140,6 +142,14 @@ namespace BurgerPunk.Movement
                 }
             }
         }
+        private void HandleRegen()
+        {
+            if (Time.time - timeSinceTakenDamage > 5f)
+            {
+                HealthPoints = Mathf.Min(HealthPoints + 0.1f, (MaxHealthPoints / 2f));
+                OnPlayerDamage?.Invoke();
+            }
+        }
 
         private void HandleMovement()
         {
@@ -197,6 +207,11 @@ namespace BurgerPunk.Movement
 
         private void HandleScroll()
         {
+            if (InputManager.Instance.playerInput.Player.Cycle.triggered)
+            {
+                holster.NextGun();
+            }
+
             float scrollValue = InputManager.Instance.playerInput.Player.Scroll.ReadValue<Vector2>().y;
 
             if (scrollValue != 0 && Time.time - timeSinceLastScroll > 0.05f)
@@ -217,6 +232,7 @@ namespace BurgerPunk.Movement
         public void TakeDamage(float hp)
         {
             HealthPoints -= hp;
+            timeSinceTakenDamage = Time.time;
             OnPlayerDamage?.Invoke();
 
             if (HealthPoints <= 0)

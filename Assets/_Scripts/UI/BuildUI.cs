@@ -24,10 +24,12 @@ public class BuildUI : MonoBehaviour
     [SerializeField]
     public RadialProgress radialProgressBar;
 
+    [SerializeField] private TextMeshProUGUI moneyText;
+
     public int objectIndex;
 
     public event System.Action OnPreviewChanged;
-    
+
     BuildViewManager buildViewManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -41,7 +43,7 @@ public class BuildUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        moneyText.text = "$" + GameManager.Instance.GetBalance().ToString();
     }
 
     private void OnEnable()
@@ -59,7 +61,7 @@ public class BuildUI : MonoBehaviour
     public void GoLeft()
     {
         objectIndex--;
-        
+
         if (objectIndex < 0)
         {
             objectIndex += objectList.placeableObjects.Length;

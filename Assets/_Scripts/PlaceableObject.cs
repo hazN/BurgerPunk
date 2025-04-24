@@ -3,10 +3,11 @@ using UnityEngine;
 /// <summary>
 /// Parent class for all placeable objects (I hope)
 /// </summary>
-public class PlaceableObject : MonoBehaviour
+public class PlaceableObject : Actor
 {
     bool active = false;
     bool inPlacementMode = true;
+    [SerializeField] GameObject healthBar;
 
     //Collider collider;
     LayerMask overlapLayer;
@@ -15,6 +16,11 @@ public class PlaceableObject : MonoBehaviour
     {
        // collider = GetComponent<Collider>();
         overlapLayer = LayerMask.GetMask("PlaceableObjects");
+        OnDeath += () =>
+        {
+            Destroy(gameObject);
+            Destroy(healthBar);
+        };
     }
 
     public void PlaceObject()

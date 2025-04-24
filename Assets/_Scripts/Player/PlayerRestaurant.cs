@@ -37,6 +37,7 @@ namespace BurgerPunk.Player
                 itemsToComplete.Add(item);
                 orderStatus.text += item.Name + "\n";
             }
+            currentOrder.Customer.SpotLight.SetActive(true);
         }
 
         private void UpdateOrderStatus()
@@ -153,6 +154,7 @@ namespace BurgerPunk.Player
                 Debug.Log("Already have an order, complete it first.");
                 return;
             }
+
 
             ClaimOrder(completedTray.GetCurrentOrder());
 
