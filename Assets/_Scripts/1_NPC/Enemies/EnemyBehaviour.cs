@@ -147,7 +147,6 @@ public class EnemyBehaviour : Actor
         {
             if (mPlayerObject != null)
             {
-                Debug.Log("Attacking Player: -" + AttackPoints);
                 mPlayerObject.TakeDamage(AttackPoints);
                 return;
             }
@@ -156,7 +155,6 @@ public class EnemyBehaviour : Actor
         {
             if(mFighterEmployeeObject != null)
             {
-                Debug.Log("Attacking Employee: -" + AttackPoints);
                 mFighterEmployeeObject.TakeDamage(AttackPoints);
                 if(!mFighterEmployeeObject.IsAlive())
                 {
