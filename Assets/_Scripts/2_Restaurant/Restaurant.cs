@@ -1,5 +1,6 @@
 using BurgerPunk;
 using BurgerPunk.Player;
+using BurgerPunk.UI;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -247,5 +248,10 @@ public class Restaurant : MonoBehaviour
     public void TakeDamage(float hp)
     {
         HealthPoints -= hp;
+
+        if (HealthPoints <= 0)
+        {
+            FindFirstObjectByType<GameOverUI>().GameOver();
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace BurgerPunk.UI
         [SerializeField] Button backToMainMenu;
         public void GameOver()
         {
+            Time.timeScale = 0f;
+
             gameOverPanel.SetActive(true);
 
             backToMainMenu.onClick.AddListener(BackToMainMenu);

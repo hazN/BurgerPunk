@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     private bool dayActivitiesComplete = false;
 
     [SerializeField] EnemySpawnManager enemySpawnManager;
+    [SerializeField] GameObject gunShop;
 
     public System.Action onDayStarted;
     public System.Action onDayEnded;
@@ -113,6 +114,7 @@ public class GameManager : MonoBehaviour
 
         if (IsDayActivitiesComplete())
         {
+            gunShop.SetActive(true);
             dayStarted = false;
             dayActivitiesComplete = true;
             StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.daySong1, 1.0f));
@@ -150,6 +152,7 @@ public class GameManager : MonoBehaviour
 
     void EndDay() // show end screen
     {
+        gunShop.SetActive(false);
         dayTimer = 0.0f;
         if (endDayScreen == null)
         {
