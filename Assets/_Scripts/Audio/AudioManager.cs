@@ -30,11 +30,16 @@ public class AudioManager : MonoBehaviour
     [Header("Player")]
     [SerializeField] AudioSource gunfire;
     [SerializeField] public AudioSource customerServed;
+    [SerializeField] public AudioSource alarm;
 
     [Header("Restaurant")]
     [SerializeField] public AudioSource fryerSfx;
     [SerializeField] public AudioSource grillSfx;
     [SerializeField] public AudioSource sodaSfx;
+
+    [Header("Customer")]
+    [SerializeField] AudioSource customerBark;
+    [SerializeField] AudioClip[] customerBarkClips;
     void Awake()
     {
         if (Instance == null)
@@ -60,6 +65,12 @@ public class AudioManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void PlayRandomCustomerBark()
+    {
+        customerBark.clip = customerBarkClips[UnityEngine.Random.Range(0, customerBarkClips.Length)];
+        customerBark.Play();
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
