@@ -151,6 +151,10 @@ public class GameManager : MonoBehaviour
     void EndDay() // show end screen
     {
         dayTimer = 0.0f;
+        if (endDayScreen == null)
+        {
+            endDayScreen = FindAnyObjectByType<EndDayScreen>(FindObjectsInactive.Include);
+        }
         endDayScreen.gameObject.SetActive(true);
         onDayEnded?.Invoke();
     }
