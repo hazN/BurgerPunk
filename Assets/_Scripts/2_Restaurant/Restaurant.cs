@@ -261,10 +261,6 @@ public class Restaurant : MonoBehaviour
 
     public void ClearPendingOrders()
     {
-        foreach (var order in PendingOrdersList)
-        {
-            Destroy(order.Customer.gameObject);
-        }
         PendingOrdersList.Clear();
     }
 
