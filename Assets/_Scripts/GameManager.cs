@@ -143,8 +143,12 @@ public class GameManager : MonoBehaviour
         numMoneyEarnedThisDay = 0;
         numStructuresThisDay = 0;
         customersServedThisDay = 0;
+        dayStarted = false;
+        dayActivitiesComplete = false;
 
         FadeUI.Instance.FadeFromBlack();
+
+        StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.pregameSong, 3.0f));
     }
 
 
@@ -207,7 +211,7 @@ public class GameManager : MonoBehaviour
     }
     public int GetCurrentDay()
     {
-        return currentDay;
+        return currentDay + 1;
     }
 
     public float GetDayProgress()

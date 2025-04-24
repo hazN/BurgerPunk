@@ -17,8 +17,12 @@ public class EndDayScreen : MonoBehaviour
     private void OnEnable()
     {
         FindFirstObjectByType<FirstPersonController>().DisableController();
-        titleText.text = "DAY" + GameManager.Instance.currentDay.ToString() + " COMPLETE";
+        titleText.text = "DAY " + GameManager.Instance.GetCurrentDay().ToString() + " COMPLETE";
 
+        descriptionText.text = "BAD GUYS OBLITERATED: " + GameManager.Instance.numEnemiesDefeatedThisDay.ToString() + "\n" +
+            "BURGER BUCKS ACQUIRED: $" + GameManager.Instance.numMoneyEarnedThisDay.ToString() + "\n" +
+            "STRUCTURES PLACED: " + GameManager.Instance.numStructuresThisDay.ToString() +"\n" +
+            "CUSTOMERS SERVED: " + GameManager.Instance.customersServedThisDay.ToString();
     }
 
     private void OnDisable()
