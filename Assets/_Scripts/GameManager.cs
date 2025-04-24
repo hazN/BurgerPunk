@@ -139,8 +139,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(mainGameScene.name);
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        Tutorial tutorial = FindFirstObjectByType<Tutorial>(FindObjectsInactive.Include);
-        tutorial.gameObject.SetActive(true);
         StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.menuTheme, 3.0f));
         StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.pregameSong, 3.0f));
         FadeUI.Instance.FadeFromBlack();
@@ -219,6 +217,14 @@ public class GameManager : MonoBehaviour
             endDayScreen = FindAnyObjectByType<EndDayScreen>(FindObjectsInactive.Include);
             gunShop = GameObject.FindGameObjectWithTag("GunTruck");
             gunShop.SetActive(false);
+
+            //Tutorial tutorial = FindFirstObjectByType<Tutorial>(FindObjectsInactive.Include);
+            
+            //tutorial.gameObject.SetActive(true);
+            //UnityEngine.Cursor.lockState = CursorLockMode.None;
+            //UnityEngine.Cursor.visible = true;
+
+            //FirstPersonController.Instance.DisableController();
         }
     }
     public int GetCurrentDay()
