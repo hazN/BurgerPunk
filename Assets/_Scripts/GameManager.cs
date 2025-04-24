@@ -1,3 +1,4 @@
+using BurgerPunk.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -199,6 +200,7 @@ public class GameManager : MonoBehaviour
             settingsMenu = FindAnyObjectByType<SettingsMenu>(FindObjectsInactive.Include);
             enemySpawnManager = FindAnyObjectByType<EnemySpawnManager>(FindObjectsInactive.Include);
             endDayScreen = FindAnyObjectByType<EndDayScreen>(FindObjectsInactive.Include);
+            gunShop = FindAnyObjectByType<GunShop>(FindObjectsInactive.Include).gameObject;
         }
     }
     public int GetCurrentDay()
