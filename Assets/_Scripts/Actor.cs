@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Actor : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Actor : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (health <= 0.0f) return;
+
         health = Mathf.Max(0.0f, health - damage);
 
         if (health <= 0.0f)

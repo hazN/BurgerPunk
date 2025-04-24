@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] AudioSource buttonClick;
-    [SerializeField] AudioSource placeableDropped;
+    [SerializeField] public AudioSource placeableDropped;
 
     [Header("Music")]
     [SerializeField] public AudioSource menuTheme;
@@ -69,7 +69,7 @@ public class AudioManager : MonoBehaviour
 
     void SetButtonSounds()
     {
-        Button[] buttons = FindObjectsByType<Button>(FindObjectsSortMode.None);
+        Button[] buttons = FindObjectsByType<Button>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (Button btn in buttons)
         {
             btn.onClick.RemoveListener(() => PlayButtonSFX());
@@ -77,7 +77,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    
 
     void PlayButtonSFX()
     {
