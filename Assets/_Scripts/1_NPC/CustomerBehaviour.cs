@@ -21,6 +21,7 @@ public class CustomerBehaviour : Interactable
     public NPCTarget Wait_Target;
     public Transform OrderTile;
     public GameObject Stool;
+    public GameObject SpotLight;
 
     [HideInInspector]
     public List<FoodTypes> FoodTypesList = new List<FoodTypes>();
@@ -62,6 +63,7 @@ public class CustomerBehaviour : Interactable
         {
             if (playerRestaurant.IsOrderComplete())
             {
+                SpotLight.SetActive(false);
                 PendingOrder order = playerRestaurant.GetCurrentOrder();
                 if (order.Customer == this)
                 {

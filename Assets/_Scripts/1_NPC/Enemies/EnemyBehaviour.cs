@@ -44,8 +44,10 @@ public class EnemyBehaviour : Actor
 
     public FirstPersonController mPlayerObject;
     public FighterEmployeeBehaviour mFighterEmployeeObject;
+    public PlaceableObject mPlaceableObject;
     public bool mIsTargetPlayer = false;
     public bool mIsTargetEmployee = false;
+    public bool mIsTargetPlaceable = false;
     private bool m_IsDead = false;
 
     private void Awake()
@@ -94,7 +96,18 @@ public class EnemyBehaviour : Actor
                 mIsTargetEmployee = false;
             }
         }
-        _currentState.Update();
+        else if(mIsTargetPlaceable)
+        {
+            if (mPlaceableObject != null)
+            {
+                _navMeshAgent.destination = mPlaceableObject.transform.position;
+            }
+            else
+            {
+                mIsTargetPlaceable = false;
+            }
+        }
+            _currentState.Update();
     }
 
     public void TransitionToState(NPCBaseState state)
@@ -108,8 +121,9 @@ public class EnemyBehaviour : Actor
     {
         if (other.CompareTag("Player"))
         {
-            mIsTargetPlayer = true;
             mIsTargetEmployee = false;
+            mIsTargetPlaceable = false;
+            mIsTargetPlayer = true;
             if (mPlayerObject == null)
                 mPlayerObject = other.GetComponent<FirstPersonController>();
             TransitionToState(mEnemyMoveState);
@@ -117,10 +131,21 @@ public class EnemyBehaviour : Actor
         else if (other.CompareTag("Employee"))
         {
             mIsTargetPlayer = false;
+            mIsTargetPlaceable = false;
             mIsTargetEmployee = true;
             if (mFighterEmployeeObject == null)
                 mFighterEmployeeObject = other.GetComponent<FighterEmployeeBehaviour>();
             _navMeshAgent.destination = mFighterEmployeeObject.transform.position;
+            TransitionToState(mEnemyMoveState);
+        }
+        else if (other.CompareTag("Placeable"))
+        {
+            mIsTargetPlayer = false;
+            mIsTargetEmployee = false;
+            mIsTargetPlaceable = true;
+            if (mPlaceableObject == null)
+                mPlaceableObject = other.GetComponent<PlaceableObject>();
+            _navMeshAgent.destination = mPlaceableObject.transform.position;
             TransitionToState(mEnemyMoveState);
         }
     }
@@ -160,6 +185,21 @@ public class EnemyBehaviour : Actor
                 {
                     mIsTargetEmployee = false;
                     mFighterEmployeeObject = null;
+                    _navMeshAgent.destination = SpawnerManger.targetPoint[Random.Range(0, SpawnerManger.targetPoint.Length)].position;
+                    TransitionToState(mEnemyMoveState);
+                }
+                return;
+            }
+        }
+        else if (mIsTargetPlaceable)
+        {
+            if( mPlaceableObject != null)
+            {
+                mPlaceableObject.TakeDamage(AttackPoints);
+                if(!mPlaceableObject.IsAlive())
+                {
+                    mIsTargetPlaceable = false;
+                    mPlaceableObject = null;
                     _navMeshAgent.destination = SpawnerManger.targetPoint[Random.Range(0, SpawnerManger.targetPoint.Length)].position;
                     TransitionToState(mEnemyMoveState);
                 }

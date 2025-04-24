@@ -88,6 +88,8 @@ public class FighterEmployeeBehaviour : Actor
                 TransitionToState(mEmployeeIdleState);
             }
         }
+        else
+            TransitionToState(mEmployeeIdleState);
     }
 
     private void OnTriggerEnter(Collider other)
