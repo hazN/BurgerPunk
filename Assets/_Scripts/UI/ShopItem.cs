@@ -46,6 +46,8 @@ namespace BurgerPunk.UI
         {
             if (!GameManager.Instance.TrySpendMoney(isBuff ? buff.price : gunData.Price))
                 return;
+
+            AudioManager.Instance.kaching.Play();
             if (isBuff)
             {
                 switch (buff.buffType)

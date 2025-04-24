@@ -60,6 +60,7 @@ public class EmployeeUI : MonoBehaviour
             GameManager.Instance.TrySpendMoney(cost);
             Restaurant.Instance.SpawnEmployees(index);
             employeePanels[index].gameObject.SetActive(false);
+            AudioManager.Instance.kaching.Play();
         }
     }
 
