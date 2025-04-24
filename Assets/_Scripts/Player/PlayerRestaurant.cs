@@ -14,6 +14,7 @@ namespace BurgerPunk.Player
         [SerializeField] private TextMeshProUGUI orderStatus;
         [SerializeField] private FirstPersonController firstPersonController;
         [SerializeField] private Tray tray;
+        [SerializeField] private RadialProgress radialProgress;
         private void Awake()
         {
             firstPersonController = gameObject.GetComponent<FirstPersonController>();
@@ -101,7 +102,10 @@ namespace BurgerPunk.Player
             Debug.Log("Starting to cook...");
             
             firstPersonController.DisableController();
+            radialProgress.gameObject.SetActive(true);
+            radialProgress.StartProgress(2f);
             yield return new WaitForSeconds(2f);
+            radialProgress.gameObject.SetActive(false);
             firstPersonController.EnableController();
             Debug.Log("Done cooking!");
 
