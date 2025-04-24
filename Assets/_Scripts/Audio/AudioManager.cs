@@ -20,6 +20,7 @@ public class AudioManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] AudioSource buttonClick;
     [SerializeField] public AudioSource placeableDropped;
+    [SerializeField] public AudioSource kaching;
 
     [Header("Music")]
     [SerializeField] public AudioSource menuTheme;
@@ -28,6 +29,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Player")]
     [SerializeField] AudioSource gunfire;
+    [SerializeField] public AudioSource customerServed;
 
     [Header("Restaurant")]
     [SerializeField] public AudioSource fryerSfx;
