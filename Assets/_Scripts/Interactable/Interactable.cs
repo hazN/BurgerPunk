@@ -10,6 +10,8 @@ public class Interactable : MonoBehaviour
     [SerializeField] private GameObject speechBubble;
 
     [SerializeField] private AudioSource interactSfx;
+    [SerializeField] private GameObject particlePosition;
+    [SerializeField] private ParticleManager.Particle particleType;
 
     void Start()
     {
@@ -30,6 +32,11 @@ public class Interactable : MonoBehaviour
             interactSfx.Play();
         }
 
+        if(particlePosition != null)
+        {
+            ParticleManager.Instance.CreateParticleEffect(particleType, particlePosition.transform.position, 5f);
+        }
+
         if (gameObjects.Count > 0)
         {
             foreach (GameObject gameObject in gameObjects)
@@ -44,7 +51,6 @@ public class Interactable : MonoBehaviour
         if (speechBubble != null)
         {
             speechBubble.SetActive(true);
-            speechBubble.GetComponent<SpeechBubble>().ShowText();
         }
     }
 
@@ -53,7 +59,6 @@ public class Interactable : MonoBehaviour
         if (speechBubble != null)
         {
             speechBubble.SetActive(false);
-            speechBubble.GetComponent<SpeechBubble>().HideText();
         }
     }
 }
