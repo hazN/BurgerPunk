@@ -30,6 +30,7 @@ public class AudioManager : MonoBehaviour
     [Header("Player")]
     [SerializeField] AudioSource gunfire;
     [SerializeField] public AudioSource customerServed;
+    [SerializeField] public AudioSource alarm;
 
     [Header("Restaurant")]
     [SerializeField] public AudioSource fryerSfx;

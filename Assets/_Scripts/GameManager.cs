@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
             EnemyWave wave = waveQueue.Dequeue();
             enemySpawnManager.SpawnWave(wave);
             OnWaveSpawned?.Invoke();
+            AudioManager.Instance.alarm.Play();
         }
 
         if (IsDayActivitiesComplete())
