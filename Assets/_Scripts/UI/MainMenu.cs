@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] SettingsMenu settingsMenu;
     [SerializeField] GameObject title;
+    [SerializeField] Tutorial tutorial;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,6 +26,11 @@ public class MainMenu : MonoBehaviour
         settingsMenu.OpenSettings();
     }
 
+    public void OpenTutorial()
+    {
+        tutorial.gameObject.SetActive(true);
+
+    }
     public void ExitGame()
     {
         Application.Quit();
