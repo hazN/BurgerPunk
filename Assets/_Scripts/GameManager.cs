@@ -6,6 +6,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] SceneAsset mainMenuScene;
     [SerializeField] SceneAsset mainGameScene;
 
+    public UnityEvent OnWaveSpawned;
     private void Awake()
     {
         if (Instance == null)
@@ -114,6 +116,7 @@ public class GameManager : MonoBehaviour
         {
             EnemyWave wave = waveQueue.Dequeue();
             enemySpawnManager.SpawnWave(wave);
+            OnWaveSpawned?.Invoke();
         }
 
         if (IsDayActivitiesComplete())

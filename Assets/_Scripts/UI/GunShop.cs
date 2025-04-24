@@ -78,16 +78,20 @@ namespace BurgerPunk.UI
                     var gunData = holster.GetRandomUnlockedGun();
                     buff.name = gunData.GunName + " Accuracy";
                     buff.gunID = gunData.GunID;
+                    //buff.value should be random but very low like 0.005 to 0.02
+                    buff.value = UnityEngine.Random.Range(0.005f, 0.02f);
                     break;
                 case Buff.BuffType.damage:
                     var gunDataDmg = holster.GetRandomUnlockedGun();
                     buff.name = gunDataDmg.GunName + " Damage";
                     buff.gunID = gunDataDmg.GunID;
+                    buff.value = UnityEngine.Random.Range(0.01f, 0.1f);
                     break;
                 case Buff.BuffType.firerate:
                     var gunDataFireRate = holster.GetRandomUnlockedGun();
                     buff.name = gunDataFireRate.GunName + " Fire Rate";
                     buff.gunID = gunDataFireRate.GunID;
+                    buff.value = UnityEngine.Random.Range(0.01f, 0.1f);
                     break;
             }
 
