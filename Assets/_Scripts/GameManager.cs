@@ -213,7 +213,7 @@ public class GameManager : MonoBehaviour
             settingsMenu = FindAnyObjectByType<SettingsMenu>(FindObjectsInactive.Include);
             enemySpawnManager = FindAnyObjectByType<EnemySpawnManager>(FindObjectsInactive.Include);
             endDayScreen = FindAnyObjectByType<EndDayScreen>(FindObjectsInactive.Include);
-            gunShop = GameObject.FindGameObjectWithTag("GunTruck");
+            //gunShop = GameObject.FindGameObjectWithTag("GunTruck");
         }
     }
     public int GetCurrentDay()

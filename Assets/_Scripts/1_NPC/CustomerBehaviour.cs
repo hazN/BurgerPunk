@@ -63,7 +63,9 @@ public class CustomerBehaviour : Interactable
         {
             if (playerRestaurant.IsOrderComplete())
             {
-                SpotLight.SetActive(false);
+                if (SpotLight != null)
+                    SpotLight.SetActive(false);
+
                 PendingOrder order = playerRestaurant.GetCurrentOrder();
                 if (order.Customer == this)
                 {

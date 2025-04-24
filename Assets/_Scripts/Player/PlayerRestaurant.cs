@@ -37,7 +37,9 @@ namespace BurgerPunk.Player
                 itemsToComplete.Add(item);
                 orderStatus.text += item.Name + "\n";
             }
-            currentOrder.Customer.SpotLight.SetActive(true);
+
+            if (currentOrder.Customer.SpotLight != null)
+                currentOrder.Customer.SpotLight.SetActive(true);
         }
 
         private void UpdateOrderStatus()
