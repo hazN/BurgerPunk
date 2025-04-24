@@ -60,12 +60,12 @@ namespace BurgerPunk.Player
             }
         }
 
-        public void Cook(FoodTypes foodType)
+        public void Cook(FoodTypes foodType, Equipment equipment)
         {
-            StartCoroutine(CookCoroutine(foodType));
+            StartCoroutine(CookCoroutine(foodType, equipment));
         }
 
-        private IEnumerator CookCoroutine(FoodTypes foodType)
+        private IEnumerator CookCoroutine(FoodTypes foodType, Equipment equipment)
         {
             if (currentOrder == null)
             {
@@ -88,6 +88,7 @@ namespace BurgerPunk.Player
             if (foodType == FoodTypes.Burger)
             {
                 AudioManager.Instance.grillSfx.Play();
+                if (equipment.particlePosition != null) ParticleManager.Instance.CreateParticleEffect(ParticleManager.Particle.Grill, equipment.particlePosition.transform.position, 10f);
             }
             else if (foodType == FoodTypes.Soda)
             {

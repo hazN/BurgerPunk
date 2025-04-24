@@ -10,7 +10,7 @@ public class Interactable : MonoBehaviour
     [SerializeField] private GameObject speechBubble;
 
     [SerializeField] private AudioSource interactSfx;
-    [SerializeField] private GameObject particlePosition;
+    [SerializeField] public GameObject particlePosition;
     [SerializeField] private ParticleManager.Particle particleType;
 
     void Start()
