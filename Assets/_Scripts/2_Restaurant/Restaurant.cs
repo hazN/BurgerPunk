@@ -76,6 +76,7 @@ public class Restaurant : MonoBehaviour
     private int[] _assignedTray = new int[4] { 0, 0, 0, 0 };
 
     public UnityEvent OnRefreshUI;
+    public UnityEvent OnDamageTaken;
 
     [SerializeField] public List<Tray> trays = new List<Tray>();
 
@@ -248,6 +249,7 @@ public class Restaurant : MonoBehaviour
     public void TakeDamage(float hp)
     {
         HealthPoints -= hp;
+        OnDamageTaken?.Invoke();
 
         if (HealthPoints <= 0)
         {

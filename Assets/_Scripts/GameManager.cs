@@ -1,3 +1,4 @@
+using BurgerPunk.Movement;
 using BurgerPunk.UI;
 using System;
 using System.Collections.Generic;
@@ -115,6 +116,7 @@ public class GameManager : MonoBehaviour
 
         if (IsDayActivitiesComplete())
         {
+            FindFirstObjectByType<FirstPersonController>().HealToMax();
             gunShop.SetActive(true);
             dayStarted = false;
             dayActivitiesComplete = true;

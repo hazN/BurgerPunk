@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BurgerPunk.Movement;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +17,8 @@ namespace BurgerPunk.UI
         [SerializeField] Button backToMainMenu;
         public void GameOver()
         {
+            FindFirstObjectByType<FirstPersonController>().DisableController();
+
             Time.timeScale = 0f;
 
             gameOverPanel.SetActive(true);

@@ -3,6 +3,7 @@ using BurgerPunk.Inputs;
 using BurgerPunk.Combat;
 using System.Linq;
 using BurgerPunk.UI;
+using UnityEngine.Events;
 
 namespace BurgerPunk.Movement
 {
@@ -13,6 +14,7 @@ namespace BurgerPunk.Movement
         [SerializeField] private Camera playerCamera;
         [SerializeField] private Holster holster;
         public float HealthPoints = 100f;
+        public float MaxHealthPoints = 100f;
 
         [Header("Movement Settings")]
         [SerializeField] private float speed = 5.0f;
@@ -27,7 +29,7 @@ namespace BurgerPunk.Movement
         public SpeechBubble CustomerOrderBubble;
         public GameObject currentTargeted;
         public bool enableController = true;
-
+        public UnityEvent OnPlayerDamage;
         private void Awake()
         {
             if(Instance != null)
@@ -215,6 +217,7 @@ namespace BurgerPunk.Movement
         public void TakeDamage(float hp)
         {
             HealthPoints -= hp;
+            OnPlayerDamage?.Invoke();
 
             if (HealthPoints <= 0)
             {
@@ -231,6 +234,8 @@ namespace BurgerPunk.Movement
         public void AddHealth(float multiplier)
         {
             HealthPoints *= (1f + multiplier);
+            MaxHealthPoints *= (1f + multiplier);
+            
             Debug.Log("Health increased by: " + multiplier);
         }
         public void EnableController()
@@ -244,6 +249,12 @@ namespace BurgerPunk.Movement
             UnityEngine.Cursor.lockState = CursorLockMode.None;
             UnityEngine.Cursor.visible = true;
             enableController = false;
+        }
+
+        public void HealToMax()
+        {
+            HealthPoints = MaxHealthPoints;
+            OnPlayerDamage?.Invoke();
         }
     }
 }
