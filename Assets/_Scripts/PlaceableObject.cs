@@ -23,6 +23,7 @@ public class PlaceableObject : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("PlaceableObjects");
         GameManager.Instance.numStructuresThisDay++;
         GameManager.Instance.totalStructuresBuilt++;
+        ParticleManager.Instance.CreateParticleEffect(ParticleManager.Particle.Pop, transform.position, 10f);
     }
 
     // Update is called once per frame
