@@ -63,6 +63,11 @@ namespace BurgerPunk.Movement
             HandleTargeted();
         }
 
+        public void SetMouseSensitivity(float sens)
+        {
+            mouseSensitivity = sens;
+        }
+
         private void HandleTargeted() // what object is currently being looked at
         {
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0));

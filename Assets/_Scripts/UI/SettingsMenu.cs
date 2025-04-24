@@ -27,6 +27,11 @@ public class SettingsMenu : MonoBehaviour
         
     }
 
+    public void UpdateSensitivity()
+    {
+        FirstPersonController.Instance.SetMouseSensitivity(sensitivitySlider.value);
+    }
+
     
     public void UpdateMasterVolume()
     {
