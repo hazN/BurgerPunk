@@ -96,6 +96,6 @@ public class FadeUI : MonoBehaviour
 
         fadeRoutine = null;
 
-        onComplete.Invoke();
+        onComplete?.Invoke();
     }
 }

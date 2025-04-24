@@ -34,7 +34,10 @@ public class EndDayScreen : MonoBehaviour
 
     public void GoNextDay()
     {
+        FadeUI.Instance.FadeToBlack();
+        
         GameManager.Instance.MoveToNextDay();
+
         this.gameObject.SetActive(false);
     }
 }
