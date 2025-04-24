@@ -45,6 +45,11 @@ namespace BurgerPunk.Movement
                 Debug.LogError("CharacterController not found");
             }
 
+            SettingsMenu settingsMenu = FindAnyObjectByType<SettingsMenu>();
+            if (settingsMenu != null)
+            {
+                mouseSensitivity = settingsMenu.sensitivitySlider.value;
+            }
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
