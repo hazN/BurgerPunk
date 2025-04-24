@@ -138,6 +138,8 @@ public class GameManager : MonoBehaviour
         numMoneyEarnedThisDay = 0;
         numStructuresThisDay = 0;
         customersServedThisDay = 0;
+
+        FadeUI.Instance.FadeFromBlack();
     }
 
 

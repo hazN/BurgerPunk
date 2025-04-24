@@ -44,9 +44,16 @@ public class BuildUI : MonoBehaviour
         
     }
 
+    private void OnEnable()
+    {
+        FindFirstObjectByType<MainGameUI>().gameObject.SetActive(false);
+    }
+
+
     public void CloseBuildUI()
     {
         buildViewManager.DeactivateBuildView();
+        FindFirstObjectByType<MainGameUI>().gameObject.SetActive(true);
     }
 
     public void GoLeft()
