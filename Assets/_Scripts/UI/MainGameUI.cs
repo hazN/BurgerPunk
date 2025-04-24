@@ -32,7 +32,7 @@ public class MainGameUI : MonoBehaviour
 
     public void SetDay(int day)
     {
-        dayText.text = "DAY: " + day.ToString();
+        dayText.text = "DAY: " + day.ToString() + "/7";
     }
 
     public void SetMoney(float money)
