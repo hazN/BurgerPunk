@@ -184,6 +184,5 @@ public class BuildViewManager : MonoBehaviour
         AudioManager.Instance.placeableDropped.Play();
         previewObject = Instantiate(buildUI.objectList.placeableObjects[buildUI.objectIndex].objectPrefab);
         UpdatePreviewObject();
-        ParticleManager.Instance.CreateParticleEffect(ParticleManager.Particle.Pop, placeableComponent.transform.position, 10f);
     }
 }
