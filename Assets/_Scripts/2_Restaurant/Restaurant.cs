@@ -1,9 +1,11 @@
 using BurgerPunk;
 using BurgerPunk.Player;
 using BurgerPunk.UI;
+using Mono.Cecil.Cil;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -254,6 +256,33 @@ public class Restaurant : MonoBehaviour
         if (HealthPoints <= 0)
         {
             FindFirstObjectByType<GameOverUI>().GameOver();
+        }
+    }
+
+    public void ClearPendingOrders()
+    {
+        foreach (var order in PendingOrdersList)
+        {
+            Destroy(order.Customer.gameObject);
+        }
+        PendingOrdersList.Clear();
+    }
+
+    public void EndDay()
+    {
+        foreach (var employee in EmployeesList)
+        {
+            employee.PendingOrder = null;
+        }
+
+        ClearPendingOrders();
+        ReadyOrderList.Clear();
+
+        CustomerManager.Instance.ClearCustomers();
+
+        foreach (var tray in trays)
+        {
+            tray.GetComponent<Tray>().ClearOrder();
         }
     }
 }

@@ -124,6 +124,9 @@ public class GameManager : MonoBehaviour
 
         if (IsDayActivitiesComplete())
         {
+            CustomerManager.Instance.DayFinished = true;
+            CustomerManager.Instance.DayStarted = false;
+            Restaurant.Instance.ClearPendingOrders();
             FindFirstObjectByType<FirstPersonController>().HealToMax();
             gunShop.SetActive(true);
             dayStarted = false;
@@ -170,6 +173,7 @@ public class GameManager : MonoBehaviour
 
     void EndDay() // show end screen
     {
+        Restaurant.Instance.EndDay();
         gunShop.SetActive(false);
         CustomerManager.Instance.DayFinished = true;
         dayTimer = 0.0f;
@@ -192,7 +196,8 @@ public class GameManager : MonoBehaviour
         if (!dayStarted)
         {
             onDayStarted?.Invoke();
-
+            CustomerManager.Instance.DayFinished = false;
+            CustomerManager.Instance.DayStarted = true;
             dayActivitiesComplete = false;
             Debug.Log("Day " + currentDay + 1 + " started.");
             dayTimer = 0.0f;
