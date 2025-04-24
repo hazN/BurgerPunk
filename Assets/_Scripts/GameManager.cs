@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
     public UnityEvent OnWaveSpawned;
 
     public bool uiIsOpen = false;
+
     private void Awake()
     {
         if (Instance == null)
@@ -265,5 +266,10 @@ public class GameManager : MonoBehaviour
     {
         numEnemiesDefeatedThisDay++;
         totalEnemiesDefeated++;
+    }
+
+    public void SetUIOpen(bool open)
+    {
+        uiIsOpen = open;
     }
 }

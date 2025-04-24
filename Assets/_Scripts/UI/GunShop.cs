@@ -100,7 +100,7 @@ namespace BurgerPunk.UI
         private void OnEnable()
         {
             FindFirstObjectByType<FirstPersonController>().DisableController();
-            GameManager.Instance.uiIsOpen = true;
+            GameManager.Instance.SetUIOpen(true);
         }
 
         private void OnDisable()
@@ -108,7 +108,7 @@ namespace BurgerPunk.UI
             FirstPersonController controller = FindFirstObjectByType<FirstPersonController>();
             controller.enabled = true;
             controller.EnableController();
-            GameManager.Instance.uiIsOpen = false;
+            GameManager.Instance.SetUIOpen(false);
         }
         public void CloseShop()
         {

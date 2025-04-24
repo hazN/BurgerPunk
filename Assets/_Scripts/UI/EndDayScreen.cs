@@ -24,13 +24,13 @@ public class EndDayScreen : MonoBehaviour
             "STRUCTURES PLACED: " + GameManager.Instance.numStructuresThisDay.ToString() +"\n" +
             "CUSTOMERS SERVED: " + GameManager.Instance.customersServedThisDay.ToString();
 
-        GameManager.Instance.uiIsOpen = true;
+        GameManager.Instance.SetUIOpen(true);
     }
 
     private void OnDisable()
     {
         FindFirstObjectByType<FirstPersonController>().EnableController();
-        GameManager.Instance.uiIsOpen = false;
+        GameManager.Instance.SetUIOpen(false);
     }
 
     // Update is called once per frame

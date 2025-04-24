@@ -23,13 +23,13 @@ public class Tutorial : MonoBehaviour
     {
         FindFirstObjectByType<FirstPersonController>()?.DisableController();
         SetPages();
-        GameManager.Instance.uiIsOpen = true;
+        GameManager.Instance.SetUIOpen(true);
     }
 
     private void OnDisable()
     {
         FindFirstObjectByType<FirstPersonController>()?.EnableController();
-        GameManager.Instance.uiIsOpen = false;
+        GameManager.Instance.SetUIOpen(false);
     }
 
 

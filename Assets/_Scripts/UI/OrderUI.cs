@@ -10,7 +10,7 @@ namespace BurgerPunk.UI
         private Restaurant restaurant;
         private void OnEnable()
         {
-            GameManager.Instance.uiIsOpen = true;
+            GameManager.Instance.SetUIOpen(true);
             restaurant = Restaurant.Instance;
             if (restaurant == null)
             {
@@ -27,7 +27,7 @@ namespace BurgerPunk.UI
             FindFirstObjectByType<FirstPersonController>().enabled = true;
             FindFirstObjectByType<FirstPersonController>().EnableController();
             restaurant.OnRefreshUI.RemoveListener(RefreshUI);
-            GameManager.Instance.uiIsOpen = false;
+            GameManager.Instance.SetUIOpen(false);
         }
 
         public void RefreshUI()

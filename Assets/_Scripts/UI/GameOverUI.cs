@@ -38,12 +38,12 @@ namespace BurgerPunk.UI
 
         private void OnEnable()
         {
-            GameManager.Instance.uiIsOpen = true;
+            //GameManager.Instance.SetUIOpen(true);
         }
 
         private void OnDisable()
         {
-            GameManager.Instance.uiIsOpen = false;
+            //GameManager.Instance.SetUIOpen(false);
         }
     }
 }
