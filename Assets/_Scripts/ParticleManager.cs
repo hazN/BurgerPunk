@@ -11,7 +11,8 @@ public class ParticleManager : MonoBehaviour
     private Dictionary<Particle, GameObject> particles;
     public enum Particle
     {
-        Pop
+        Pop,
+        Ding
     }
 
     private void Start()

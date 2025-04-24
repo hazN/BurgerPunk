@@ -69,14 +69,4 @@ public class SpeechBubble : MonoBehaviour
             items[foodIndex].sprite = sprites[foodIndex];
         }
     }
-
-    public void HideText()
-    {
-        text.gameObject.SetActive(false);
-    }
-
-    public void ShowText()
-    {
-        text.gameObject.SetActive(true);
-    }
 }
