@@ -180,6 +180,12 @@ public class BuildViewManager : MonoBehaviour
 
     void PlaceObject()
     {
+        if (!GameManager.Instance.TrySpendMoney(buildUI.objectList.placeableObjects[buildUI.objectIndex].cost))
+        {
+            radialProgressBar.CancelProgress();
+            return;
+        }
+
         placeableComponent.PlaceObject();
         AudioManager.Instance.placeableDropped.Play();
         previewObject = Instantiate(buildUI.objectList.placeableObjects[buildUI.objectIndex].objectPrefab);
