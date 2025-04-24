@@ -76,6 +76,8 @@ public class GameManager : MonoBehaviour
         //fadeUI.FadeFromBlack();
         //FadeUI.Instance.gameObject.SetActive(true);
         //FadeUI.Instance.FadeFromBlack();
+
+        settingsMenu.Initialize();
     }
 
     public void SetupBellInteractable(Interactable interactable)

@@ -29,6 +29,10 @@ public class AudioManager : MonoBehaviour
     [Header("Player")]
     [SerializeField] AudioSource gunfire;
 
+    [Header("Restaurant")]
+    [SerializeField] public AudioSource fryerSfx;
+    [SerializeField] public AudioSource grillSfx;
+    [SerializeField] public AudioSource sodaSfx;
     void Awake()
     {
         if (Instance == null)

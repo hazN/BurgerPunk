@@ -71,9 +71,36 @@ namespace BurgerPunk.Player
                 yield break;
             }
 
+            bool needsItem = false;
+            foreach (var item in itemsToComplete)
+            {
+                if (item.Type == foodType)
+                {
+                    needsItem = true;
+                    break;
+                }
+            }
+
+            if (!needsItem) yield break;
+
+            if (foodType == FoodTypes.Burger)
+            {
+                AudioManager.Instance.grillSfx.Play();
+            }
+            else if (foodType == FoodTypes.Soda)
+            {
+                AudioManager.Instance.sodaSfx.Play();
+            }
+            else if (foodType == FoodTypes.Fries)
+            {
+                AudioManager.Instance.fryerSfx.Play();
+            }
+
+
             Debug.Log("Starting to cook...");
+            
             firstPersonController.DisableController();
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
             firstPersonController.EnableController();
             Debug.Log("Done cooking!");
 
@@ -84,6 +111,7 @@ namespace BurgerPunk.Player
                     tray.EnableItem(true, foodType);
                     itemsToComplete.Remove(item);
                     UpdateOrderStatus();
+                   
                     break;
                 }
             }

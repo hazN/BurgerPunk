@@ -15,10 +15,20 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] Toggle fullscreenToggle;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
+    {
+        Initialize();
+    }
+
+    public void Initialize()
     {
         audioManager = FindAnyObjectByType<AudioManager>();
         Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+
+        UpdateSensitivity();
+        UpdateMasterVolume();
+        UpdateMusicVolume();
+        UpdateSfxVolume();
     }
 
     // Update is called once per frame
