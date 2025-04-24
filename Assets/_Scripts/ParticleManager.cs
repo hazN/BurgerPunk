@@ -28,7 +28,14 @@ public class ParticleManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void CreateParticleEffect(Particle type, Vector3 pos, float destroyTime)
