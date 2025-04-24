@@ -160,6 +160,7 @@ public class GameManager : MonoBehaviour
         if (dayActivitiesComplete)
         {
             EndDay();
+            return;
         }
 
         if (!dayStarted)
