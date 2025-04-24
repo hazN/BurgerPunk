@@ -35,5 +35,15 @@ namespace BurgerPunk.UI
         {
             SceneManager.LoadScene("TitleScreen");
         }
+
+        private void OnEnable()
+        {
+            GameManager.Instance.uiIsOpen = true;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.Instance.uiIsOpen = false;
+        }
     }
 }

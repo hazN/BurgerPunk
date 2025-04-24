@@ -24,11 +24,15 @@ public class EmployeeUI : MonoBehaviour
         employeeText2.text = "$" + employeeCosts[1].ToString();
         employeeText3.text = "$" + employeeCosts[2].ToString();
         employeeText4.text = "$" + employeeCosts[3].ToString();
+
+        GameManager.Instance.uiIsOpen = true;
     }
 
     private void OnDisable()
     {
         FindFirstObjectByType<FirstPersonController>().EnableController();
+
+        GameManager.Instance.uiIsOpen = false;
     }
 
     void Start()

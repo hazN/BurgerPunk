@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] SceneAsset mainGameScene;
 
     public UnityEvent OnWaveSpawned;
+
+    public bool uiIsOpen = false;
     private void Awake()
     {
         if (Instance == null)
@@ -91,7 +93,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !uiIsOpen)
         {
             if (settingsMenu != null)
             {
@@ -135,8 +137,9 @@ public class GameManager : MonoBehaviour
         settingsMenu = null;
         SceneManager.LoadScene(mainGameScene.name);
         SceneManager.sceneLoaded += OnSceneLoaded;
-        
 
+        Tutorial tutorial = FindFirstObjectByType<Tutorial>(FindObjectsInactive.Include);
+        tutorial.gameObject.SetActive(true);
         StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.menuTheme, 3.0f));
         StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.pregameSong, 3.0f));
         FadeUI.Instance.FadeFromBlack();

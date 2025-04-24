@@ -23,11 +23,14 @@ public class EndDayScreen : MonoBehaviour
             "BURGER BUCKS ACQUIRED: $" + GameManager.Instance.numMoneyEarnedThisDay.ToString() + "\n" +
             "STRUCTURES PLACED: " + GameManager.Instance.numStructuresThisDay.ToString() +"\n" +
             "CUSTOMERS SERVED: " + GameManager.Instance.customersServedThisDay.ToString();
+
+        GameManager.Instance.uiIsOpen = true;
     }
 
     private void OnDisable()
     {
         FindFirstObjectByType<FirstPersonController>().EnableController();
+        GameManager.Instance.uiIsOpen = false;
     }
 
     // Update is called once per frame
