@@ -90,7 +90,7 @@ public class FadeUI : MonoBehaviour
         while (time < fadeDuration)
         {
             time += Time.deltaTime;
-            if (fadeDelay > 0f)
+            if (time > 0f)
             {
                 float alpha = Mathf.Lerp(0f, 1f, time / fadeDuration);
                 fadeImage.color = new Color(color.r, color.g, color.b, alpha);
