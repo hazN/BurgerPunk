@@ -128,6 +128,7 @@ public class GameManager : MonoBehaviour
             Restaurant.Instance.ClearPendingOrders();
             FindFirstObjectByType<FirstPersonController>().HealToMax();
             gunShop.SetActive(true);
+            gunShop.GetComponent<GunShop>().refreshShop();
             dayStarted = false;
             dayActivitiesComplete = true;
             StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.daySong1, 1.0f));
@@ -158,6 +159,10 @@ public class GameManager : MonoBehaviour
         FadeUI.Instance.FadeFromBlack();
 
         StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.pregameSong, 3.0f));
+
+        CustomerManager.Instance.DayStarted = true;
+        CustomerManager.Instance.DayFinished = false;
+        CustomerManager.Instance.SpawnCustomers(CustomerManager.Instance.TargetList.Count, 5.0f);
     }
 
 
@@ -197,6 +202,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Day " + currentDay + 1 + " started.");
             dayTimer = 0.0f;
             dayStarted = true;
+            CustomerManager.Instance.DayStarted = true;
             CustomerManager.Instance.DayFinished = false;
             CustomerManager.Instance.SpawnCustomers(CustomerManager.Instance.TargetList.Count, 5.0f);
             StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.daySong1, 3.0f));

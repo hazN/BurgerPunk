@@ -281,5 +281,9 @@ public class Restaurant : MonoBehaviour
         {
             tray.GetComponent<Tray>().ClearOrder();
         }
+        foreach (var target in CustomerManager.Instance.TargetList)
+        {
+            target.IsOccupied = false;
+        }
     }
 }
