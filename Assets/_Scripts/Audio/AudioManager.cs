@@ -49,6 +49,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip[] enemyAttackClips;
     [SerializeField] AudioClip[] enemyDeathClips;
     [SerializeField] AudioClip[] enemyDamagedClips;
+
+    [Header("Ambience")]
+    [SerializeField] public AudioSource ambience;
     void Awake()
     {
         if (Instance == null)

@@ -153,6 +153,7 @@ public class GameManager : MonoBehaviour
         //FindFirstObjectByType<Tutorial>(FindObjectsInactive.Include).gameObject.SetActive(true);
         StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.menuTheme, 3.0f));
         StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.pregameSong, 3.0f));
+        StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.ambience, 3.0f));
         FadeUI.Instance.FadeFromBlack();
     }
     public void MoveToNextDay()
