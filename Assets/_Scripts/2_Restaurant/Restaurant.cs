@@ -287,5 +287,7 @@ public class Restaurant : MonoBehaviour
         FreeATray(1);
         FreeATray(2);
         FreeATray(3);
+
+        CustomerManager.Instance.IsSomeonePlacingOrder = false;
     }
 }
