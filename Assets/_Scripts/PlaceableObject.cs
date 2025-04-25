@@ -7,6 +7,7 @@ public class PlaceableObject : Actor
 {
     bool active = false;
     bool inPlacementMode = true;
+    [SerializeField] bool isEmployee = false;
     [SerializeField] GameObject healthBar;
 
     //Collider collider;
@@ -27,6 +28,14 @@ public class PlaceableObject : Actor
     {
         inPlacementMode = false;
         gameObject.layer = LayerMask.NameToLayer("PlaceableObjects");
+        if (isEmployee)
+        {
+            gameObject.tag = "Employee";
+            gameObject.GetComponent<FighterEmployeeBehaviour>().enabled = true;
+        }
+        else
+            gameObject.tag = "Placeable";
+
         GameManager.Instance.numStructuresThisDay++;
         GameManager.Instance.totalStructuresBuilt++;
         ParticleManager.Instance.CreateParticleEffect(ParticleManager.Particle.Pop, transform.position, 10f);
