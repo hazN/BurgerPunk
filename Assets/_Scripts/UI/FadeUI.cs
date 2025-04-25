@@ -9,6 +9,7 @@ public class FadeUI : MonoBehaviour
     public static FadeUI Instance;
     [SerializeField] public Image fadeImage;
     public float fadeDuration = 1f;
+    public float fadeDelay = 0f;
 
     Coroutine fadeRoutine = null;
 
@@ -59,19 +60,21 @@ public class FadeUI : MonoBehaviour
 
     public IEnumerator FadeFromBlackCoroutine(System.Action onComplete = null) // Fade from black to transparent
     {
-        float time = 0f;
+        float time = 0f - fadeDelay;
         Color color = fadeImage.color;
 
         while (time < fadeDuration)
         {
             time += Time.deltaTime;
-            float alpha = Mathf.Lerp(1f, 0f, time / fadeDuration);
-            fadeImage.color = new Color(color.r, color.g, color.b, alpha);
+            if (time > 0f)
+            {
+                float alpha = Mathf.Lerp(1f, 0f, time / fadeDuration);
+                fadeImage.color = new Color(color.r, color.g, color.b, alpha);
+            }
             yield return null;
         }
 
         fadeImage.color = new Color(color.r, color.g, color.b, 0f);
-        fadeImage.gameObject.SetActive(false); // Optional
 
         fadeRoutine = null;
 
@@ -81,14 +84,17 @@ public class FadeUI : MonoBehaviour
     public IEnumerator FadeToBlackCoroutine(System.Action onComplete = null) // Fade to black
     {
         fadeImage.gameObject.SetActive(true); // In case it was turned off
-        float time = 0f;
+        float time = 0f - fadeDelay;
         Color color = fadeImage.color;
 
         while (time < fadeDuration)
         {
             time += Time.deltaTime;
-            float alpha = Mathf.Lerp(0f, 1f, time / fadeDuration);
-            fadeImage.color = new Color(color.r, color.g, color.b, alpha);
+            if (fadeDelay > 0f)
+            {
+                float alpha = Mathf.Lerp(0f, 1f, time / fadeDuration);
+                fadeImage.color = new Color(color.r, color.g, color.b, alpha);
+            }
             yield return null;
         }
 
