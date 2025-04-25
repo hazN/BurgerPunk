@@ -8,6 +8,7 @@ public class EnemyBehaviour : Actor
     public float AttackPoints = 5f;
     public Transform TargetPoint;
     public EnemySpawnManager SpawnerManger;
+    [SerializeField] public AudioSource audioSource;
 
     #region Animator Parameters
     public readonly int m_HashMove = Animator.StringToHash("Moving");
@@ -50,6 +51,9 @@ public class EnemyBehaviour : Actor
     public bool mIsTargetPlaceable = false;
     private bool m_IsDead = false;
 
+    float attackVoicelineTimer = 0.0f;
+    float attackVoicelineTime = 5.0f;
+
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -62,10 +66,14 @@ public class EnemyBehaviour : Actor
             _animator.SetBool(m_HashDead, true);
             StartCoroutine(Despawn());
             GameManager.Instance.EnemyDied();
+            audioSource.clip = AudioManager.Instance.GetEnemyDeathClip();
+            audioSource.Play();
         };
         OnHit += () =>
         {
             _animator.SetTrigger(m_HashHurt);
+            audioSource.clip = AudioManager.Instance.GetEnemyDamagedClip();
+            audioSource.Play();
         };
     }
 
@@ -82,6 +90,16 @@ public class EnemyBehaviour : Actor
     {
         if (m_IsDead) return;
         if (NavMeshAgent == null) return;
+
+        attackVoicelineTimer += Time.deltaTime;
+        if (attackVoicelineTimer > attackVoicelineTime)
+        {
+            attackVoicelineTime = Random.Range(4.0f, 10.0f);
+            attackVoicelineTimer = 0;
+
+            audioSource.clip = AudioManager.Instance.GetEnemyAttackClip();
+            audioSource.Play();
+        }
 
         if (mIsTargetPlayer)
             _navMeshAgent.destination = mPlayerObject.transform.position;
