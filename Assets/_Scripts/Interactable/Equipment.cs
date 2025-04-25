@@ -26,6 +26,8 @@ namespace BurgerPunk
             }
             else
             {
+                holster.EquipGun("Tray");
+                playerRestaurant.Cook(equipmentType, this);
                 //Debug.Log("Need to be holding a tray to use this equipment. Please equip the tray first.");
             }
         }

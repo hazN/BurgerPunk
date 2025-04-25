@@ -8,6 +8,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject title;
     [SerializeField] Tutorial tutorial;
 
+    bool gameStarted = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -38,6 +40,11 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        FadeUI.Instance.FadeToBlack(GameManager.Instance.StartGame);
+        if (!gameStarted)
+        {
+            FadeUI.Instance.FadeToBlack(GameManager.Instance.StartGame);
+            gameStarted = true;
+        }
+        
     }
 }
