@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
         dayStarted = false;
         settingsMenu = FindAnyObjectByType<SettingsMenu>(FindObjectsInactive.Include);
         // TODO: Remove this
-        balance = 10000f;
+        balance = 1000f;
         //fadeUI.gameObject.SetActive(true);
         //fadeUI.FadeFromBlack();
         //FadeUI.Instance.gameObject.SetActive(true);
@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
             Restaurant.Instance.ClearPendingOrders();
             FindFirstObjectByType<FirstPersonController>().HealToMax();
             gunShop.SetActive(true);
-            gunShop.GetComponent<GunShop>().refreshShop();
+            FindAnyObjectByType<GunShop>(FindObjectsInactive.Include).refreshShop();
             dayStarted = false;
             dayActivitiesComplete = true;
             StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.daySong1, 1.0f));
