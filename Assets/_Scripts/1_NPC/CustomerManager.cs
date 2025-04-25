@@ -76,7 +76,7 @@ public class CustomerManager : MonoBehaviour
             if (!TargetList[i].IsOccupied)
                 return i;
         }
-
+        
         return freeSpot;
     }
 
@@ -84,6 +84,8 @@ public class CustomerManager : MonoBehaviour
     {
         
         int freeSpot = GetFreeSpot();
+
+        Debug.Log("acquiring free spot: " + freeSpot);
         if (freeSpot == -1)
             return;
 

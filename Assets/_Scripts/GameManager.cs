@@ -246,10 +246,6 @@ public class GameManager : MonoBehaviour
         return dayTimer / lengthOfDay;
     }
 
-    public void AddToBalance(float amount)
-    {
-        balance += amount;
-    }
 
     public float GetBalance()
     {
