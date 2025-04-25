@@ -25,7 +25,6 @@ namespace BurgerPunk.Player
         public void ClaimOrder(PendingOrder order)
         {
             OrderUI orderUI = FindFirstObjectByType<OrderUI>(FindObjectsInactive.Include);
-            AudioManager.Instance.claimOrder.Play();
 
             if (orderUI != null)
             {
@@ -41,7 +40,7 @@ namespace BurgerPunk.Player
             isOrderComplete = false;
 
             currentOrder = order;
-
+            AudioManager.Instance.claimOrder.Play();
             itemsToComplete.Clear();
             foreach (var item in order.OrderItemsList)
             {
