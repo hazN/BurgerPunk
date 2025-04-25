@@ -32,7 +32,7 @@ namespace BurgerPunk.Combat
         {
             if (rightHandIKTarget == null || leftHandIKTarget == null)
             {
-                Debug.Log("IK targets not set");
+                //Debug.Log("IK targets not set");
                 return;
             }
             rightHandIKTarget.SetPositionAndRotation(rightHandWeaponPosition.position, rightHandWeaponPosition.rotation);
@@ -47,7 +47,7 @@ namespace BurgerPunk.Combat
                 {
                     muzzleFlash.gameObject.transform.position = muzzleFlashTransform.transform.position;
                     muzzleFlash.gameObject.transform.rotation = muzzleFlashTransform.transform.rotation;
-                    Debug.Log("Muzzle flash played");
+                    //Debug.Log("Muzzle flash played");
                     muzzleFlash.Stop();
                     muzzleFlash.Play();
                 }
@@ -94,16 +94,16 @@ namespace BurgerPunk.Combat
                     if (actor != null)
                     {
                         actor.TakeDamage(damage);
-                        Debug.Log("Hit " + actor.name + " for " + damage + " damage.");
+                        //Debug.Log("Hit " + actor.name + " for " + damage + " damage.");
                     }
                     else
                     {
-                        Debug.Log("Hit " + hit.collider.name);
+                        //Debug.Log("Hit " + hit.collider.name);
                     }
                 }
                 else
                 {
-                    Debug.Log("Hit " + hit.collider.name);
+                    //Debug.Log("Hit " + hit.collider.name);
                 }
 
                 //Actor actor = hit.collider.GetComponent<Actor>();
@@ -119,7 +119,7 @@ namespace BurgerPunk.Combat
             }
             else
             {
-                Debug.Log("Missed.");
+                //Debug.Log("Missed.");
             }
 
             // Always spawn the trail
@@ -147,17 +147,17 @@ namespace BurgerPunk.Combat
         public void AddDamage(float multiplier)
         {
             damage *= (1 + multiplier);
-            Debug.Log("Damage increased to: " + damage);
+            //Debug.Log("Damage increased to: " + damage);
         }
         public void AddFireRate(float multiplier)
         {
             fireRate *= (1 + multiplier);
-            Debug.Log("Fire rate increased to: " + fireRate);
+            //Debug.Log("Fire rate increased to: " + fireRate);
         }
         public void AddAccuracy(float multiplier)
         {
             accuracy *= (1 + multiplier);
-            Debug.Log("Accuracy increased to: " + accuracy);
+            //Debug.Log("Accuracy increased to: " + accuracy);
         }
         public bool IsFireable()
         {

@@ -58,7 +58,7 @@ namespace BurgerPunk.Combat
             }
             else
             {
-                Debug.Log($"Gun with name {name} not found in holster.");
+                //Debug.Log($"Gun with name {name} not found in holster.");
             }
         }
 
@@ -73,7 +73,7 @@ namespace BurgerPunk.Combat
             }
             else
             {
-                Debug.Log($"Gun with name {name} not found in holster.");
+                //Debug.Log($"Gun with name {name} not found in holster.");
             }
         }
 
@@ -81,7 +81,7 @@ namespace BurgerPunk.Combat
         {
             if (unlockedGuns.Count == 0)
             {
-                Debug.Log("No unlocked guns to switch to.");
+                //Debug.Log("No unlocked guns to switch to.");
                 return;
             }
 
@@ -94,7 +94,7 @@ namespace BurgerPunk.Combat
         {
             if (unlockedGuns.Count == 0)
             {
-                Debug.Log("No unlocked guns to switch to.");
+                //Debug.Log("No unlocked guns to switch to.");
                 return;
             }
 
@@ -113,7 +113,7 @@ namespace BurgerPunk.Combat
             }
             else
             {
-                Debug.Log("No unlocked guns available.");
+                //Debug.Log("No unlocked guns available.");
                 return null;
             }
         }
@@ -125,7 +125,7 @@ namespace BurgerPunk.Combat
             List<GunData> lockedGuns = guns.FindAll(g => !g.unlocked && g.Gun.IsFireable());
             if (lockedGuns.Count == 0)
             {
-                Debug.Log("No locked guns available.");
+                //Debug.Log("No locked guns available.");
                 return null;
             }
 
@@ -163,7 +163,7 @@ namespace BurgerPunk.Combat
             }
             else
             {
-                Debug.Log($"Gun with ID {gunId} not found.");
+                //Debug.Log($"Gun with ID {gunId} not found.");
             }
         }
 
@@ -176,7 +176,7 @@ namespace BurgerPunk.Combat
             }
             else
             {
-                Debug.Log($"Gun with ID {gunId} not found.");
+                //Debug.Log($"Gun with ID {gunId} not found.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace BurgerPunk.Combat
             }
             else
             {
-                Debug.Log($"Gun with ID {gunId} not found.");
+                //Debug.Log($"Gun with ID {gunId} not found.");
             }
         }
 

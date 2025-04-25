@@ -26,7 +26,7 @@ namespace BurgerPunk
             }
             else
             {
-                Debug.Log("Need to be holding a tray to use this equipment. Please equip the tray first.");
+                //Debug.Log("Need to be holding a tray to use this equipment. Please equip the tray first.");
             }
         }
     }

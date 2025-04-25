@@ -81,7 +81,7 @@ public class AudioManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("Setting button sfx");
+        //Debug.Log("Setting button sfx");
         SetButtonSounds();
     }
 
@@ -140,19 +140,19 @@ public class AudioManager : MonoBehaviour
     }
     public void SetMasterVolume(float volume)
     {
-        Debug.Log("setting master volume " + volume);
+        //Debug.Log("setting master volume " + volume);
         SetVolume("masterVolume", volume);
     }
 
     public void SetSfxVolume(float volume)
     {
-        Debug.Log("setting sfx volume " + volume);
+        //Debug.Log("setting sfx volume " + volume);
         SetVolume("sfxVolume", volume);
     }
 
     public void SetMusicVolume(float volume)
     {
-        Debug.Log("setting music volume " + volume);
+        //Debug.Log("setting music volume " + volume);
         SetVolume("musicVolume", volume);
     }
 

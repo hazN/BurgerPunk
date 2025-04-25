@@ -6,7 +6,7 @@ public static class AudioFade
 {
     public static IEnumerator FadeOut(AudioSource audioSource, float FadeTime)
     {
-        Debug.Log("fading out" + audioSource.clip.name);
+        //Debug.Log("fading out" + audioSource.clip.name);
         FadeTime = Math.Max(FadeTime, 0.0001f);
         float startVolume = audioSource.volume;
 

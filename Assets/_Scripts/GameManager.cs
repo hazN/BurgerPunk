@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] protected float lengthOfDay = 300.0f; // seconds
     protected float dayTimer = 0.0f;
 
-    private bool dayStarted = false;
-    private bool dayActivitiesComplete = false;
+    public bool dayStarted = false;
+    public bool dayActivitiesComplete = false;
 
     [SerializeField] EnemySpawnManager enemySpawnManager;
     [SerializeField] GameObject gunShop;
@@ -163,8 +163,8 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.pregameSong, 3.0f));
 
-        CustomerManager.Instance.DayStarted = true;
-        CustomerManager.Instance.DayFinished = false;
+        //CustomerManager.Instance.DayStarted = true;
+        //CustomerManager.Instance.DayFinished = false;
         CustomerManager.Instance.SpawnCustomers(CustomerManager.Instance.TargetList.Count, 5.0f);
     }
 
@@ -203,12 +203,12 @@ public class GameManager : MonoBehaviour
         {
             onDayStarted?.Invoke();
             dayActivitiesComplete = false;
-            Debug.Log("Day " + currentDay + 1 + " started.");
+            //Debug.Log("Day " + currentDay + 1 + " started.");
             dayTimer = 0.0f;
             dayStarted = true;
-            CustomerManager.Instance.DayStarted = true;
-            CustomerManager.Instance.DayFinished = false;
-            CustomerManager.Instance.SpawnCustomers(CustomerManager.Instance.TargetList.Count, 5.0f);
+            //CustomerManager.Instance.DayStarted = true;
+            //CustomerManager.Instance.DayFinished = false;
+            //CustomerManager.Instance.SpawnCustomers(CustomerManager.Instance.TargetList.Count, 5.0f);
             StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.daySong1, 3.0f));
             StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.pregameSong, 1.5f));
 

@@ -121,7 +121,7 @@ public class Restaurant : MonoBehaviour
         {
             if (order.Customer == customer)
             {
-                Debug.Log("Order Fullfilled");
+                //Debug.Log("Order Fullfilled");
                 //GameManager.Instance.AddToBalance(order.TotalCost);
                 ReadyOrderList.Remove(order);
                 FreeATray(order.TrayId);
@@ -159,7 +159,7 @@ public class Restaurant : MonoBehaviour
         int tray = GetFreeTray();
         if (ReadyOrderList.Count == 4 || tray == -1)
         {
-            Debug.Log("All trays are occupied");
+            //Debug.Log("All trays are occupied");
             return;
         }
         if (employee == null)
@@ -176,7 +176,7 @@ public class Restaurant : MonoBehaviour
 
         if (employee == null)
         {
-            Debug.Log("All Employees are busy");
+            //Debug.Log("All Employees are busy");
             return;
         }
         employee.PendingOrder = new PendingOrder(PendingOrdersList[0]);
@@ -210,7 +210,7 @@ public class Restaurant : MonoBehaviour
 
     private void OccupyATray(int i)
     {
-        Debug.Log("Tray no. " + i + " occupied");
+        //Debug.Log("Tray no. " + i + " occupied");
         _assignedTray[i] = 1;
     }
 

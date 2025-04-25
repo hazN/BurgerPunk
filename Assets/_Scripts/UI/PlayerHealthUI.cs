@@ -14,7 +14,7 @@ namespace BurgerPunk.UI
             player = FindFirstObjectByType<FirstPersonController>();
             if (player == null)
             {
-                Debug.LogError("Player not found in the scene.");
+                //Debug.LogError("Player not found in the scene.");
             }
             player.OnPlayerDamage.AddListener(UpdateHealthText);
         }

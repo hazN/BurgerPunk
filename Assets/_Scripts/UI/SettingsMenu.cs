@@ -23,7 +23,7 @@ public class SettingsMenu : MonoBehaviour
     public void Initialize()
     {
         audioManager = FindAnyObjectByType<AudioManager>();
-        Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        //Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
 
         UpdateSensitivity();
         UpdateMasterVolume();
@@ -99,6 +99,8 @@ public class SettingsMenu : MonoBehaviour
 
     public void ToggleFullScreen()
     {
+
+        return;
         if (fullscreenToggle.isOn)
         {
             Screen.fullScreen = true;

@@ -23,7 +23,7 @@ namespace BurgerPunk.Player
         {
             if (currentOrder != null)
             {
-                Debug.Log("Already have an order");
+                //Debug.Log("Already have an order");
                 return;
             }
 
@@ -71,7 +71,7 @@ namespace BurgerPunk.Player
         {
             if (currentOrder == null)
             {
-                Debug.Log("No order to cook for");
+                //Debug.Log("No order to cook for");
                 yield break;
             }
 
@@ -102,7 +102,7 @@ namespace BurgerPunk.Player
             }
 
 
-            Debug.Log("Starting to cook...");
+            //Debug.Log("Starting to cook...");
             
             firstPersonController.DisableController();
             radialProgress.gameObject.SetActive(true);
@@ -110,7 +110,7 @@ namespace BurgerPunk.Player
             yield return new WaitForSeconds(2f);
             radialProgress.gameObject.SetActive(false);
             firstPersonController.EnableController();
-            Debug.Log("Done cooking!");
+            //Debug.Log("Done cooking!");
 
             foreach (var item in itemsToComplete)
             {
@@ -147,14 +147,14 @@ namespace BurgerPunk.Player
             }
             else
             {
-                Debug.Log("No order to clear");
+                //Debug.Log("No order to clear");
             }
         }
         public void EquipCompletedOrder(InteractableTray trayObj, Tray completedTray)
         {
             if (currentOrder != null)
             {
-                Debug.Log("Already have an order, complete it first.");
+                //Debug.Log("Already have an order, complete it first.");
                 return;
             }
 

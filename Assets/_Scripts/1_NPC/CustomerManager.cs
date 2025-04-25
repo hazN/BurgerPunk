@@ -17,8 +17,8 @@ public class CustomerManager : MonoBehaviour
     [SerializeField]
     private int TotalOccupiedPlaces = 0;
     private List <CustomerBehaviour> _customerBehavioursList = new List<CustomerBehaviour>();
-    public bool DayStarted = false;
-    public bool DayFinished = false;
+    //public bool DayStarted = false;
+    //public bool DayFinished = false;
 
     private void Awake()
     {
@@ -56,7 +56,7 @@ public class CustomerManager : MonoBehaviour
             customer.Wait_Target.IsOccupied = false;
             _customerBehavioursList.Remove(customer);
             Destroy(customer.gameObject);
-            if(!DayFinished)
+            if(!GameManager.Instance.dayActivitiesComplete)
                 SpawnCustomers(1, 5f);
         }
     }

@@ -46,7 +46,7 @@ namespace BurgerPunk.Movement
             controller = GetComponent<CharacterController>();
             if (controller == null)
             {
-                Debug.LogError("CharacterController not found");
+                //Debug.LogError("CharacterController not found");
             }
 
             SettingsMenu settingsMenu = FindAnyObjectByType<SettingsMenu>(FindObjectsInactive.Include);
@@ -199,7 +199,7 @@ namespace BurgerPunk.Movement
                 }
                 else
                 {
-                    Debug.LogWarning("No gun equipped in holster!");
+                    //Debug.LogWarning("No gun equipped in holster!");
                 }
             }
         }
@@ -244,7 +244,7 @@ namespace BurgerPunk.Movement
         public void AddSpeed(float multiplier)
         {
             speed *= (1f + multiplier);
-            Debug.Log("Speed increased to: " + speed);
+            //Debug.Log("Speed increased to: " + speed);
         }
 
         public void AddHealth(float multiplier)
@@ -252,7 +252,7 @@ namespace BurgerPunk.Movement
             HealthPoints *= (1f + multiplier);
             MaxHealthPoints *= (1f + multiplier);
             
-            Debug.Log("Health increased by: " + multiplier);
+            //Debug.Log("Health increased by: " + multiplier);
         }
         public void EnableController()
         {

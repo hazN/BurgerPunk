@@ -13,7 +13,7 @@ namespace BurgerPunk.UI
             restaurant = FindFirstObjectByType<Restaurant>();
             if (restaurant == null)
             {
-                Debug.LogError("Restaurant not found in the scene.");
+                //Debug.LogError("Restaurant not found in the scene.");
                 return;
             }
 

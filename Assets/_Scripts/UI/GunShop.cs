@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -36,6 +37,7 @@ namespace BurgerPunk.UI
             refreshShop();
         }
 
+        
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Tab))
@@ -99,6 +101,8 @@ namespace BurgerPunk.UI
         }
         private void OnEnable()
         {
+            
+
             FindFirstObjectByType<FirstPersonController>().DisableController();
             GameManager.Instance.SetUIOpen(true);
         }
@@ -123,12 +127,16 @@ namespace BurgerPunk.UI
                     Destroy(child.gameObject);
             }
 
+            holster = FindFirstObjectByType<Holster>(FindObjectsInactive.Include);
+            if (!holster) return;
+
             List<GunData> availableGuns = holster.GetLockedGuns();
             for (int i = 0; i < 4; i++)
             {
                 if (UnityEngine.Random.Range(0, 2) == 0 && availableGuns.Count > 0)
                 {
                     // Check for duplicates
+                    
                     GunData gun = holster.GetRandomLockedGun();
                     while (gunsInShop.Contains(gun))
                     {
