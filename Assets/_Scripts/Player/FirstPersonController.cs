@@ -260,6 +260,12 @@ namespace BurgerPunk.Movement
             UnityEngine.Cursor.visible = false;
             enableController = true;
         }
+        public void PartiallyDisableController()
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.Confined;
+            UnityEngine.Cursor.visible = false;
+            enableController = false;
+        }
         public void DisableController()
         {
             UnityEngine.Cursor.lockState = CursorLockMode.None;

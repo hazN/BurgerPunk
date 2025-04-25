@@ -163,7 +163,6 @@ public class GameManager : MonoBehaviour
         dayActivitiesComplete = false;
 
         FadeUI.Instance.FadeFromBlack();
-        FindFirstObjectByType<PlayerRestaurant>(FindObjectsInactive.Include).ClearOrder();
         StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.pregameSong, 3.0f));
     }
 
@@ -179,6 +178,7 @@ public class GameManager : MonoBehaviour
     {
         dayOverPrompt.gameObject.SetActive(false);
         Restaurant.Instance.EndDay();
+        FindFirstObjectByType<PlayerRestaurant>(FindObjectsInactive.Include).ClearOrder();
         gunShop.SetActive(false);
         dayTimer = 0.0f;
         if (endDayScreen == null)

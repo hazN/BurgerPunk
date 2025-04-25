@@ -173,12 +173,13 @@ namespace BurgerPunk.Player
 
             //Debug.Log("Starting to cook...");
             
-            firstPersonController.DisableController();
+            firstPersonController.PartiallyDisableController();
             radialProgress.gameObject.SetActive(true);
             radialProgress.StartProgress(2f);
             yield return new WaitForSeconds(2f);
             radialProgress.gameObject.SetActive(false);
-            firstPersonController.EnableController();
+            if (!FindAnyObjectByType<EndDayScreen>(FindObjectsInactive.Include).gameObject.activeSelf)
+                firstPersonController.EnableController();
             //Debug.Log("Done cooking!");
 
             foreach (var item in itemsToComplete)
