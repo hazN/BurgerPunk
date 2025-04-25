@@ -56,4 +56,15 @@ public class EmployeeBehaviour : MonoBehaviour
             }
         }
     }
+
+    public void Reset()
+    {
+        PendingOrder = null;
+        _animator.SetBool(m_HashMove, false);
+        _animator.SetBool(m_HashCooking, false);
+        _navMeshAgent.destination = transform.position;
+        IsBusy = false;
+        OrderItemsMade = 0;
+        OrderStacked = false;
+    }
 }

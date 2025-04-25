@@ -17,9 +17,9 @@ public class Actor : MonoBehaviour
 
         if (health <= 0.0f)
         {
-            OnDeath.Invoke();
+            OnDeath?.Invoke();
         }
-        else OnHit.Invoke();
+        else OnHit?.Invoke();
     }
 
     public bool IsAlive()

@@ -267,7 +267,7 @@ public class Restaurant : MonoBehaviour
     {
         foreach (var employee in EmployeesList)
         {
-            employee.PendingOrder = null;
+            employee.Reset();
         }
 
         ClearPendingOrders();
