@@ -50,11 +50,10 @@ public class GameManager : MonoBehaviour
     public int totalStructuresBuilt = 0;
     public int totalCustomersServed = 0;
 
-    [Header("Scenes")]
-    [SerializeField] SceneAsset mainMenuScene;
-    [SerializeField] SceneAsset mainGameScene;
 
     public UnityEvent OnWaveSpawned;
+
+    public DayOverPrompt dayOverPrompt;
 
     public bool uiIsOpen = false;
 
@@ -125,6 +124,7 @@ public class GameManager : MonoBehaviour
 
         if (IsDayActivitiesComplete())
         {
+            dayOverPrompt.gameObject.SetActive(true);
             Restaurant.Instance.ClearPendingOrders();
             FindFirstObjectByType<FirstPersonController>().HealToMax();
             gunShop.SetActive(true);
@@ -175,6 +175,7 @@ public class GameManager : MonoBehaviour
 
     void EndDay() // show end screen
     {
+        dayOverPrompt.gameObject.SetActive(false);
         Restaurant.Instance.EndDay();
         gunShop.SetActive(false);
         CustomerManager.Instance.DayFinished = true;
@@ -225,6 +226,7 @@ public class GameManager : MonoBehaviour
             endDayScreen = FindAnyObjectByType<EndDayScreen>(FindObjectsInactive.Include);
             gunShop = GameObject.FindGameObjectWithTag("GunTruck");
             gunShop.SetActive(false);
+            dayOverPrompt = FindAnyObjectByType<DayOverPrompt>(FindObjectsInactive.Include);
 
             //Tutorial tutorial = FindFirstObjectByType<Tutorial>(FindObjectsInactive.Include);
             
