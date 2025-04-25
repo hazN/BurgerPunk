@@ -168,6 +168,14 @@ public class EnemyBehaviour : Actor
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if(!mIsTargetPlayer && !mIsTargetEmployee && !mIsTargetPlaceable)
+        {
+            OnTriggerEnter(other);
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
