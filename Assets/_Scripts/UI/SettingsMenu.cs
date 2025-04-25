@@ -31,6 +31,8 @@ public class SettingsMenu : MonoBehaviour
         UpdateSfxVolume();
     }
 
+    
+
     // Update is called once per frame
     void Update()
     {

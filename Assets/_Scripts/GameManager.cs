@@ -50,11 +50,10 @@ public class GameManager : MonoBehaviour
     public int totalStructuresBuilt = 0;
     public int totalCustomersServed = 0;
 
-    [Header("Scenes")]
-    [SerializeField] private string mainMenuScene;
-    [SerializeField] private string mainGameScene;
 
     public UnityEvent OnWaveSpawned;
+
+    public DayOverPrompt dayOverPrompt;
 
     public bool uiIsOpen = false;
 
@@ -125,6 +124,7 @@ public class GameManager : MonoBehaviour
 
         if (IsDayActivitiesComplete())
         {
+            dayOverPrompt.gameObject.SetActive(true);
             Restaurant.Instance.ClearPendingOrders();
             FindFirstObjectByType<FirstPersonController>().HealToMax();
             gunShop.SetActive(true);
@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
     {
         enemySpawnManager = FindAnyObjectByType<EnemySpawnManager>();
         settingsMenu = null;
-        SceneManager.LoadScene(mainGameScene);
+        SceneManager.LoadScene(mainGameScene.name);
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.menuTheme, 3.0f));
@@ -175,6 +175,7 @@ public class GameManager : MonoBehaviour
 
     void EndDay() // show end screen
     {
+        dayOverPrompt.gameObject.SetActive(false);
         Restaurant.Instance.EndDay();
         gunShop.SetActive(false);
         CustomerManager.Instance.DayFinished = true;
@@ -218,13 +219,14 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        if (scene.name == mainGameScene)
+        if (scene.name == mainGameScene.name)
         {
             settingsMenu = FindAnyObjectByType<SettingsMenu>(FindObjectsInactive.Include);
             enemySpawnManager = FindAnyObjectByType<EnemySpawnManager>(FindObjectsInactive.Include);
             endDayScreen = FindAnyObjectByType<EndDayScreen>(FindObjectsInactive.Include);
             gunShop = GameObject.FindGameObjectWithTag("GunTruck");
             gunShop.SetActive(false);
+            dayOverPrompt = FindAnyObjectByType<DayOverPrompt>(FindObjectsInactive.Include);
 
             //Tutorial tutorial = FindFirstObjectByType<Tutorial>(FindObjectsInactive.Include);
             
