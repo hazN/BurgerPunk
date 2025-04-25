@@ -1,4 +1,5 @@
 using BurgerPunk.Movement;
+using BurgerPunk.Player;
 using BurgerPunk.UI;
 using System;
 using System.Collections.Generic;
@@ -127,7 +128,9 @@ public class GameManager : MonoBehaviour
 
         if (IsDayActivitiesComplete())
         {
+
             dayOverPrompt.gameObject.SetActive(true);
+            dayOverPrompt.StartCountDown();
             Restaurant.Instance.ClearPendingOrders();   
             FindFirstObjectByType<FirstPersonController>().HealToMax();
             gunShop.SetActive(true);
@@ -160,8 +163,9 @@ public class GameManager : MonoBehaviour
         dayActivitiesComplete = false;
 
         FadeUI.Instance.FadeFromBlack();
-
+        FindFirstObjectByType<PlayerRestaurant>(FindObjectsInactive.Include).ClearOrder();
         StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.pregameSong, 3.0f));
+        
 
         //CustomerManager.Instance.DayStarted = true;
         //CustomerManager.Instance.DayFinished = false;
@@ -176,7 +180,7 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    void EndDay() // show end screen
+    public void EndDay() // show end screen
     {
         dayOverPrompt.gameObject.SetActive(false);
         Restaurant.Instance.EndDay();
@@ -195,7 +199,7 @@ public class GameManager : MonoBehaviour
     {
         if (dayActivitiesComplete)
         {
-            EndDay();
+            //EndDay();
             return;
         }
 

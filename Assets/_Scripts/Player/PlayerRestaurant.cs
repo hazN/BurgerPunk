@@ -66,6 +66,8 @@ namespace BurgerPunk.Player
 
             if (currentOrder.Customer.SpotLight != null)
                 currentOrder.Customer.SpotLight.SetActive(true);
+
+            currentOrder.Customer.InteractCone.gameObject.SetActive(true);
         }
 
         private void UpdateOrderStatus()
