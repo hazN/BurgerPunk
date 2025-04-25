@@ -207,7 +207,7 @@ public class GameManager : MonoBehaviour
             //Debug.Log("Day " + currentDay + 1 + " started.");
             dayTimer = 0.0f;
             dayStarted = true;
-            CustomerManager.Instance.SpawnCustomers(4, 5.0f);
+            CustomerManager.Instance.SpawnCustomers(CustomerManager.Instance.CustomersList.Count, 5.0f);
             StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.daySong1, 3.0f));
             StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.pregameSong, 1.5f));
 

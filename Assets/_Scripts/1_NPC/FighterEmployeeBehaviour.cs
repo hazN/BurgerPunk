@@ -119,6 +119,15 @@ public class FighterEmployeeBehaviour : Actor
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if(_enemy != null)
+        {
+            _enemy = null;
+            TransitionToState(mEmployeeIdleState);
+        }
+    }
+
     private IEnumerator Despawn()
     {
         yield return new WaitForSeconds(5f);
