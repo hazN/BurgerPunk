@@ -51,8 +51,8 @@ public class GameManager : MonoBehaviour
     public int totalCustomersServed = 0;
 
     [Header("Scenes")]
-    [SerializeField] SceneAsset mainMenuScene;
-    [SerializeField] SceneAsset mainGameScene;
+    [SerializeField] private string mainMenuScene;
+    [SerializeField] private string mainGameScene;
 
     public UnityEvent OnWaveSpawned;
 
@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
     {
         enemySpawnManager = FindAnyObjectByType<EnemySpawnManager>();
         settingsMenu = null;
-        SceneManager.LoadScene(mainGameScene.name);
+        SceneManager.LoadScene(mainGameScene);
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.menuTheme, 3.0f));
@@ -218,7 +218,7 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        if (scene.name == mainGameScene.name)
+        if (scene.name == mainGameScene)
         {
             settingsMenu = FindAnyObjectByType<SettingsMenu>(FindObjectsInactive.Include);
             enemySpawnManager = FindAnyObjectByType<EnemySpawnManager>(FindObjectsInactive.Include);
