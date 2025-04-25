@@ -24,7 +24,7 @@ public static class AudioFade
     public static IEnumerator FadeIn(AudioSource audioSource, float FadeTime)
     {
         FadeTime = Math.Max(FadeTime, 0.0001f);
-        float startVolume = audioSource.volume;
+        float startVolume = 1.0f;
         audioSource.volume = 0;
         audioSource.Play();
 
