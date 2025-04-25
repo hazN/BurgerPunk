@@ -75,6 +75,8 @@ public class CustomerBehaviour : Interactable
 
                     AudioManager.Instance.customerServed.Play();
 
+                    AudioManager.Instance.PlayRandomCustomerBark();
+
                     GameManager.Instance.AddMoney((int)order.TotalCost);
 
                     GameManager.Instance.customersServedThisDay++;
