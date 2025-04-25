@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class IntroSceneHandler : MonoBehaviour
 {
@@ -7,7 +8,10 @@ public class IntroSceneHandler : MonoBehaviour
 
     public void NextScene()
     {
-        // if sceneindex == size of scenes - 1, load next scene
+        if (sceneIndex == scenes.Length - 1)
+        {
+            GameManager.Instance.StartGame();
+        }
         scenes[sceneIndex].gameObject.SetActive(false);
         sceneIndex++;
         scenes[sceneIndex].gameObject.SetActive(true);
