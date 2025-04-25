@@ -129,12 +129,29 @@ namespace BurgerPunk.Combat
                 return null;
             }
 
-            float bias = Mathf.Clamp01(level * 0.1f);
+            List<float> weights = new List<float>();
+            float totalWeight = 0f;
 
-            float rand = Mathf.Pow(UnityEngine.Random.value, 1f - bias);
-            int index = Mathf.Clamp(Mathf.FloorToInt(rand * lockedGuns.Count), 0, lockedGuns.Count - 1);
+            foreach (var gun in lockedGuns)
+            {
+                float price = gun.Price;
+                float weight = 1f / Mathf.Pow(price, 1f - Mathf.Clamp01(level * 0.05f));
 
-            return lockedGuns[index];
+                weights.Add(weight);
+                totalWeight += weight;
+            }
+
+            float rand = UnityEngine.Random.Range(0f, totalWeight);
+            float cumulative = 0f;
+
+            for (int i = 0; i < lockedGuns.Count; i++)
+            {
+                cumulative += weights[i];
+                if (rand <= cumulative)
+                    return lockedGuns[i];
+            }
+
+            return lockedGuns[lockedGuns.Count - 1];
         }
 
         public void AddAccuracy(int gunId, float value)
