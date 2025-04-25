@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
 
         if (IsDayActivitiesComplete())
         {
-
+            AudioManager.Instance.dayEnd.Play();
             dayOverPrompt.gameObject.SetActive(true);
             dayOverPrompt.StartCountDown();
             Restaurant.Instance.ClearPendingOrders();   
@@ -190,6 +190,7 @@ public class GameManager : MonoBehaviour
             endDayScreen = FindAnyObjectByType<EndDayScreen>(FindObjectsInactive.Include);
         }
         endDayScreen.gameObject.SetActive(true);
+        AudioManager.Instance.applause.Play();
         onDayEnded?.Invoke();
     }
 

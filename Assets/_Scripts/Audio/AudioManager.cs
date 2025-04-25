@@ -21,6 +21,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource buttonClick;
     [SerializeField] public AudioSource placeableDropped;
     [SerializeField] public AudioSource kaching;
+    [SerializeField] public AudioSource dayEnd;
+    [SerializeField] public AudioSource applause;
 
     [Header("Music")]
     [SerializeField] public AudioSource menuTheme;
