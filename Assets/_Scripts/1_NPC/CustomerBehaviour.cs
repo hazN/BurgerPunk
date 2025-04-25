@@ -63,16 +63,17 @@ public class CustomerBehaviour : Interactable
         {
             if (playerRestaurant.IsOrderComplete())
             {
-                if (SpotLight != null)
-                    SpotLight.SetActive(false);
-
                 PendingOrder order = playerRestaurant.GetCurrentOrder();
                 if (order.Customer == this)
                 {
+                    if (SpotLight != null)
+                        SpotLight.SetActive(false);
+
                     _animator.SetTrigger(m_HashEat);
 
                     playerRestaurant.ClearOrder();
-
+                    // Add customer audio here
+                    AudioManager.Instance.PlayRandomCustomerBark();
                     AudioManager.Instance.customerServed.Play();
 
                     AudioManager.Instance.PlayRandomCustomerBark();
