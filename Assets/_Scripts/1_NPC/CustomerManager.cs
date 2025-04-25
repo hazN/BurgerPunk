@@ -96,4 +96,14 @@ public class CustomerManager : MonoBehaviour
         customerBehaviour.Wait_Target.IsOccupied = true;
         _customerBehavioursList.Add(customerBehaviour);
     }
+
+    public void ClearCustomers()
+    {
+        foreach (var customer in _customerBehavioursList)
+        {
+            if (customer != null)
+                Destroy(customer.gameObject);
+        }
+        _customerBehavioursList.Clear();
+    }
 }
