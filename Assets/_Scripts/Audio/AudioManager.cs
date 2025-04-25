@@ -40,6 +40,12 @@ public class AudioManager : MonoBehaviour
     [Header("Customer")]
     [SerializeField] AudioSource customerBark;
     [SerializeField] AudioClip[] customerBarkClips;
+
+
+    [Header("Enemy")]
+    [SerializeField] AudioClip[] enemyAttackClips;
+    [SerializeField] AudioClip[] enemyDeathClips;
+    [SerializeField] AudioClip[] enemyDamagedClips;
     void Awake()
     {
         if (Instance == null)
@@ -82,6 +88,21 @@ public class AudioManager : MonoBehaviour
     public void Gunfire(AudioClip clip)
     {
         gunfire.PlayOneShot(clip);
+    }
+
+    public AudioClip GetEnemyAttackClip()
+    {
+        return enemyAttackClips[UnityEngine.Random.Range(0, enemyAttackClips.Length)];
+    }
+
+    public AudioClip GetEnemyDamagedClip()
+    {
+        return enemyDamagedClips[UnityEngine.Random.Range(0, enemyDamagedClips.Length)];
+    }
+
+    public AudioClip GetEnemyDeathClip()
+    {
+        return enemyDeathClips[UnityEngine.Random.Range(0, enemyDeathClips.Length)];
     }
 
     void SetButtonSounds()
