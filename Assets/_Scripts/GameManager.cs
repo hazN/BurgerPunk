@@ -148,6 +148,9 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(mainGameScene);
         SceneManager.sceneLoaded += OnSceneLoaded;
 
+        //FirstPersonController.Instance.EnableController();
+
+        //FindFirstObjectByType<Tutorial>(FindObjectsInactive.Include).gameObject.SetActive(true);
         StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.menuTheme, 3.0f));
         StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.pregameSong, 3.0f));
         FadeUI.Instance.FadeFromBlack();
@@ -227,9 +230,7 @@ public class GameManager : MonoBehaviour
             gunShop.SetActive(false);
             dayOverPrompt = FindAnyObjectByType<DayOverPrompt>(FindObjectsInactive.Include);
 
-            //Tutorial tutorial = FindFirstObjectByType<Tutorial>(FindObjectsInactive.Include);
-            
-            //tutorial.gameObject.SetActive(true);
+            FindFirstObjectByType<Tutorial>(FindObjectsInactive.Include).gameObject.SetActive(true);
             //UnityEngine.Cursor.lockState = CursorLockMode.None;
             //UnityEngine.Cursor.visible = true;
 

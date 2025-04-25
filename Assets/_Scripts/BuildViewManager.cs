@@ -43,7 +43,7 @@ public class BuildViewManager : MonoBehaviour
 
 
         }
-        DeactivateBuildView();
+        //DeactivateBuildView();
     }
 
     // Update is called once per frame
@@ -154,7 +154,7 @@ public class BuildViewManager : MonoBehaviour
 
         buildUI.gameObject.SetActive(false);
 
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         if (player)
         {
