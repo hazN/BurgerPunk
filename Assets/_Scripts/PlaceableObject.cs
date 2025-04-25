@@ -34,7 +34,10 @@ public class PlaceableObject : Actor
             gameObject.GetComponent<FighterEmployeeBehaviour>().enabled = true;
         }
         else
+        {
             gameObject.tag = "Placeable";
+
+        }
 
         GameManager.Instance.numStructuresThisDay++;
         GameManager.Instance.totalStructuresBuilt++;
