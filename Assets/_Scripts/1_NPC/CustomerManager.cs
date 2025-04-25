@@ -14,11 +14,7 @@ public class CustomerManager : MonoBehaviour
     public Transform OrderTile;
     public bool IsSomeonePlacingOrder = false;
 
-    [SerializeField]
-    private int TotalOccupiedPlaces = 0;
     private List <CustomerBehaviour> _customerBehavioursList = new List<CustomerBehaviour>();
-    //public bool DayStarted = false;
-    //public bool DayFinished = false;
 
     private void Awake()
     {
