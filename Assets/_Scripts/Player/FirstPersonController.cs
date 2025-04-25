@@ -54,7 +54,7 @@ namespace BurgerPunk.Movement
             {
                 mouseSensitivity = settingsMenu.sensitivitySlider.value;
             }
-            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = false;
         }
 
@@ -256,7 +256,7 @@ namespace BurgerPunk.Movement
         }
         public void EnableController()
         {
-            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.lockState = CursorLockMode.Confined;
             UnityEngine.Cursor.visible = false;
             enableController = true;
         }
