@@ -1,4 +1,5 @@
-﻿using BurgerPunk.Movement;
+﻿using BurgerPunk.Combat;
+using BurgerPunk.Movement;
 using BurgerPunk.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -112,6 +113,27 @@ namespace BurgerPunk.Player
             StartCoroutine(CookCoroutine(foodType, equipment));
         }
 
+        public bool CanUseEquipment(Equipment equipment)
+        {
+            if (currentOrder == null)
+            {
+                return false;
+            }
+            
+            FoodTypes foodType = equipment.equipmentType;
+
+            bool needsItem = false;
+            foreach (var item in itemsToComplete)
+            {
+                if (item.Type == foodType)
+                {
+                    needsItem = true;
+                    break;
+                }
+            }
+
+            return needsItem;
+        }
         private IEnumerator CookCoroutine(FoodTypes foodType, Equipment equipment)
         {
             if (currentOrder == null)
