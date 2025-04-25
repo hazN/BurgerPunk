@@ -123,8 +123,8 @@ public class Restaurant : MonoBehaviour
         {
             if (order.Customer == customer)
             {
-                AudioManager.Instance.PlayRandomCustomerBark();
-                GameManager.Instance.AddToBalance(order.TotalCost);
+                Debug.Log("Order Fullfilled");
+                //GameManager.Instance.AddToBalance(order.TotalCost);
                 ReadyOrderList.Remove(order);
                 FreeATray(order.TrayId);
                 AssignTask();
