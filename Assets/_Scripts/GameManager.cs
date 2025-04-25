@@ -57,6 +57,9 @@ public class GameManager : MonoBehaviour
 
     public bool uiIsOpen = false;
 
+    public string mainGameScene = "MainGameScene";
+    public string titleGameScene = "TitleScene";
+
     private void Awake()
     {
         if (Instance == null)
@@ -139,7 +142,7 @@ public class GameManager : MonoBehaviour
     {
         enemySpawnManager = FindAnyObjectByType<EnemySpawnManager>();
         settingsMenu = null;
-        SceneManager.LoadScene(mainGameScene.name);
+        SceneManager.LoadScene(mainGameScene);
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.menuTheme, 3.0f));
@@ -219,7 +222,7 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        if (scene.name == mainGameScene.name)
+        if (scene.name == mainGameScene)
         {
             settingsMenu = FindAnyObjectByType<SettingsMenu>(FindObjectsInactive.Include);
             enemySpawnManager = FindAnyObjectByType<EnemySpawnManager>(FindObjectsInactive.Include);
