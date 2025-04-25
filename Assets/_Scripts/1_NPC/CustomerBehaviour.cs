@@ -22,6 +22,7 @@ public class CustomerBehaviour : Interactable
     public Transform OrderTile;
     public GameObject Stool;
     public GameObject SpotLight;
+    [SerializeField] public InteractableCone InteractCone;
 
     [HideInInspector]
     public List<FoodTypes> FoodTypesList = new List<FoodTypes>();
@@ -68,6 +69,7 @@ public class CustomerBehaviour : Interactable
                 {
                     if (SpotLight != null)
                         SpotLight.SetActive(false);
+                    InteractCone.gameObject.SetActive(false);
 
                     _animator.SetTrigger(m_HashEat);
 
