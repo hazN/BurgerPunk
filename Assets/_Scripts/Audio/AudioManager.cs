@@ -36,6 +36,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioSource fryerSfx;
     [SerializeField] public AudioSource grillSfx;
     [SerializeField] public AudioSource sodaSfx;
+    [SerializeField] public AudioSource claimOrder;
+    [SerializeField] public AudioSource wrongCustomer;
+    [SerializeField] public AudioSource orderComplete;
 
     [Header("Customer")]
     [SerializeField] AudioSource customerBark;

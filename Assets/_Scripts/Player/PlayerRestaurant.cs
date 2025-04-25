@@ -1,4 +1,5 @@
 ﻿using BurgerPunk.Movement;
+using BurgerPunk.UI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,6 +13,7 @@ namespace BurgerPunk.Player
         private List<OrderItem> itemsToComplete = new List<OrderItem>();
         private bool isOrderComplete = false;
         [SerializeField] private TextMeshProUGUI orderStatus;
+        [SerializeField] private RectTransform orderPanel;
         [SerializeField] private FirstPersonController firstPersonController;
         [SerializeField] private Tray tray;
         [SerializeField] private RadialProgress radialProgress;
@@ -21,6 +23,14 @@ namespace BurgerPunk.Player
         }
         public void ClaimOrder(PendingOrder order)
         {
+            OrderUI orderUI = FindFirstObjectByType<OrderUI>(FindObjectsInactive.Include);
+            AudioManager.Instance.claimOrder.Play();
+
+            if (orderUI != null)
+            {
+                orderUI.gameObject.SetActive(false);
+            }
+
             if (currentOrder != null)
             {
                 //Debug.Log("Already have an order");
@@ -35,7 +45,22 @@ namespace BurgerPunk.Player
             foreach (var item in order.OrderItemsList)
             {
                 itemsToComplete.Add(item);
-                orderStatus.text += item.Name + "\n";
+                string workstation = "";
+
+                if (item.Type == FoodTypes.Burger)
+                {
+                    workstation = "[GRILL]";
+                }
+                else if (item.Type == FoodTypes.Fries)
+                {
+                    workstation = "[FRYER]";
+                }
+                else if (item.Type == FoodTypes.Soda)
+                {
+                    workstation = "[VENDING MACHINE]";
+                }
+
+                orderStatus.text += item.Name + " " + workstation + "\n";
             }
 
             if (currentOrder.Customer.SpotLight != null)
@@ -48,6 +73,11 @@ namespace BurgerPunk.Player
             if (itemsToComplete.Count == 0)
             {
                 orderStatus.text = "Order Complete, hand to Customer!";
+                if (!isOrderComplete)
+                {
+                    AudioManager.Instance.orderComplete.Play();
+                }
+
                 isOrderComplete = true;
 
                 // HIGHLIGHT CUSTOMER
@@ -58,7 +88,22 @@ namespace BurgerPunk.Player
             }
             foreach (var item in itemsToComplete)
             {
-                orderStatus.text += item.Name + "\n";
+                string workstation = "";
+
+                if (item.Type == FoodTypes.Burger)
+                {
+                    workstation = "[GRILL]";
+                }
+                else if (item.Type == FoodTypes.Fries)
+                {
+                    workstation = "[FRYER]";
+                }
+                else if (item.Type == FoodTypes.Soda)
+                {
+                    workstation = "[VENDING MACHINE]";
+                }
+
+                orderStatus.text += item.Name + " " + workstation + "\n";
             }
         }
 
@@ -122,6 +167,18 @@ namespace BurgerPunk.Player
                    
                     break;
                 }
+            }
+        }
+
+        private void Update()
+        {
+            if (currentOrder == null)
+            {
+                orderPanel.gameObject.SetActive(false);
+            }
+            else
+            {
+                orderPanel.gameObject.SetActive(true);
             }
         }
 

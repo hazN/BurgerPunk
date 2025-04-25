@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
         if (IsDayActivitiesComplete())
         {
             dayOverPrompt.gameObject.SetActive(true);
-            Restaurant.Instance.ClearPendingOrders();
+            Restaurant.Instance.ClearPendingOrders();   
             FindFirstObjectByType<FirstPersonController>().HealToMax();
             gunShop.SetActive(true);
             FindAnyObjectByType<GunShop>(FindObjectsInactive.Include).refreshShop();
@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
 
         //CustomerManager.Instance.DayStarted = true;
         //CustomerManager.Instance.DayFinished = false;
-        CustomerManager.Instance.SpawnCustomers(CustomerManager.Instance.TargetList.Count, 5.0f);
+        //CustomerManager.Instance.SpawnCustomers(CustomerManager.Instance.TargetList.Count, 5.0f);
     }
 
 
@@ -181,7 +181,7 @@ public class GameManager : MonoBehaviour
         dayOverPrompt.gameObject.SetActive(false);
         Restaurant.Instance.EndDay();
         gunShop.SetActive(false);
-        CustomerManager.Instance.DayFinished = true;
+        //CustomerManager.Instance.DayFinished = true;
         dayTimer = 0.0f;
         if (endDayScreen == null)
         {
@@ -208,7 +208,7 @@ public class GameManager : MonoBehaviour
             dayStarted = true;
             //CustomerManager.Instance.DayStarted = true;
             //CustomerManager.Instance.DayFinished = false;
-            //CustomerManager.Instance.SpawnCustomers(CustomerManager.Instance.TargetList.Count, 5.0f);
+            CustomerManager.Instance.SpawnCustomers(CustomerManager.Instance.TargetList.Count, 5.0f);
             StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.daySong1, 3.0f));
             StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.pregameSong, 1.5f));
 

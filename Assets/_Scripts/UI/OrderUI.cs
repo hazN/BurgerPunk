@@ -14,7 +14,7 @@ namespace BurgerPunk.UI
             restaurant = Restaurant.Instance;
             if (restaurant == null)
             {
-                Debug.LogError("Restaurant instance is null");
+                //Debug.LogError("Restaurant instance is null");
                 return;
             }
             restaurant.OnRefreshUI.AddListener(RefreshUI);
@@ -63,7 +63,7 @@ namespace BurgerPunk.UI
             }
             else
             {
-                Debug.Log("No pending orders");
+                //Debug.Log("No pending orders");
             }
 
         }

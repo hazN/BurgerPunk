@@ -40,6 +40,7 @@ public class CustomerManager : MonoBehaviour
 
     public void SpawnCustomers(int count = 1, float timeInSeconds = 0f)
     {
+        Debug.Log("Begin spawn customers");
         if(timeInSeconds == 0f)
             for (int i = 0; i < count; i++)
                 CreateCustomer();
@@ -85,9 +86,17 @@ public class CustomerManager : MonoBehaviour
 
     private void CreateCustomer()
     {
+        
         int freeSpot = GetFreeSpot();
         if (freeSpot == -1)
             return;
+
+        if (GameManager.Instance.dayActivitiesComplete)
+        {
+            Debug.Log("Try create customer failed, day is complete");
+        }
+
+        Debug.Log("Customer created");
         GameObject customer = Instantiate(CustomersList[Random.Range(0, CustomersList.Count)], SpawnPoint);
         CustomerBehaviour customerBehaviour = customer.GetComponent<CustomerBehaviour>();
         customerBehaviour.OrderTile = OrderTile;

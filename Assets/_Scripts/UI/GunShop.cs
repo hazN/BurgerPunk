@@ -32,7 +32,7 @@ namespace BurgerPunk.UI
             holster = FindFirstObjectByType<Holster>();
             if (holster == null)
             {
-                Debug.LogError("Holster not found");
+                //Debug.LogError("Holster not found");
             }
             refreshShop();
         }
