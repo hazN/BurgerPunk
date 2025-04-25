@@ -16,6 +16,7 @@ public class EatAndLeave : StateMachineBehaviour
             {
                 customer.FoodTypesList.Clear();
                 customer.IsOrderFulfilled = true;
+                ParticleManager.Instance.CreateParticleEffect(ParticleManager.Particle.Firework, customer.gameObject.transform.position, 10f);
                 customer.Animator.SetBool(customer.m_HashSit, false);
                 customer.Stool.gameObject.SetActive(false);
             }

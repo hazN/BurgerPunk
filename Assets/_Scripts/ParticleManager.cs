@@ -13,7 +13,8 @@ public class ParticleManager : MonoBehaviour
     {
         Pop,
         Ding,
-        Grill
+        Grill,
+        Firework
     }
 
     private void Start()
