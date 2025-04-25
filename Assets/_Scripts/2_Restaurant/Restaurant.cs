@@ -283,5 +283,7 @@ public class Restaurant : MonoBehaviour
         {
             target.IsOccupied = false;
         }
+
+        CustomerManager.Instance.IsSomeonePlacingOrder = false;
     }
 }
