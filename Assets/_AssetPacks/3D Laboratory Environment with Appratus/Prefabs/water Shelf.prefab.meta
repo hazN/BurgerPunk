@@ -10,5 +10,6 @@ AssetOrigin:
   productId: 220212
   packageName: Chemistry Lab Items Pack
   packageVersion: 1.0
-  assetPath: Assets/3D Laboratory Environment with Appratus/Prefabs/water Shelf.prefab
+  assetPath: Assets/_AssetPacks/3D Laboratory Environment with Appratus/Prefabs/water
+    Shelf.prefab
   uploadId: 494867
