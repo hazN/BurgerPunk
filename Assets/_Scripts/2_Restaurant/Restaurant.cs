@@ -2,6 +2,7 @@ using BurgerPunk;
 using BurgerPunk.Player;
 using BurgerPunk.UI;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -99,7 +100,7 @@ public class Restaurant : MonoBehaviour
     public void SpawnEmployees(int index  = -1)
     {
         if (index == -1)
-            index = Random.Range(0, EmployeesPrefabsList.Count);
+            index = UnityEngine.Random.Range(0, EmployeesPrefabsList.Count);
         if(index > EmployeesPrefabsList.Count)
         {
             throw new UnityException("Employee Prefab is not present");
@@ -217,7 +218,7 @@ public class Restaurant : MonoBehaviour
     public void GetRandomOrder(CustomerBehaviour customer)
     {
         string orderStr = string.Empty;
-        int orderSize = EquipmentsList.Count <= 1 ? 1 : Random.Range(1, EquipmentsList.Count + 1);
+        int orderSize = EquipmentsList.Count <= 1 ? 1 : UnityEngine.Random.Range(1, EquipmentsList.Count + 1);
         int itemOrdered = 0;
         PendingOrder pendingOrder = new PendingOrder();
         pendingOrder.MachinesList = new List<Transform>();
@@ -230,9 +231,9 @@ public class Restaurant : MonoBehaviour
             if (item.RestaurantEquipment.IsEquipped)
             {
                 itemOrdered++;
-                OrderItem orderItem = item.RestaurantEquipment.OrderItemsList[Random.Range(0, item.RestaurantEquipment.OrderItemsList.Count)];
+                OrderItem orderItem = item.RestaurantEquipment.OrderItemsList[UnityEngine.Random.Range(0, item.RestaurantEquipment.OrderItemsList.Count)];
                 pendingOrder.OrderItemsList.Add(orderItem);
-                pendingOrder.MachinesList.Add(item.TargetList[Random.Range(0, item.TargetList.Length)]);
+                pendingOrder.MachinesList.Add(item.TargetList[UnityEngine.Random.Range(0, item.TargetList.Length)]);
                 pendingOrder.TotalCost += orderItem.Cost;
                 customer.FoodTypesList.Add(orderItem.Type);
             }
@@ -289,5 +290,7 @@ public class Restaurant : MonoBehaviour
         FreeATray(3);
 
         CustomerManager.Instance.IsSomeonePlacingOrder = false;
+
+        GC.Collect();
     }
 }
