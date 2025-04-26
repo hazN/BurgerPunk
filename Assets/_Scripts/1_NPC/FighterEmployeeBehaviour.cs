@@ -43,7 +43,7 @@ public class FighterEmployeeBehaviour : Actor
     void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        _navMeshAgent.stoppingDistance = 1.1f;
+        _navMeshAgent.stoppingDistance = 2f;
         _animator = GetComponent<Animator>();
         OnDeath += () =>
         {
@@ -81,12 +81,13 @@ public class FighterEmployeeBehaviour : Actor
     {
         if (_enemy)
         {
-            _enemy.TakeDamage(Damage);
             if(!_enemy.IsAlive())
             {
                 _enemy = null;
                 TransitionToState(mEmployeeIdleState);
             }
+            else
+                _enemy.TakeDamage(Damage);
         }
         else
             TransitionToState(mEmployeeIdleState);
@@ -104,19 +105,15 @@ public class FighterEmployeeBehaviour : Actor
             _navMeshAgent.destination = _enemy.transform.position;
             TransitionToState(mEmployeeMoveState);
         }
+        else
+        {
+            TransitionToState(mEmployeeIdleState);
+        }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if(_enemy == null)
-        {
-            if (other.CompareTag("Enemy"))
-            {
-                _enemy = other.GetComponent<EnemyBehaviour>();
-                _navMeshAgent.destination = _enemy.transform.position;
-                TransitionToState(mEmployeeMoveState);
-            }
-        }
+        OnTriggerEnter(other);
     }
 
     private void OnTriggerExit(Collider other)
