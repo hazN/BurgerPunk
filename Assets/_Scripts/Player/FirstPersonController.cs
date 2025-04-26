@@ -60,7 +60,7 @@ namespace BurgerPunk.Movement
 
         private void Update()
         {
-            Debug.Log("cursor status: " + Cursor.lockState.ToString());
+            //Debug.Log("cursor status: " + Cursor.lockState.ToString());
             if (!enableController)
             {
                 return;
@@ -257,7 +257,7 @@ namespace BurgerPunk.Movement
         }
         public void EnableController()
         {
-            Debug.Log("cursor locked, controller enable");
+            //Debug.Log("cursor locked, controller enable");
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
             enableController = true;
@@ -270,7 +270,7 @@ namespace BurgerPunk.Movement
         }
         public void DisableController()
         {
-            Debug.Log("cursor locked, controller disabled");
+            //Debug.Log("cursor locked, controller disabled");
             UnityEngine.Cursor.lockState = CursorLockMode.None;
             UnityEngine.Cursor.visible = true;
             enableController = false;

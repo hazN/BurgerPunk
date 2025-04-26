@@ -28,6 +28,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioSource menuTheme;
     [SerializeField] public AudioSource pregameSong;
     [SerializeField] public AudioSource daySong1;
+    [SerializeField] public AudioSource daySong2;
 
     [Header("Player")]
     [SerializeField] AudioSource gunfire;
@@ -81,6 +82,17 @@ public class AudioManager : MonoBehaviour
         
     }
 
+    public AudioSource GetDaySong(int day = 0)
+    {
+        if (day % 2 == 0)
+        {
+            return daySong1;
+        }
+        else
+        {
+            return daySong2;
+        }
+    }
     public void PlayRandomCustomerBark()
     {
         customerBark.clip = customerBarkClips[UnityEngine.Random.Range(0, customerBarkClips.Length)];
