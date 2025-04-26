@@ -9,6 +9,7 @@ public class EnemyBehaviour : Actor
     public Transform TargetPoint;
     public EnemySpawnManager SpawnerManger;
     [SerializeField] public AudioSource audioSource;
+    [SerializeField] private HealthBar healthBar;
 
     #region Animator Parameters
     public readonly int m_HashMove = Animator.StringToHash("Moving");
@@ -58,7 +59,7 @@ public class EnemyBehaviour : Actor
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-        _navMeshAgent.stoppingDistance = 1.1f;
+        _navMeshAgent.stoppingDistance = 1.5f;
         OnDeath += () =>
         {
             m_IsDead = true;
@@ -112,6 +113,8 @@ public class EnemyBehaviour : Actor
             else
             {
                 mIsTargetEmployee = false;
+                _navMeshAgent.destination = SpawnerManger.targetPoint[Random.Range(0, SpawnerManger.targetPoint.Length)].position;
+                TransitionToState(mEnemyMoveState);
             }
         }
         else if(mIsTargetPlaceable)
@@ -123,9 +126,11 @@ public class EnemyBehaviour : Actor
             else
             {
                 mIsTargetPlaceable = false;
+                _navMeshAgent.destination = SpawnerManger.targetPoint[Random.Range(0, SpawnerManger.targetPoint.Length)].position;
+                TransitionToState(mEnemyMoveState);
             }
         }
-            _currentState.Update();
+        _currentState.Update();
     }
 
     public void TransitionToState(NPCBaseState state)
@@ -186,7 +191,15 @@ public class EnemyBehaviour : Actor
         }
         else if (other.CompareTag("Employee"))
         {
+            mIsTargetEmployee = false;
             mFighterEmployeeObject = null;
+            _navMeshAgent.destination = SpawnerManger.targetPoint[Random.Range(0, SpawnerManger.targetPoint.Length)].position;
+            TransitionToState(mEnemyMoveState);
+        }
+        else if(other.CompareTag("Placeable"))
+        {
+            mIsTargetPlaceable = false;
+            mPlaceableObject = null;
             _navMeshAgent.destination = SpawnerManger.targetPoint[Random.Range(0, SpawnerManger.targetPoint.Length)].position;
             TransitionToState(mEnemyMoveState);
         }
@@ -206,14 +219,15 @@ public class EnemyBehaviour : Actor
         {
             if(mFighterEmployeeObject != null)
             {
-                mFighterEmployeeObject.TakeDamage(AttackPoints);
-                if(!mFighterEmployeeObject.IsAlive())
+                if (!mFighterEmployeeObject.IsAlive())
                 {
                     mIsTargetEmployee = false;
                     mFighterEmployeeObject = null;
                     _navMeshAgent.destination = SpawnerManger.targetPoint[Random.Range(0, SpawnerManger.targetPoint.Length)].position;
                     TransitionToState(mEnemyMoveState);
                 }
+                else mFighterEmployeeObject.TakeDamage(AttackPoints);
+                
                 return;
             }
         }
@@ -242,5 +256,6 @@ public class EnemyBehaviour : Actor
     {
         yield return new WaitForSeconds(5f);
         Destroy(gameObject);
+        Destroy(healthBar);
     }
 }

@@ -261,6 +261,7 @@ public class Restaurant : MonoBehaviour
     public void ClearPendingOrders()
     {
         PendingOrdersList.Clear();
+        ReadyOrderList.Clear();
     }
 
     public void EndDay()
@@ -271,7 +272,6 @@ public class Restaurant : MonoBehaviour
         }
 
         ClearPendingOrders();
-        ReadyOrderList.Clear();
 
         CustomerManager.Instance.ClearCustomers();
 

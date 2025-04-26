@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class FighterEmployeeMoveState : NPCBaseState
 {
@@ -13,7 +14,7 @@ public class FighterEmployeeMoveState : NPCBaseState
 
     public override void Update()
     {
-        if(Helper.HaveReached(employee.NavMeshAgent))
+        if (Helper.HaveReached(employee.NavMeshAgent))
         {
             employee.Animator.SetBool(employee.m_HashMoving, false);
             employee.TransitionToState(employee.mEmployeeAttackState);
