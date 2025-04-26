@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
     public bool uiIsOpen = false;
 
     public string mainGameScene = "MainGameScene";
+    public string introScene = "Intro";
     public string titleGameScene = "TitleScene";
 
     private void Awake()
@@ -139,6 +140,12 @@ public class GameManager : MonoBehaviour
             dayActivitiesComplete = true;
             StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.GetDaySong(), 1.0f));
         }
+    }
+
+    public void StartIntro()
+    {
+        SceneManager.LoadScene(introScene);
+        FadeUI.Instance.FadeFromBlack();
     }
 
     public void StartGame()

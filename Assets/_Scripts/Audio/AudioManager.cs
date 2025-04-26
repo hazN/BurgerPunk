@@ -86,11 +86,11 @@ public class AudioManager : MonoBehaviour
     {
         if (day % 2 == 0)
         {
-            return daySong1;
+            return daySong2;
         }
         else
         {
-            return daySong2;
+            return daySong1;
         }
     }
     public void PlayRandomCustomerBark()

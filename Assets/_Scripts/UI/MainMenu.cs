@@ -42,7 +42,8 @@ public class MainMenu : MonoBehaviour
     {
         if (!gameStarted)
         {
-            FadeUI.Instance.FadeToBlack(GameManager.Instance.StartGame);
+            FadeUI.Instance.FadeToBlack(GameManager.Instance.StartIntro);
+            //FadeUI.Instance.FadeToBlack(GameManager.Instance.StartGame);
             gameStarted = true;
         }
         

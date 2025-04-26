@@ -11,6 +11,7 @@ public class IntroSceneHandler : MonoBehaviour
         if (sceneIndex == scenes.Length - 1)
         {
             GameManager.Instance.StartGame();
+            return;
         }
         scenes[sceneIndex].gameObject.SetActive(false);
         sceneIndex++;
