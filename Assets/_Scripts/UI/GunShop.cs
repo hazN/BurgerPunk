@@ -138,10 +138,10 @@ namespace BurgerPunk.UI
                     // Check for duplicates
                     
                     GunData gun = holster.GetRandomLockedGun();
-                    while (gunsInShop.Contains(gun))
-                    {
-                        gun = holster.GetRandomLockedGun();
-                    }
+                    //while (gunsInShop.Contains(gun))
+                    //{
+                    //    gun = holster.GetRandomLockedGun();
+                    //}
 
                     availableGuns.Remove(gun);
                     gunsInShop.Add(gun);

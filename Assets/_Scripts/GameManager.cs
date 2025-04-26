@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
     public string introScene = "Intro";
     public string titleGameScene = "TitleScene";
 
+
     private void Awake()
     {
         if (Instance == null)
@@ -116,17 +117,6 @@ public class GameManager : MonoBehaviour
 
         if (!dayStarted) return;
 
-        dayTimer += Time.deltaTime;
-        dayTimer = Math.Min(dayTimer, lengthOfDay);
-
-        if (waveQueue.Any() && dayTimer/lengthOfDay > waveQueue.Peek().spawnTime)
-        {
-            EnemyWave wave = waveQueue.Dequeue();
-            enemySpawnManager.SpawnWave(wave);
-            OnWaveSpawned?.Invoke();
-            AudioManager.Instance.alarm.Play();
-        }
-
         if (IsDayActivitiesComplete())
         {
             AudioManager.Instance.dayEnd.Play();
@@ -139,6 +129,17 @@ public class GameManager : MonoBehaviour
             dayStarted = false;
             dayActivitiesComplete = true;
             StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.GetDaySong(currentDay), 1.0f));
+        }
+
+        dayTimer += Time.deltaTime;
+        dayTimer = Math.Min(dayTimer, lengthOfDay);
+
+        if (waveQueue.Any() && dayTimer / lengthOfDay > waveQueue.Peek().spawnTime)
+        {
+            EnemyWave wave = waveQueue.Dequeue();
+            enemySpawnManager.SpawnWave(wave);
+            OnWaveSpawned?.Invoke();
+            AudioManager.Instance.alarm.Play();
         }
     }
 
