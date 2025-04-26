@@ -81,6 +81,9 @@ public class Restaurant : MonoBehaviour
 
     [SerializeField] public List<Tray> trays = new List<Tray>();
 
+    [SerializeField] GameObject underAttackUI;
+    float underAttackTimer = 3.0f;
+
     private void Awake()
     {
         if (Instance != null)
@@ -146,6 +149,10 @@ public class Restaurant : MonoBehaviour
         employee.OrderStacked = false;
         employee.OrderItemsMade = 0;
         ReadyOrderList.Add(employee.PendingOrder);
+
+        employee.audioSource.clip = AudioManager.Instance.GetChefCompleteClip();
+        employee.audioSource.Play();
+
         AssignTask(employee);
     }
 
@@ -190,6 +197,9 @@ public class Restaurant : MonoBehaviour
         employee.NavMeshAgent.speed = employee.EmployeeSpeed;
         employee.Animator.SetBool(employee.m_HashMove, true);
         PendingOrdersList.RemoveAt(0);
+
+        employee.audioSource.clip = AudioManager.Instance.GetChefClaimClip();
+        employee.audioSource.Play();
 
         OnRefreshUI?.Invoke();
     }
@@ -247,9 +257,31 @@ public class Restaurant : MonoBehaviour
         AssignTask();
         customer.Animator.SetTrigger(customer.m_HashOrder1);
     }
-
+    private void Update()
+    {
+        if (underAttackUI != null)
+        {
+            if (underAttackUI.activeSelf)
+            {
+                underAttackTimer -= Time.deltaTime;
+                if (underAttackTimer < 0)
+                {
+                    underAttackUI.SetActive(false);
+                }
+            }
+        }
+    }
     public void TakeDamage(float hp)
     {
+        if (underAttackUI != null)
+        {
+            if (!underAttackUI.activeSelf)
+            {
+                underAttackTimer = 3.0f;
+                underAttackUI.SetActive(true);
+                AudioManager.Instance.underAttack.Play();
+            }
+        }
         HealthPoints -= hp;
         OnDamageTaken?.Invoke();
 

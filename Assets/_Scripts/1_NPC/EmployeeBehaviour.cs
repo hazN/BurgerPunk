@@ -22,6 +22,8 @@ public class EmployeeBehaviour : MonoBehaviour
         set => _navMeshAgent = value;
     }
 
+    public AudioSource audioSource;
+
     private Animator _animator;
     public Animator Animator
     {

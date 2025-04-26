@@ -58,9 +58,10 @@ public class GameManager : MonoBehaviour
 
     public bool uiIsOpen = false;
 
-    public string mainGameScene = "MainGameScene";
+    public string mainGameScene = "MainScene_Important_Backup_Backup";
     public string introScene = "Intro";
-    public string titleGameScene = "TitleScene";
+    public string titleGameScene = "TitleScreen";
+    public string endGameScene = "EndScreen";
 
 
     private void Awake()
@@ -80,12 +81,7 @@ public class GameManager : MonoBehaviour
     {
         dayStarted = false;
         settingsMenu = FindAnyObjectByType<SettingsMenu>(FindObjectsInactive.Include);
-        // TODO: Remove this
         balance = 1000f;
-        //fadeUI.gameObject.SetActive(true);
-        //fadeUI.FadeFromBlack();
-        //FadeUI.Instance.gameObject.SetActive(true);
-        //FadeUI.Instance.FadeFromBlack();
 
         settingsMenu.Initialize();
     }
@@ -93,6 +89,7 @@ public class GameManager : MonoBehaviour
     public void SetupBellInteractable(Interactable interactable)
     {
         bellInteractable = interactable;
+        interactable.OnInteracted -= RingBell;
         interactable.OnInteracted += RingBell;
     }
 
@@ -151,9 +148,26 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        numEnemiesDefeatedThisDay = 0;
+        numMoneyEarnedThisDay = 0;
+        numStructuresThisDay = 0;
+        customersServedThisDay = 0;
+
+        totalEnemiesDefeated = 0;
+        totalMoneyEarned = 0;
+        totalStructuresBuilt = 0;
+        totalCustomersServed = 0;
+        currentDay = 0;
+        balance = 1000f;
+        dayTimer = 0.0f;
+
+        dayStarted = false;
+        dayActivitiesComplete = false;
+
         enemySpawnManager = FindAnyObjectByType<EnemySpawnManager>();
         settingsMenu = null;
         SceneManager.LoadScene(mainGameScene);
+        SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         //FirstPersonController.Instance.EnableController();
@@ -174,6 +188,38 @@ public class GameManager : MonoBehaviour
         dayStarted = false;
         dayActivitiesComplete = false;
 
+        BuildViewManager bvm = FindFirstObjectByType<BuildViewManager>(FindObjectsInactive.Include);
+        if (bvm != null)
+        {
+            bvm.DeactivateBuildView();
+            SetUIOpen(false);
+            FindFirstObjectByType<MainGameUI>(FindObjectsInactive.Include).gameObject.SetActive(true);
+        }
+
+        EmployeeUI eui = FindFirstObjectByType<EmployeeUI>(FindObjectsInactive.Include);
+        if (eui != null)
+        {
+            if (eui.gameObject.activeSelf)
+            {
+                eui.gameObject.SetActive(false);
+            }
+        }
+
+        GunShop gs = FindFirstObjectByType<GunShop>(FindObjectsInactive.Include);
+        if (gs != null)
+        {
+            if (gs.gameObject.activeSelf)
+            {
+                gs.gameObject.SetActive(false);
+            }
+        }
+
+        if (currentDay == 7)
+        {
+            FadeUI.Instance.FadeToBlack(() => SceneManager.LoadScene(endGameScene)); 
+            return;
+        }
+        FadeUI.Instance.FadeToBlack();
         FadeUI.Instance.FadeFromBlack();
         StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.pregameSong, 3.0f));
     }

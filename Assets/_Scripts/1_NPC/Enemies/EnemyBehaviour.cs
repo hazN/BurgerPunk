@@ -69,6 +69,7 @@ public class EnemyBehaviour : Actor
             GameManager.Instance.EnemyDied();
             audioSource.clip = AudioManager.Instance.GetEnemyDeathClip();
             audioSource.Play();
+            GameManager.Instance.AddMoney(50);
         };
         OnHit += () =>
         {

@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioSource kaching;
     [SerializeField] public AudioSource dayEnd;
     [SerializeField] public AudioSource applause;
+    [SerializeField] public AudioSource underAttack;
 
     [Header("Music")]
     [SerializeField] public AudioSource menuTheme;
@@ -47,6 +48,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource customerBark;
     [SerializeField] AudioClip[] customerBarkClips;
 
+    [Header("Chef")]
+    [SerializeField] AudioClip[] chefClaims;
+    [SerializeField] AudioClip[] chefComplete;
 
     [Header("Enemy")]
     [SerializeField] AudioClip[] enemyAttackClips;
@@ -118,6 +122,17 @@ public class AudioManager : MonoBehaviour
     {
         gunfire.PlayOneShot(clip);
     }
+
+    public AudioClip GetChefClaimClip()
+    {
+        return chefClaims[UnityEngine.Random.Range(0, chefClaims.Length)];
+    }
+
+    public AudioClip GetChefCompleteClip()
+    {
+        return chefComplete[UnityEngine.Random.Range(0, chefComplete.Length)];
+    }
+
 
     public AudioClip GetEnemyAttackClip()
     {
