@@ -90,10 +90,10 @@ namespace BurgerPunk.Combat
                 EnemyHitbox enemyHitbox = hit.collider.GetComponent<EnemyHitbox>();
                 if (enemyHitbox != null)
                 {
-                    Actor actor = enemyHitbox.GetActor();
+                    Actor actor = enemyHitbox?.GetActor();
                     if (actor != null)
                     {
-                        actor.TakeDamage(damage);
+                        actor?.TakeDamage(damage);
                         //Debug.Log("Hit " + actor.name + " for " + damage + " damage.");
                     }
                     else
