@@ -111,6 +111,13 @@ public class CustomerManager : MonoBehaviour
             if (customer != null)
                 Destroy(customer.gameObject);
         }
+        StartCoroutine(DelayedClear());
+    }
+
+    private IEnumerator DelayedClear()
+    {
+        yield return new WaitForEndOfFrame();
         _customerBehavioursList.Clear();
     }
+
 }

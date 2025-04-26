@@ -55,12 +55,13 @@ public class CustomerBehaviour : Interactable
     public readonly CustomerSittingState mCustomerSittigState = new CustomerSittingState();
     public readonly CustomerWaitingState mCustomerWaitingState = new CustomerWaitingState();
     private PlayerRestaurant playerRestaurant;
+    private System.Action interactionHandler;
     private void Awake()
     {
         playerRestaurant = FindFirstObjectByType<PlayerRestaurant>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-        OnInteracted += () =>
+        interactionHandler += () =>
         {
             if (playerRestaurant.IsOrderComplete())
             {
@@ -90,6 +91,15 @@ public class CustomerBehaviour : Interactable
                 }
             }
         };
+
+        OnInteracted += interactionHandler;
+    }
+    private void OnDestroy()
+    {
+        if (interactionHandler != null)
+        {
+            OnInteracted -= interactionHandler;
+        }
     }
 
     void Start()
