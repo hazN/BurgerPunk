@@ -23,7 +23,8 @@ namespace BurgerPunk
             // Check if the player is holding the tray
             if (holster.GetCurrentGun().GunName == "Tray")
             {
-                playerRestaurant.EquipCompletedOrder(this, tray);
+                if (tray.GetCurrentOrder() != null)
+                    playerRestaurant.EquipCompletedOrder(this, tray);
             }
             else
             {

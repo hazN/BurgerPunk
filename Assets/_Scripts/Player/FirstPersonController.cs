@@ -263,10 +263,11 @@ namespace BurgerPunk.Movement
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
             enableController = true;
+
+            Mouse.current.WarpCursorPosition(new Vector2(Screen.width / 2, Screen.height / 2));
         }
         public void PartiallyDisableController()
         {
-            Mouse.current.WarpCursorPosition(new Vector2(Screen.width / 2, Screen.height / 2));
 
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
@@ -274,8 +275,6 @@ namespace BurgerPunk.Movement
         }
         public void DisableController()
         {
-            Mouse.current.WarpCursorPosition(new Vector2(Screen.width / 2, Screen.height / 2));
-
             //Debug.Log("cursor locked, controller disabled");
             UnityEngine.Cursor.lockState = CursorLockMode.None;
             UnityEngine.Cursor.visible = true;
