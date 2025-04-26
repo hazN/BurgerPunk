@@ -4,6 +4,7 @@ using BurgerPunk.Combat;
 using System.Linq;
 using BurgerPunk.UI;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 namespace BurgerPunk.Movement
 {
@@ -257,13 +258,17 @@ namespace BurgerPunk.Movement
         }
         public void EnableController()
         {
+
             //Debug.Log("cursor locked, controller enable");
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
             enableController = true;
+
+            Mouse.current.WarpCursorPosition(new Vector2(Screen.width / 2, Screen.height / 2));
         }
         public void PartiallyDisableController()
         {
+
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
             enableController = false;

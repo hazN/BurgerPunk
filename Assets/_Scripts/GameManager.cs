@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
             FindAnyObjectByType<GunShop>(FindObjectsInactive.Include).refreshShop();
             dayStarted = false;
             dayActivitiesComplete = true;
-            StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.GetDaySong(), 1.0f));
+            StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.GetDaySong(currentDay), 1.0f));
         }
     }
 
@@ -217,7 +217,7 @@ public class GameManager : MonoBehaviour
             dayTimer = 0.0f;
             dayStarted = true;
             CustomerManager.Instance.SpawnCustomers(CustomerManager.Instance.CustomersList.Count, 5.0f);
-            StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.GetDaySong(), 3.0f));
+            StartCoroutine(AudioFade.FadeIn(AudioManager.Instance.GetDaySong(currentDay), 3.0f));
             StartCoroutine(AudioFade.FadeOut(AudioManager.Instance.pregameSong, 1.5f));
 
             foreach (EnemyWave wave in enemyDayWaves[currentDay].waves)
