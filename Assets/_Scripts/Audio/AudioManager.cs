@@ -55,6 +55,15 @@ public class AudioManager : MonoBehaviour
 
     [Header("Ambience")]
     [SerializeField] public AudioSource ambience;
+
+    [Header("Intro")]
+    [SerializeField] public AudioSource introSFX;
+    [SerializeField] public AudioClip sparkle;
+    [SerializeField] public AudioClip notSoFast;
+    [SerializeField] public AudioClip smash;
+    [SerializeField] public AudioClip jumphim;
+    [SerializeField] public AudioClip imDying;
+
     void Awake()
     {
         if (Instance == null)
