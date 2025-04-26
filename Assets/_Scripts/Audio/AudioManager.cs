@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioSource kaching;
     [SerializeField] public AudioSource dayEnd;
     [SerializeField] public AudioSource applause;
+    [SerializeField] public AudioSource applauseBig;
     [SerializeField] public AudioSource underAttack;
 
     [Header("Music")]
@@ -30,6 +31,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioSource pregameSong;
     [SerializeField] public AudioSource daySong1;
     [SerializeField] public AudioSource daySong2;
+    [SerializeField] public AudioSource daySong3;
 
     [Header("Player")]
     [SerializeField] AudioSource gunfire;
@@ -97,13 +99,17 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource GetDaySong(int day = 0)
     {
-        if (day % 2 == 0)
+        if (day % 3 == 0)
         {
             return daySong2;
         }
-        else
+        else if (day % 3 == 1)
         {
             return daySong1;
+        }
+        else
+        {
+            return daySong3;
         }
     }
     public void PlayRandomCustomerBark()

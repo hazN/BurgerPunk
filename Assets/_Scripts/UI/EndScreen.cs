@@ -21,6 +21,7 @@ public class EndScreen : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         AudioManager.Instance.ambience.Stop();
+        AudioManager.Instance.applauseBig.Play();
     }
 
 
